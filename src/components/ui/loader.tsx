@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 
 export const Loader = ({ className }: { className?: string }) => {
   return (
-    <div className="flex h-full items-center justify-center space-x-2 bg-white dark:invert">
+    <div className="flex h-full items-center justify-center space-x-2 ">
       <span className="sr-only">Loading...</span>
       <div
         className={cn(
