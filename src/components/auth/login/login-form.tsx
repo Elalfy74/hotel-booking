@@ -12,11 +12,11 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 
+import { AuthInput } from '../shared/auth-input';
 import { loginSchema, LoginSchemaType } from './login-schema';
 
-export const LoginForm = () => {
+export const LoginForm = ({ handleForgotPassword }: { handleForgotPassword: () => void }) => {
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
   });
@@ -35,11 +35,7 @@ export const LoginForm = () => {
             <FormItem>
               <FormLabel>email address</FormLabel>
               <FormControl>
-                <Input
-                  className="bg-slate-200 focus-visible:bg-white"
-                  placeholder="email@example.com"
-                  {...field}
-                />
+                <AuthInput placeholder="email@example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -52,14 +48,16 @@ export const LoginForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
-                  className="bg-slate-200 focus-visible:bg-white"
-                  placeholder="enter your password here"
-                  {...field}
-                />
+                <AuthInput placeholder="enter your password here" {...field} />
               </FormControl>
               <FormMessage />
-              <Button variant="link" type="button" className="p-0" size="sm">
+              <Button
+                variant="link"
+                type="button"
+                className="p-0"
+                size="sm"
+                onClick={handleForgotPassword}
+              >
                 Forgot Password?
               </Button>
             </FormItem>

@@ -12,8 +12,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 
+import { AuthInput } from '../shared/auth-input';
 import { signUpSchema, SignUpSchemaType } from './sign-up-schema';
 
 export const SignUpForm = () => {
@@ -36,11 +36,7 @@ export const SignUpForm = () => {
               <FormItem>
                 <FormLabel>first name</FormLabel>
                 <FormControl>
-                  <Input
-                    className="bg-slate-200 focus-visible:bg-white"
-                    placeholder="first name"
-                    {...field}
-                  />
+                  <AuthInput placeholder="first name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -54,11 +50,7 @@ export const SignUpForm = () => {
               <FormItem>
                 <FormLabel>last name</FormLabel>
                 <FormControl>
-                  <Input
-                    className="bg-slate-200 focus-visible:bg-white"
-                    placeholder="last name"
-                    {...field}
-                  />
+                  <AuthInput placeholder="last name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -73,11 +65,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>email address</FormLabel>
               <FormControl>
-                <Input
-                  className="bg-slate-200 focus-visible:bg-white"
-                  placeholder="email@example.com"
-                  {...field}
-                />
+                <AuthInput placeholder="email@example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -90,11 +78,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
-                  className="bg-slate-200 focus-visible:bg-white"
-                  placeholder="enter your password here"
-                  {...field}
-                />
+                <AuthInput placeholder="enter your password here" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
