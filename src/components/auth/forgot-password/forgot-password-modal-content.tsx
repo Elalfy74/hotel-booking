@@ -7,8 +7,10 @@ export const ForgotPasswordModalContent = ({ handleContentChange }: ContentCompo
   return (
     <DialogHeader>
       <DialogTitle className="mb-4 text-center text-3xl">Password Recovery</DialogTitle>
-      <DialogDescription>Enter your email to recover your password</DialogDescription>
-      <div>
+      <DialogDescription className="text-center">
+        Enter your email to recover your password
+      </DialogDescription>
+      <div className="pt-5">
         <ForgotPasswordForm />
       </div>
     </DialogHeader>

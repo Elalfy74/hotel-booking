@@ -14,7 +14,7 @@ export const SocialAuth = () => {
 
 const GoogleButton = () => {
   return (
-    <Button className="flex-1 space-x-3" size="lg">
+    <Button className="flex-1 space-x-3 fill-current" size="lg">
       <GoogleLogo className="h-4 w-4" />
       <span>Sign in With Google</span>
     </Button>
