@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { LoginModal } from '../auth/login/login-modal';
-import { SignUpModal } from '../auth/sign-up/sign-up-modal';
+import { ThemeSwitcher } from '../theme-switcher';
 import { Logo } from '../ui/logo';
 
 export const Header = () => {
@@ -12,9 +12,9 @@ export const Header = () => {
           <Logo className="h-8 w-8" />
         </Link>
       </h2>
-      <div className="space-x-3">
+      <div className="flex space-x-3">
         <LoginModal />
-        <SignUpModal />
+        <ThemeSwitcher />
       </div>
     </header>
   );
