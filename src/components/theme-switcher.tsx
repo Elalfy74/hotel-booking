@@ -35,24 +35,15 @@ export const ThemeSwitcher = () => {
         <Button variant="outline">{themeElements[theme]}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-[5rem]">
-        <DropdownMenuCheckboxItem
-          checked={theme === 'light'}
-          onCheckedChange={() => setTheme('light')}
-        >
-          {themeElements.light}
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          checked={theme === 'dark'}
-          onCheckedChange={() => setTheme('dark')}
-        >
-          {themeElements.dark}
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          checked={theme === 'system'}
-          onCheckedChange={() => setTheme('system')}
-        >
-          {themeElements.system}
-        </DropdownMenuCheckboxItem>
+        {Object.entries(themeElements).map(([key, value]) => (
+          <DropdownMenuCheckboxItem
+            key={key}
+            checked={theme === key}
+            onCheckedChange={() => setTheme(key)}
+          >
+            {value}
+          </DropdownMenuCheckboxItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
