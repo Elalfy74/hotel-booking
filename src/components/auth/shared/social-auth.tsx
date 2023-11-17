@@ -15,7 +15,7 @@ export const SocialAuth = () => {
 const GoogleButton = () => {
   return (
     <Button className="flex-1 space-x-3" size="lg">
-      <GoogleLogo className="h-4 w-4" fill="white" />
+      <GoogleLogo className="h-4 w-4" />
       <span>Sign in With Google</span>
     </Button>
   );
@@ -24,7 +24,7 @@ const GoogleButton = () => {
 const TwitterButton = () => {
   return (
     <Button size="icon" className="h-10 w-10 bg-gray-700 hover:bg-gray-700/90">
-      <TwitterIcon className="h-5 w-5 fill-current" />
+      <TwitterIcon className="h-5 w-5 fill-current dark:fill-white dark:stroke-white" />
     </Button>
   );
 };
