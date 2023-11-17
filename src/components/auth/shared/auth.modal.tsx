@@ -19,7 +19,7 @@ const AuthModalContent = dynamic(
 );
 
 // represent the keys of modal content
-export type ContentKey = 'login' | 'signUp';
+export type ContentKey = 'login' | 'signUp' | 'forgotPassword';
 
 interface AuthModalProps {
   contentKey: ContentKey;
