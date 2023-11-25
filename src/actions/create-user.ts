@@ -21,18 +21,19 @@ export const createUser = async (data: SignUpSchemaType) => {
 
     if (!isValid.success) {
       response.error = isValid.error.message;
+      return response;
     }
 
     await prisma.user.create({ data });
 
     return response;
   } catch (err) {
-    if (err instanceof Prisma.PrismaClientKnownRequestError) {
-      if (err.code === 'P2002') {
-        response.error = 'Email already exists';
-      }
+    if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002') {
+      response.error = 'Email already exists';
     } else if (err instanceof Error) {
-      err.message;
+      response.error = err.message;
+    } else {
+      response.error = 'Something went wrong';
     }
 
     return response;
