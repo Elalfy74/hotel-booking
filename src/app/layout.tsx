@@ -5,7 +5,9 @@ import { Inter as FontSans } from 'next/font/google';
 import NextTopLoader from 'nextjs-toploader';
 
 import { Header } from '@/components/layouts/header';
+import AppSessionProvider from '@/components/providers/app-session-provider';
 import { ThemeProvider } from '@/components/providers/theme-provider';
+import { getAppSession } from '@/lib/get-app-session';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
@@ -18,7 +20,9 @@ const fontSans = FontSans({
   variable: '--font-sans',
 });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const session = await getAppSession();
+
   return (
     <html lang="en">
       <body className={cn('min-h-screen font-sans antialiased', fontSans.variable)}>
@@ -28,9 +32,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
-          <NextTopLoader />
-          <Header />
-          {children}
+          <AppSessionProvider session={session}>
+            <NextTopLoader />
+            <Header />
+            {children}
+          </AppSessionProvider>
         </ThemeProvider>
       </body>
     </html>
