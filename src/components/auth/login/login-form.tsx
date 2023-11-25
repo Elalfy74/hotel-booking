@@ -68,7 +68,7 @@ export const LoginForm = ({ handleForgotPassword, onSuccess }: LoginFormProps) =
               <FormItem>
                 <FormLabel>email address</FormLabel>
                 <FormControl>
-                  <AuthInput placeholder="email@example.com" {...field} />
+                  <AuthInput placeholder="email@example.com" {...field} autoComplete="email" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -81,7 +81,12 @@ export const LoginForm = ({ handleForgotPassword, onSuccess }: LoginFormProps) =
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <AuthInput placeholder="enter your password here" {...field} type="password" />
+                  <AuthInput
+                    placeholder="enter your password here"
+                    {...field}
+                    type="password"
+                    autoComplete="current-password"
+                  />
                 </FormControl>
                 <FormMessage />
                 <Button
