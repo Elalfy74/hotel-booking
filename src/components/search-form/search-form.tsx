@@ -7,8 +7,8 @@ import { PassengersInput } from './inputs/passengers-input';
 
 export const SearchForm = () => {
   return (
-    <form className="container">
-      <Card className="flex flex-col flex-wrap justify-between gap-5 p-6 md:px-16 md:py-10 lg:flex-row">
+    <form>
+      <Card className="flex w-full flex-col flex-wrap justify-between gap-5 p-6 lg:flex-row lg:px-16 lg:py-10">
         <div className="relative flex-1">
           <CityInput />
         </div>
