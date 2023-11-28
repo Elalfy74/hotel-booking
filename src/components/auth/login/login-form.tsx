@@ -37,7 +37,7 @@ export const LoginForm = ({ handleForgotPassword, onSuccess }: LoginFormProps) =
     const res = await signIn('credentials', {
       email: values.email,
       password: values.password,
-      redirect: false,
+      callbackUrl: '/',
     });
 
     if (res?.error) {

@@ -6,7 +6,7 @@ import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { createUser } from '@/actions/create-user';
+import { createUser } from '@/actions/users-actions';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
@@ -43,7 +43,7 @@ export const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
     const res = await signIn('credentials', {
       email: values.email,
       password: values.password,
-      redirect: false,
+      callbackUrl: '/',
     });
 
     if (res?.error) {

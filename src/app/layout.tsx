@@ -3,7 +3,9 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import NextTopLoader from 'nextjs-toploader';
+import { Toaster } from 'sonner';
 
+import { AppQueryProvider } from '@/components/providers/app-query-provider';
 import AppSessionProvider from '@/components/providers/app-session-provider';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { getAppSession } from '@/lib/get-app-session';
@@ -32,8 +34,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           disableTransitionOnChange
         >
           <AppSessionProvider session={session}>
-            <NextTopLoader />
-            {children}
+            <AppQueryProvider>
+              <NextTopLoader />
+              <Toaster richColors />
+              {children}
+            </AppQueryProvider>
           </AppSessionProvider>
         </ThemeProvider>
       </body>

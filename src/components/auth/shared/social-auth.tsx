@@ -1,4 +1,5 @@
 import { TwitterIcon } from 'lucide-react';
+import { signIn } from 'next-auth/react';
 
 import { Button } from '@/components/ui/button';
 import { GoogleLogo } from '@/components/ui/google-logo';
@@ -22,8 +23,18 @@ const GoogleButton = () => {
 };
 
 const TwitterButton = () => {
+  const handleGithubLogin = async () => {
+    await signIn('github', {
+      redirect: false,
+    });
+  };
+
   return (
-    <Button size="icon" className="h-10 w-10 bg-gray-700 hover:bg-gray-700/90">
+    <Button
+      size="icon"
+      className="h-10 w-10 bg-gray-700 hover:bg-gray-700/90"
+      onClick={handleGithubLogin}
+    >
       <TwitterIcon className="h-5 w-5 fill-current dark:fill-white dark:stroke-white" />
     </Button>
   );
