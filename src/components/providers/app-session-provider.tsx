@@ -1,15 +1,9 @@
-'use client';
-import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 
-const Providers = ({
-  children,
-  session,
-}: {
-  children: React.ReactNode;
-  session: Session | null;
-}) => {
+import { getAppSession } from '@/lib/get-app-session';
+
+export const AppSessionProvider = async ({ children }: { children: React.ReactNode }) => {
+  const session = await getAppSession();
+
   return <SessionProvider session={session}>{children}</SessionProvider>;
 };
-
-export default Providers;
