@@ -1,3 +1,5 @@
+'use client';
+
 import { TwitterIcon } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 
