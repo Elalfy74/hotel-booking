@@ -51,7 +51,9 @@ export const columns = (onActionDone: () => void): ColumnDef<IUser>[] => {
       cell: ({ row }) => {
         return (
           <div className="flex items-center gap-2">
-            <CustomAvatar src={row.original.image} fallBack={row.original.firstName?.[0] || 'A'} />
+            <CustomAvatar src={row.original.image}>
+              {row.original.firstName?.[0] || 'A'}
+            </CustomAvatar>
             {row.original.firstName} {row.original.lastName}
           </div>
         );
