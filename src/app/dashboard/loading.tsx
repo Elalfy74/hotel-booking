@@ -1,10 +1,7 @@
-import { Spinner } from '@/components/ui/spinner';
+import { AppLoading } from '@/components/app-loading.server';
 
 const DashboardLoading = () => {
-  return (
-    <div className="flex h-full flex-1 items-center justify-center">
-      <Spinner size="lg" />
-    </div>
-  );
+  return <AppLoading />;
 };
+
 export default DashboardLoading;
