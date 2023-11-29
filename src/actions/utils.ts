@@ -1,8 +1,14 @@
+import bcrypt from 'bcrypt';
+
 import { getAppSession } from '@/lib/get-app-session';
 
 export interface ActionRes<T> {
   data?: T;
   error?: string;
+}
+
+export function hashPassword(password: string) {
+  return bcrypt.hashSync(password, 10);
 }
 
 export async function checkAuth() {
