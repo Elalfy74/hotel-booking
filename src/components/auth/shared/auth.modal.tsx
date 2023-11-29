@@ -5,7 +5,6 @@ import { useCallback, useState } from 'react';
 
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Loader } from '@/components/ui/loader';
-import { useDisclosure } from '@/hooks/use-disclosure';
 import { cn } from '@/lib/utils';
 
 const AuthModalContent = dynamic(
@@ -24,12 +23,10 @@ export type ContentKey = 'login' | 'signUp' | 'forgotPassword';
 
 interface AuthModalProps {
   contentKey: ContentKey;
-  // Trigger element
-  children: React.ReactNode;
+  children: React.ReactNode; // Trigger element
 }
 
 export const AuthModal = ({ contentKey, children }: AuthModalProps) => {
-  const [opened, { close, setOpened }] = useDisclosure(false);
   const [currentContentKey, setCurrentContentKey] = useState<ContentKey>(contentKey);
 
   const handleContentChange = (contentKey: ContentKey) => {
@@ -40,14 +37,13 @@ export const AuthModal = ({ contentKey, children }: AuthModalProps) => {
   const widthStyle = currentContentKey === 'signUp' ? 'max-w-md' : 'max-w-sm';
 
   return (
-    <Dialog open={opened} onOpenChange={setOpened}>
+    <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className={cn(widthStyle, 'transition-none')}>
         <AuthModalContent
           currentContentKey={currentContentKey}
           handleContentChange={handleContentChange}
           resetContent={resetContent}
-          close={close}
         />
       </DialogContent>
     </Dialog>

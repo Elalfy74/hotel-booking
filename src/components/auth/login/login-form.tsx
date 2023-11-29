@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -23,10 +24,11 @@ import { loginSchema, LoginSchemaType } from './login-schema';
 
 interface LoginFormProps {
   handleForgotPassword: () => void;
-  onSuccess: () => void;
 }
 
-export const LoginForm = ({ handleForgotPassword, onSuccess }: LoginFormProps) => {
+export const LoginForm = ({ handleForgotPassword }: LoginFormProps) => {
+  const router = useRouter();
+
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
   });
@@ -37,7 +39,7 @@ export const LoginForm = ({ handleForgotPassword, onSuccess }: LoginFormProps) =
     const res = await signIn('credentials', {
       email: values.email,
       password: values.password,
-      callbackUrl: '/',
+      redirect: false,
     });
 
     if (res?.error) {
@@ -45,7 +47,7 @@ export const LoginForm = ({ handleForgotPassword, onSuccess }: LoginFormProps) =
     }
 
     if (res?.ok) {
-      onSuccess();
+      router.replace('/');
     }
   };
 

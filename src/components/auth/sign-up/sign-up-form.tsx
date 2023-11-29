@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -22,11 +23,9 @@ import { Loader } from '@/components/ui/loader';
 import { AuthInput } from '../shared/auth-input';
 import { signUpSchema, SignUpSchemaType } from './sign-up-schema';
 
-interface SignUpFormProps {
-  onSuccess: () => void;
-}
+export const SignUpForm = () => {
+  const router = useRouter();
 
-export const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
   const form = useForm<SignUpSchemaType>({
     resolver: zodResolver(signUpSchema),
   });
@@ -43,7 +42,7 @@ export const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
     const res = await signIn('credentials', {
       email: values.email,
       password: values.password,
-      callbackUrl: '/',
+      redirect: false,
     });
 
     if (res?.error) {
@@ -51,7 +50,7 @@ export const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
     }
 
     if (res?.ok) {
-      onSuccess();
+      router.replace('/');
     }
   };
 

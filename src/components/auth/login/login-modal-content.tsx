@@ -6,7 +6,7 @@ import { ContentComponentProps } from '../shared/auth-modal-content';
 import { SocialAuth } from '../shared/social-auth';
 import { LoginForm } from './login-form';
 
-export const LoginModalContent = ({ handleContentChange, close }: ContentComponentProps) => {
+export const LoginModalContent = ({ handleContentChange }: ContentComponentProps) => {
   return (
     <>
       <DialogHeader>
@@ -14,10 +14,7 @@ export const LoginModalContent = ({ handleContentChange, close }: ContentCompone
         <div>
           <SocialAuth />
           <Divider>Or continue with</Divider>
-          <LoginForm
-            handleForgotPassword={() => handleContentChange('forgotPassword')}
-            onSuccess={close}
-          />
+          <LoginForm handleForgotPassword={() => handleContentChange('forgotPassword')} />
         </div>
       </DialogHeader>
       <DialogFooter className="items-center !justify-center text-sm text-muted-foreground">
