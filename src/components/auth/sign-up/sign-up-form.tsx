@@ -7,7 +7,7 @@ import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { createUser } from '@/actions/users-actions';
+import { signUpUser } from '@/actions/users-actions';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
@@ -33,7 +33,7 @@ export const SignUpForm = () => {
   const [error, setError] = useState<null | string>(null);
 
   const onSubmit = async (values: SignUpSchemaType) => {
-    const { error } = await createUser(values);
+    const { error } = await signUpUser(values);
 
     if (error) {
       return setError(error);

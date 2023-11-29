@@ -1,12 +1,14 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { UploadIcon, UserIcon } from 'lucide-react';
-import Image from 'next/image';
+import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { createUser, IUser } from '@/actions/users-actions';
+import { AvatarInput } from '@/components/avatar-input.client';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -26,39 +28,66 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
+import { usersQueryKey } from '../../(root)/_hooks/use-users';
 import { createUserSchema, CreateUserSchemaType } from './create-user-schema';
 
 export const CreateUserForm = () => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
   const form = useForm<CreateUserSchemaType>({
     resolver: zodResolver(createUserSchema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
       role: 'USER',
-      image: '',
     },
   });
 
-  const onSubmit = async (values: CreateUserSchemaType) => {
-    console.log(values);
+  const onSubmit = async ({ image, ...values }: CreateUserSchemaType) => {
+    if (!(image instanceof File)) return;
+
+    const formData = new FormData();
+
+    formData.append('image', image);
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    const { error, data } = await createUser(formData);
+    if (error || !data) return toast.error(error);
+
+    toast.success('User created successfully');
+    // queryClient.invalidateQueries({
+    //   predicate: (query) => {
+    //     if (query.queryKey[0] === 'users') return true;
+    //     if (query.queryKey[0] === 'users count') return true;
+    //     return false;
+    //   },
+    // });
+    queryClient.setQueryData<IUser[]>(usersQueryKey, (oldData) => {
+      if (!oldData) return undefined;
+      return [data, ...oldData];
+    });
+
+    setTimeout(() => {
+      router.push('/dashboard/users');
+    }, 1000);
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 max-w-4xl space-y-6">
-        <Avatar className="group relative h-44 w-44 cursor-pointer overflow-hidden border">
-          <AvatarImage asChild src={form.getValues().image}>
-            <Image src={form.getValues().image || ''} width={200} height={200} alt="user image" />
-          </AvatarImage>
-          <AvatarFallback>
-            <UserIcon className="h-20 w-20 text-gray-400" />
-          </AvatarFallback>
-          <div className="absolute -bottom-2 left-0 flex h-10 w-full items-center justify-center bg-muted opacity-0 transition-all group-hover:opacity-100">
-            <UploadIcon className="h-4 w-4" />
-          </div>
-        </Avatar>
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <AvatarInput onChange={field.onChange} priority />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <div className="grid grid-cols-2 gap-x-6">
           <FormField

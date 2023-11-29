@@ -1,13 +1,14 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { UploadIcon, UserIcon } from 'lucide-react';
-import Image from 'next/image';
+import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
-import { IUser } from '@/actions/users-actions';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { IUser, updateUserById } from '@/actions/users-actions';
+import { AvatarInput } from '@/components/avatar-input.client';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -34,6 +35,9 @@ interface EditUserFormProps {
 }
 
 export const EditUserForm = ({ user }: EditUserFormProps) => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
   const form = useForm<EditUserSchema>({
     resolver: zodResolver(editUserSchema),
     defaultValues: {
@@ -41,28 +45,62 @@ export const EditUserForm = ({ user }: EditUserFormProps) => {
       lastName: user.lastName || '',
       email: user.email,
       role: user.role,
-      image: user.image || '',
+      image: undefined,
     },
   });
 
-  const onSubmit = async (values: EditUserSchema) => {
-    console.log(values);
+  const onSubmit = async ({ image, ...values }: EditUserSchema) => {
+    const formData = new FormData();
+
+    if (image && image instanceof File) {
+      formData.append('image', image);
+    }
+
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    const { error } = await updateUserById({
+      id: user.id,
+      data: formData,
+    });
+
+    if (error) return toast.error(error);
+
+    toast.success('User updated successfully');
+    queryClient.invalidateQueries({
+      predicate: ({ queryKey }) => {
+        if (queryKey[0] === 'users') return true;
+        if (queryKey[0] === 'user' && queryKey[1] === user.id) return true;
+        return false;
+      },
+    });
+    setTimeout(() => {
+      router.push('/dashboard/users');
+    }, 1000);
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 max-w-4xl space-y-6">
-        <Avatar className="group relative h-44 w-44 cursor-pointer overflow-hidden border">
-          <AvatarImage asChild src={form.getValues().image}>
-            <Image src={form.getValues().image} width={200} height={200} alt="user image" />
-          </AvatarImage>
-          <AvatarFallback>
-            <UserIcon className="h-20 w-20 text-gray-400" />
-          </AvatarFallback>
-          <div className="absolute -bottom-2 left-0 flex h-10 w-full items-center justify-center bg-muted opacity-0 transition-all group-hover:opacity-100">
-            <UploadIcon className="h-4 w-4" />
-          </div>
-        </Avatar>
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <AvatarInput
+                  onChange={field.onChange}
+                  defaultPreview={user.image}
+                  width={300}
+                  height={300}
+                  priority
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <div className="grid grid-cols-2 gap-x-6">
           <FormField

@@ -12,6 +12,11 @@ interface UseUsersProps {
   };
 }
 
+export const usersQueryKey = [
+  'users',
+  { currentPage: 0, pageSize: 10, filter: { role: [], query: '' } },
+];
+
 export const useUsers = ({ currentPage, pageSize, filter }: UseUsersProps) => {
   let where: Prisma.UserFindManyArgs['where'] = {};
 
