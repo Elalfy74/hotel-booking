@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { usePagination } from 'react-use-pagination';
 import { toast } from 'sonner';
 
+import { AppLoading } from '@/components/app-loading.server';
 import { DataTable } from '@/components/ui/data-table';
 
 import { useDeleteManyUsers } from '../_hooks/use-delete-many-users';
@@ -21,7 +22,11 @@ export const UsersTable = () => {
   const filter = { query: usersFilter.searchValue, role: usersFilter.selectedRoles };
 
   // Fetch users count
-  const { data: usersCount, refetch: refetchUsersCount } = useUsersCount({ filter });
+  const {
+    data: usersCount,
+    isLoading: usersCountLoading,
+    refetch: refetchUsersCount,
+  } = useUsersCount({ filter });
 
   // Handle pagination
   const pagination = usePagination({
@@ -36,7 +41,11 @@ export const UsersTable = () => {
   );
 
   // Fetch users based on pagination and filter
-  const { data: usersData, refetch: refetchUsers } = useUsers({
+  const {
+    data: usersData,
+    isLoading: usersLoading,
+    refetch: refetchUsers,
+  } = useUsers({
     currentPage,
     pageSize: pagination.pageSize,
     filter,
@@ -67,6 +76,8 @@ export const UsersTable = () => {
   // Handle Data Fetching Errors
   if (usersData?.error) throw new Error(usersData.error);
   if (usersCount?.error) throw new Error(usersCount.error);
+
+  if (usersLoading || usersCountLoading) return <AppLoading />;
 
   // Handle Data Loading
   // Not actually needed
