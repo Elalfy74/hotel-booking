@@ -33,7 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           enableSystem
           disableTransitionOnChange
         >
-          <AppSessionProvider>
+          <AppSessionProvider session={session}>
             <AppQueryProvider>
               <NextTopLoader />
               <Toaster richColors />
