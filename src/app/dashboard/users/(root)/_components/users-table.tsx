@@ -26,6 +26,7 @@ export const UsersTable = () => {
     data: usersCount,
     isLoading: usersCountLoading,
     refetch: refetchUsersCount,
+    isRefetching: useCountFetching,
   } = useUsersCount({ filter });
 
   // Handle pagination
@@ -45,6 +46,7 @@ export const UsersTable = () => {
     data: usersData,
     isLoading: usersLoading,
     refetch: refetchUsers,
+    isFetching: userFetching,
   } = useUsers({
     currentPage,
     pageSize: pagination.pageSize,
@@ -87,6 +89,7 @@ export const UsersTable = () => {
     <DataTable
       columns={columns(refetchAll)}
       data={usersData.data}
+      isLoading={userFetching || useCountFetching}
       handleDeleteSelected={handleDeleteManyUsers}
       isDeleting={isPending}
       filter={<UsersFilter {...usersFilter} />}

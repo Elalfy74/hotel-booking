@@ -17,11 +17,13 @@ import { GetPaginationReturnType } from '@/lib/utils';
 
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableToolbar } from './data-table-toolbar';
+import { Spinner } from './spinner';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
 
 interface DataTableProps<TData, TValue> extends GetPaginationReturnType {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  isLoading: boolean;
   filter: React.ReactNode;
   handleDeleteSelected: (ids: string[], onSuccess: () => void) => void;
   isDeleting: boolean;
@@ -30,6 +32,7 @@ interface DataTableProps<TData, TValue> extends GetPaginationReturnType {
 export function DataTable<TData extends { id: string }, TValue>({
   columns,
   data,
+  isLoading,
   filter,
   handleDeleteSelected,
   isDeleting,
@@ -66,7 +69,8 @@ export function DataTable<TData extends { id: string }, TValue>({
       >
         {filter}
       </DataTableToolbar>
-      <div className="rounded-md border">
+
+      <div className="relative overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -103,9 +107,16 @@ export function DataTable<TData extends { id: string }, TValue>({
             )}
           </TableBody>
         </Table>
+
+        {isLoading && (
+          <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-background/50 backdrop-blur-sm">
+            <Spinner size="lg" />
+          </div>
+        )}
       </div>
       <DataTablePagination
         selected={table.getSelectedRowModel().rows.length}
+        isLoading={isLoading}
         {...paginationProps}
       />
     </div>

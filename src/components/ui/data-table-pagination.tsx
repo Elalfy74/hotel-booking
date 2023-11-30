@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 
 interface DataTablePaginationProps extends GetPaginationReturnType {
   selected: number;
+  isLoading: boolean;
 }
 
 export function DataTablePagination(props: DataTablePaginationProps) {
@@ -24,7 +25,7 @@ export function DataTablePagination(props: DataTablePaginationProps) {
         <div className="flex items-center space-x-2">
           <p className="text-sm font-medium">Rows per page</p>
           <Select
-            disabled={props.totalItems <= 10}
+            disabled={props.totalItems <= 10 || props.isLoading}
             value={`${props.pageSize}`}
             onValueChange={(value) => {
               props.setPageSize(Number(value));
@@ -50,7 +51,7 @@ export function DataTablePagination(props: DataTablePaginationProps) {
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => props.setPage(0)}
-            disabled={!props.previousEnabled}
+            disabled={!props.previousEnabled || props.isLoading}
           >
             <span className="sr-only">Go to first page</span>
             <DoubleArrowLeftIcon className="h-4 w-4" />
@@ -59,7 +60,7 @@ export function DataTablePagination(props: DataTablePaginationProps) {
             variant="outline"
             className="h-8 w-8 p-0"
             onClick={() => props.setPreviousPage()}
-            disabled={!props.previousEnabled}
+            disabled={!props.previousEnabled || props.isLoading}
           >
             <span className="sr-only">Go to previous page</span>
             <ChevronLeftIcon className="h-4 w-4" />
@@ -68,7 +69,7 @@ export function DataTablePagination(props: DataTablePaginationProps) {
             variant="outline"
             className="h-8 w-8 p-0"
             onClick={() => props.setNextPage()}
-            disabled={!props.nextEnabled}
+            disabled={!props.nextEnabled || props.isLoading}
           >
             <span className="sr-only">Go to next page</span>
             <ChevronRightIcon className="h-4 w-4" />
@@ -77,7 +78,7 @@ export function DataTablePagination(props: DataTablePaginationProps) {
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => props.setPage(props.totalPages - 1)}
-            disabled={!props.nextEnabled}
+            disabled={!props.nextEnabled || props.isLoading}
           >
             <span className="sr-only">Go to last page</span>
             <DoubleArrowRightIcon className="h-4 w-4" />
