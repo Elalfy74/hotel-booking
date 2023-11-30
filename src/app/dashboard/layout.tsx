@@ -1,8 +1,6 @@
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 
 import { SideBar } from '@/components/layouts/sidebar';
-import { getAppSession } from '@/lib/get-app-session';
 
 export const metadata: Metadata = {
   title: 'Hotel Booking Dashboard',
@@ -10,12 +8,6 @@ export const metadata: Metadata = {
 };
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
-  const session = await getAppSession();
-
-  if (!session || session.user.role !== 'ADMIN') {
-    redirect('/');
-  }
-
   return (
     <main className="flex">
       <SideBar />

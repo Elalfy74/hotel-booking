@@ -8,7 +8,6 @@ import { Toaster } from 'sonner';
 import { AppQueryProvider } from '@/components/providers/app-query-provider';
 import { AppSessionProvider } from '@/components/providers/app-session-provider';
 import { ThemeProvider } from '@/components/providers/theme-provider';
-import { getAppSession } from '@/lib/get-app-session';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
@@ -22,8 +21,6 @@ const fontSans = FontSans({
 });
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await getAppSession();
-
   return (
     <html lang="en">
       <body className={cn('min-h-screen font-sans antialiased', fontSans.variable)}>
@@ -33,13 +30,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           enableSystem
           disableTransitionOnChange
         >
-          <AppSessionProvider session={session}>
-            <AppQueryProvider>
-              <NextTopLoader />
-              <Toaster richColors />
-              {children}
-            </AppQueryProvider>
-          </AppSessionProvider>
+          <AppSessionProvider />
+          <AppQueryProvider>
+            <NextTopLoader />
+            <Toaster richColors />
+            {children}
+          </AppQueryProvider>
         </ThemeProvider>
       </body>
     </html>

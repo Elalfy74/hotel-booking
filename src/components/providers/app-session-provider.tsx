@@ -1,13 +1,21 @@
 'use client';
 import { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
+import { useEffect } from 'react';
 
-export const AppSessionProvider = ({
-  children,
-  session,
-}: {
-  children: React.ReactNode;
-  session: Session | null;
-}) => {
-  return <SessionProvider session={session}>{children}</SessionProvider>;
+import { useClientSession } from '@/store/use-client-session';
+
+export const AppSessionProvider = () => {
+  const setSession = useClientSession((state) => state.setSession);
+
+  useEffect(() => {
+    const getSession = async () => {
+      const session: Session | {} = await fetch('/api/auth/session').then((res) => res.json());
+      const notEmptySession = 'user' in session;
+      setSession(notEmptySession ? session : null);
+    };
+
+    getSession();
+  }, [setSession]);
+
+  return null;
 };

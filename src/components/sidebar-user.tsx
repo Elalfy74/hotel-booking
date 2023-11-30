@@ -2,7 +2,7 @@
 
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 import {
   DropdownMenu,
@@ -10,16 +10,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useClientSession } from '@/store/use-client-session';
 
 import { CustomAvatar } from './custom-avatar';
 import { Button } from './ui/button';
 
 export const SidebarUser = () => {
-  const { data } = useSession();
+  const { data } = useClientSession((state) => state.session);
 
   const handleLogout = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
-    await signOut({});
+    await signOut();
   };
 
   return (

@@ -13,19 +13,19 @@ const defaultFilter = {
 };
 
 const UsersPage = async () => {
-  const queryClient = new QueryClient();
+  // const queryClient = new QueryClient();
 
-  const usersPromise = queryClient.prefetchQuery({
-    queryKey: ['users', { currentPage: 0, pageSize: 10, filter: defaultFilter }],
-    queryFn: () => getUsers({}),
-  });
+  // const usersPromise = queryClient.prefetchQuery({
+  //   queryKey: ['users', { currentPage: 0, pageSize: 10, filter: defaultFilter }],
+  //   queryFn: () => getUsers({}),
+  // });
 
-  const usersCountPromise = queryClient.prefetchQuery({
-    queryKey: ['users count', { filter: defaultFilter }],
-    queryFn: () => getUsersCount({}),
-  });
+  // const usersCountPromise = queryClient.prefetchQuery({
+  //   queryKey: ['users count', { filter: defaultFilter }],
+  //   queryFn: () => getUsersCount({}),
+  // });
 
-  await Promise.all([usersPromise, usersCountPromise]);
+  // await Promise.all([usersPromise, usersCountPromise]);
 
   return (
     <>
@@ -41,9 +41,9 @@ const UsersPage = async () => {
           </Link>
         </Button>
       </div>
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <UsersTable />
-      </HydrationBoundary>
+      {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
+      <UsersTable />
+      {/* </HydrationBoundary> */}
     </>
   );
 };

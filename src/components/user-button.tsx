@@ -1,16 +1,16 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { useClientSession } from '@/store/use-client-session';
 
 import { LoginModal } from './auth/login/login-modal';
 import { UserAvatarButton } from './user-avatar-button';
 
 export const UserButton = () => {
-  const session = useSession();
+  const session = useClientSession((state) => state.session);
 
-  if (session.status === 'loading') return null;
+  if (session.isLoading) return null;
 
-  if (session.status === 'authenticated')
+  if (session.data)
     return (
       <UserAvatarButton
         avatar={session.data?.user?.image || undefined}
