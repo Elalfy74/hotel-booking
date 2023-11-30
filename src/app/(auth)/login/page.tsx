@@ -1,7 +1,4 @@
-'use client';
-
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import { LoginForm } from '@/components/auth/login/login-form';
 import { SocialAuth } from '@/components/auth/shared/social-auth';
@@ -10,8 +7,6 @@ import { Divider } from '@/components/ui/divider';
 import { Logo } from '@/components/ui/logo';
 
 const LoginPage = () => {
-  const router = useRouter();
-
   return (
     <div className="mx-auto max-w-lg">
       {/* Heading */}
@@ -23,7 +18,7 @@ const LoginPage = () => {
       </div>
       <SocialAuth />
       <Divider>Or continue with</Divider>
-      <LoginForm handleForgotPassword={() => router.push('/forgot-password')} />
+      <LoginForm />
       {/* Footer */}
       <div className="mt-6 flex items-center justify-center text-sm text-muted-foreground">
         Doesn&apos;t have an account?
