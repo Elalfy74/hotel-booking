@@ -3,12 +3,13 @@
 import { useClientSession } from '@/store/use-client-session';
 
 import { LoginModal } from './auth/login/login-modal';
+import { CustomAvatar } from './custom-avatar';
 import { UserAvatarButton } from './user-avatar-button';
 
 export const UserButton = () => {
   const session = useClientSession((state) => state.session);
 
-  if (session.isLoading) return null;
+  if (session.isLoading) return <CustomAvatar />;
 
   if (session.data)
     return (
