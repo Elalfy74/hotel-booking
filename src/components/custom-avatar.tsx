@@ -1,3 +1,4 @@
+import { UserIcon } from 'lucide-react';
 import Image from 'next/image';
 
 import { cn } from '@/lib/utils';
@@ -7,7 +8,7 @@ import { Avatar, AvatarFallback } from './ui/avatar';
 export interface CustomAvatarProps {
   className?: string;
   src?: string | null;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   onLoad?: () => void;
   width?: number;
   height?: number;
@@ -36,7 +37,11 @@ export const CustomAvatar = ({
           priority={priority}
         />
       )}
-      {!src && <AvatarFallback>{children}</AvatarFallback>}
+      {!src && (
+        <AvatarFallback>
+          {children || <UserIcon className="text-muted-foreground" />}
+        </AvatarFallback>
+      )}
     </Avatar>
   );
 };
