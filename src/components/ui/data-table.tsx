@@ -13,6 +13,7 @@ import {
 } from '@tanstack/react-table';
 import { useState } from 'react';
 
+import { DeleteManyButtonProps } from '@/app/dashboard/users/(root)/_components/delete-many-users-button';
 import { GetPaginationReturnType } from '@/lib/utils';
 
 import { DataTablePagination } from './data-table-pagination';
@@ -25,17 +26,14 @@ interface DataTableProps<TData, TValue> extends GetPaginationReturnType {
   data: TData[];
   isLoading: boolean;
   filter: React.ReactNode;
-  handleDeleteSelected: (ids: string[], onSuccess: () => void) => void;
-  isDeleting: boolean;
+  deleteBtn: React.ComponentType<DeleteManyButtonProps>;
 }
-
 export function DataTable<TData extends { id: string }, TValue>({
   columns,
   data,
   isLoading,
   filter,
-  handleDeleteSelected,
-  isDeleting,
+  deleteBtn,
   ...paginationProps
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({});
@@ -62,11 +60,7 @@ export function DataTable<TData extends { id: string }, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar
-        table={table}
-        handleDeleteSelected={handleDeleteSelected}
-        isDeleting={isDeleting}
-      >
+      <DataTableToolbar table={table} deleteBtn={deleteBtn}>
         {filter}
       </DataTableToolbar>
 

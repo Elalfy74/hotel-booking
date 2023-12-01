@@ -12,7 +12,7 @@ import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { useDeleteUser } from '../_hooks/use-delete-user';
 
-export const columns = (onActionDone: () => void): ColumnDef<IUser>[] => {
+export const columns = (keys: any[]): ColumnDef<IUser>[] => {
   return [
     {
       id: 'select',
@@ -89,13 +89,10 @@ export const columns = (onActionDone: () => void): ColumnDef<IUser>[] => {
       cell: ({ row }) => {
         const id = row.original.id;
 
-        const onSuccess = () => {
-          close();
-          onActionDone();
-        };
-
+        // Delete Alert State
         const [opened, { setOpened, close }] = useDisclosure();
-        const { mutate, isPending } = useDeleteUser(onSuccess);
+
+        const { mutate, isPending } = useDeleteUser({ onSuccess: close, keys });
 
         return (
           <DataTableRowActions

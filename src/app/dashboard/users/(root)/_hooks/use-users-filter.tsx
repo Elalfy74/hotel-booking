@@ -3,7 +3,6 @@ import { useState } from 'react';
 
 export const useUsersFilter = () => {
   const [searchValue, setSearchValue] = useState('');
-
   const [selectedRoles, setSelectedRoles] = useState<Role[]>([]);
 
   const resetFilter = () => {
