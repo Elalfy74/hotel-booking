@@ -1,4 +1,4 @@
-import { AppLoading } from '@/components/app-loading.server';
+import { AppLoading } from '@/components/app-loading';
 
 const DashboardLoading = () => {
   return <AppLoading />;

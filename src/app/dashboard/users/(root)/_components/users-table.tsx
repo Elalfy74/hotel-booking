@@ -1,6 +1,6 @@
 'use client';
 
-import { AppLoading } from '@/components/app-loading.server';
+import { AppLoading } from '@/components/app-loading';
 import { DataTable } from '@/components/ui/data-table';
 
 import { useUsersTable } from '../_hooks/use-users-table';
