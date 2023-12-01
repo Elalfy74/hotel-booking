@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { usePagination } from 'react-use-pagination';
 
 type UsePaginationConfig = {
@@ -7,11 +8,17 @@ type UsePaginationConfig = {
 };
 
 export const useAppPagination = (props?: UsePaginationConfig) => {
-  const pagination = usePagination(props);
+  const { setPage, ...pagination } = usePagination(props);
+
+  const resetPage = useCallback(() => {
+    setPage(0);
+  }, [setPage]);
 
   return {
     ...pagination,
     // unexpected behavior when currentPage is -1
     currentPage: pagination.currentPage === -1 ? 0 : pagination.currentPage,
+    setPage,
+    resetPage,
   };
 };

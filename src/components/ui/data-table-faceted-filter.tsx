@@ -1,4 +1,5 @@
 import { CheckIcon, PlusCircledIcon } from '@radix-ui/react-icons';
+import { LucideIcon } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
@@ -17,13 +18,15 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from './popover';
 import { Separator } from './separator';
 
+export interface FacetedOption<T = string> {
+  label: string;
+  value: T;
+  icon?: LucideIcon;
+}
+
 interface DataTableFacetedFilterProps<T> {
   title: string;
-  options: {
-    label: string;
-    value: T;
-    icon?: React.ComponentType<{ className?: string }>;
-  }[];
+  options: FacetedOption<T>[];
   selectedValues: T[];
   onSelectedValuesChange: (values: T[]) => void;
 }

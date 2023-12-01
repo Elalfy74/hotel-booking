@@ -1,44 +1,60 @@
 import { Role } from '@prisma/client';
-import { ShieldAlert, UserIcon } from 'lucide-react';
+import { ShieldAlertIcon, UserIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import { DataTableFacetedFilter } from '@/components/ui/data-table-faceted-filter';
+import { DataTableFacetedFilter, FacetedOption } from '@/components/ui/data-table-faceted-filter';
 import { DataTableResetFilter } from '@/components/ui/data-table-reset-filter';
 import { DataTableSearchFilter } from '@/components/ui/data-table-search-filter';
 
 import { useUsersFilter } from '../_hooks/use-users-filter';
 
-interface UsersFilterProps extends ReturnType<typeof useUsersFilter> {}
+interface UsersFilterProps extends ReturnType<typeof useUsersFilter> {
+  resetPage: () => void;
+}
 
 export const UsersFilter = (props: UsersFilterProps) => {
-  const { setSearchValue, selectedRoles, setSelectedRoles, resetFilter } = props;
+  const { setSearchValue, selectedRoles, setSelectedRoles, resetFilter, resetPage } = props;
 
   const [value, setValue] = useState('');
-
   const isFiltering = value.length > 0 || selectedRoles.length > 0;
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setSearchValue(value);
+      resetPage();
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, [value, setSearchValue]);
+  }, [value, setSearchValue, resetPage]);
+
+  const handleValueChange = (value: string) => {
+    setValue(value);
+  };
+
+  const handleSelectedRolesChange = (selectedRoles: Role[]) => {
+    setSelectedRoles(selectedRoles);
+    resetPage();
+  };
 
   const reset = () => {
     setValue('');
     resetFilter();
+    resetPage();
   };
 
   return (
     <>
-      <DataTableSearchFilter value={value} setValue={setValue} placeholder="Filter Users..." />
+      <DataTableSearchFilter
+        value={value}
+        setValue={handleValueChange}
+        placeholder="Filter Users..."
+      />
 
       <DataTableFacetedFilter
         title="Role"
         options={options}
         selectedValues={selectedRoles}
-        onSelectedValuesChange={setSelectedRoles}
+        onSelectedValuesChange={handleSelectedRolesChange}
       />
 
       {isFiltering && <DataTableResetFilter reset={reset} />}
@@ -46,16 +62,15 @@ export const UsersFilter = (props: UsersFilterProps) => {
   );
 };
 
-const options: { label: string; value: Role; icon: React.ComponentType<{ className?: string }> }[] =
-  [
-    {
-      label: 'USER',
-      value: 'USER',
-      icon: () => <UserIcon className="h-4 w-4" />,
-    },
-    {
-      label: 'ADMIN',
-      value: 'ADMIN',
-      icon: () => <ShieldAlert className="h-4 w-4" />,
-    },
-  ];
+const options: FacetedOption<Role>[] = [
+  {
+    label: 'USER',
+    value: 'USER',
+    icon: UserIcon,
+  },
+  {
+    label: 'ADMIN',
+    value: 'ADMIN',
+    icon: ShieldAlertIcon,
+  },
+];
