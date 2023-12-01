@@ -11,6 +11,10 @@ export function hashPassword(password: string) {
   return bcrypt.hashSync(password, 10);
 }
 
+export function comparePassword(password: string, hashed: string) {
+  return bcrypt.compareSync(password, hashed);
+}
+
 export async function checkAuth() {
   const session = await getAppSession();
 
@@ -60,7 +64,7 @@ export function asyncAuthHandler<T, U>(fn: AsyncFunction<T, U>): AsyncFunction<A
 export function asyncAdminHandler<T, U>(fn: AsyncFunction<T, U>): AsyncFunction<ActionRes<T>, U> {
   return async function (args: U) {
     try {
-      // await checkAdmin();
+      await checkAdmin();
 
       const data = await fn(args);
       return { data };

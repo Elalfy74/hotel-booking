@@ -2,11 +2,44 @@
 
 import { Prisma, Role } from '@prisma/client';
 
+import { LoginSchemaType } from '@/components/auth/login/login-schema';
 import { signUpSchema, SignUpSchemaType } from '@/components/auth/sign-up/sign-up-schema';
 import prisma from '@/lib/prisma';
 import { utapi } from '@/lib/uploadthing';
 
-import { asyncAdminHandler, asyncHandler, hashPassword } from './utils';
+import { asyncAdminHandler, asyncHandler, comparePassword, hashPassword } from './utils';
+
+export interface IUser {
+  id: string;
+  firstName: string | null;
+  lastName: string | null;
+  role: Role;
+  email: string;
+  image: string | null;
+  accounts: {
+    provider: string;
+  }[];
+}
+
+export const loginUser = asyncHandler(async (data: LoginSchemaType) => {
+  // Validate data
+  const isValid = signUpSchema.safeParse(data);
+  if (!isValid.success) {
+    throw new Error(isValid.error.message);
+  }
+
+  // Check if user exists or password is set (credentials provider)
+  const user = await prisma.user.findUnique({
+    where: { email: data.email },
+  });
+  if (!user || !user.password) throw new Error('Invalid email or password');
+
+  // Check password
+  const isPasswordValid = comparePassword(data.password, user.password);
+  if (!isPasswordValid) throw new Error('Invalid email or password');
+
+  return user;
+});
 
 export const signUpUser = asyncHandler(async (data: SignUpSchemaType) => {
   // Validate data
@@ -75,29 +108,31 @@ export const createUser = asyncAdminHandler(async (data: FormData): Promise<IUse
   return res;
 });
 
-export const getUsers = asyncAdminHandler(async (args: Prisma.UserFindManyArgs) => {
-  return prisma.user.findMany({
-    skip: args.skip || 0,
-    take: args.take || 10,
-    where: args.where,
-    select: {
-      id: true,
-      firstName: true,
-      lastName: true,
-      email: true,
-      image: true,
-      role: true,
-      accounts: {
-        select: {
-          provider: true,
+export const getUsers = asyncAdminHandler(
+  async (args: Prisma.UserFindManyArgs): Promise<IUser[]> => {
+    return prisma.user.findMany({
+      skip: args.skip || 0,
+      take: args.take || 10,
+      where: args.where,
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        image: true,
+        role: true,
+        accounts: {
+          select: {
+            provider: true,
+          },
         },
       },
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
-});
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+  },
+);
 
 export const getUsersCount = asyncAdminHandler(async (args: Prisma.UserFindManyArgs) => {
   return prisma.user.count({
@@ -181,5 +216,3 @@ export const deleteManyUsers = asyncAdminHandler(async (ids: string[]) => {
     },
   });
 });
-
-export type IUser = NonNullable<Awaited<ReturnType<typeof getUsers>>['data']>[number];

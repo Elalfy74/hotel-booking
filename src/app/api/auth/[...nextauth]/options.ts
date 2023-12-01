@@ -4,7 +4,7 @@ import { DefaultSession, NextAuthOptions } from 'next-auth';
 import credentialsProvider from 'next-auth/providers/credentials';
 import githubProvider, { GithubProfile } from 'next-auth/providers/github';
 
-import { loginSchema } from '@/components/auth/login/login-schema';
+import { loginUser } from '@/actions/users-actions';
 import prisma from '@/lib/prisma';
 
 declare module 'next-auth' {
@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
       profile(profile: GithubProfile) {
         return {
           id: profile.id.toString(),
-          firstName: profile.login,
+          firstName: profile.name ?? profile.login,
           email: profile.email,
           image: profile.avatar_url,
         };
@@ -34,50 +34,28 @@ export const authOptions: NextAuthOptions = {
     }),
     credentialsProvider({
       credentials: {
-        email: {
-          label: 'Email',
-          placeholder: 'Email',
-          type: 'email',
-        },
-        password: {
-          label: 'Password',
-          placeholder: 'Password',
-          type: 'password',
-        },
+        email: {},
+        password: {},
       },
 
       async authorize(credentials) {
-        const isValid = loginSchema.safeParse(credentials);
-
         if (!credentials?.email || !credentials.password) {
           return null;
         }
 
-        if (!isValid.success) {
-          throw new Error(isValid.error.message);
-        }
+        const { data, error } = await loginUser(credentials);
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        });
-
-        if (!user || !user.password) {
-          throw new Error('Invalid email or password');
-        }
-
-        if (credentials.password !== user.password) {
-          throw new Error('Invalid email or password');
+        if (error || !data) {
+          throw new Error(error);
         }
 
         return {
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          image: user.image,
-          role: user.role,
+          id: data.id,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          image: data.image,
+          role: data.role,
         };
       },
     }),
