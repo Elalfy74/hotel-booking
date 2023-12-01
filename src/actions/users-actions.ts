@@ -1,9 +1,9 @@
 'use server';
 
-import { Prisma, Role } from '@prisma/client';
+import { type Prisma, type Role } from '@prisma/client';
 
-import { LoginSchemaType } from '@/components/auth/login/login-schema';
-import { signUpSchema, SignUpSchemaType } from '@/components/auth/sign-up/sign-up-schema';
+import { loginSchema, type LoginSchemaType } from '@/components/auth/login/login-schema';
+import { signUpSchema, type SignUpSchemaType } from '@/components/auth/sign-up/sign-up-schema';
 import prisma from '@/lib/prisma';
 import { utapi } from '@/lib/uploadthing';
 
@@ -23,7 +23,7 @@ export interface IUser {
 
 export const loginUser = asyncHandler(async (data: LoginSchemaType) => {
   // Validate data
-  const isValid = signUpSchema.safeParse(data);
+  const isValid = loginSchema.safeParse(data);
   if (!isValid.success) {
     throw new Error(isValid.error.message);
   }
