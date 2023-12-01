@@ -24,9 +24,16 @@ export const useUsersCount = ({ filter }: UseUsersCountProps) => {
     where.role = { in: filter.role };
   }
 
-  return useQuery({
-    queryKey: ['users count', { filter }],
+  const queryKey = ['users count', { filter }];
+
+  const query = useQuery({
+    queryKey,
     queryFn: () => getUsersCount({ where }),
     placeholderData: keepPreviousData,
   });
+
+  return {
+    ...query,
+    queryKey,
+  };
 };

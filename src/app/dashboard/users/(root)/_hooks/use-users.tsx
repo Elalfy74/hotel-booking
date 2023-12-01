@@ -31,8 +31,10 @@ export const useUsers = ({ currentPage, pageSize, filter }: UseUsersProps) => {
     where.role = { in: filter.role };
   }
 
-  return useQuery({
-    queryKey: ['users', { currentPage, pageSize, filter }],
+  const queryKey = ['users', { currentPage, pageSize, filter }];
+
+  const query = useQuery({
+    queryKey,
     queryFn: () =>
       getUsers({
         skip: currentPage * pageSize,
@@ -41,4 +43,9 @@ export const useUsers = ({ currentPage, pageSize, filter }: UseUsersProps) => {
       }),
     placeholderData: keepPreviousData,
   });
+
+  return {
+    ...query,
+    queryKey,
+  };
 };
