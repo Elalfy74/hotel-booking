@@ -7,7 +7,7 @@ import { signUpSchema, type SignUpSchemaType } from '@/components/auth/sign-up/s
 import prisma from '@/lib/prisma';
 import { utapi } from '@/lib/uploadthing';
 
-import { asyncAdminHandler, asyncHandler, comparePassword, hashPassword } from './utils';
+import { ActionRes, asyncAdminHandler, asyncHandler, comparePassword, hashPassword } from './utils';
 
 export interface IUser {
   id: string;
@@ -133,12 +133,14 @@ export const getUsers = asyncAdminHandler(
     });
   },
 );
+export type GetUsersReturnType = AwaitedReturn<typeof getUsers>;
 
 export const getUsersCount = asyncAdminHandler(async (args: Prisma.UserFindManyArgs) => {
   return prisma.user.count({
     where: args.where,
   });
 });
+export type GetUsersCountReturnType = AwaitedReturn<typeof getUsersCount>;
 
 export const getUserById = asyncAdminHandler(async (id: string): Promise<IUser | null> => {
   return prisma.user.findUnique({

@@ -1,3 +1,5 @@
+type AwaitedReturn<T extends (...args: any) => any> = Awaited<ReturnType<T>>;
+
 interface ICountry {
   id: string;
   name: string;

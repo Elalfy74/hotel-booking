@@ -1,13 +1,9 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 
-import { createUser, IUser } from '@/actions/users-actions';
 import { AvatarInput } from '@/components/avatar-input';
 import { Button } from '@/components/ui/button';
 import {
@@ -28,12 +24,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import { usersQueryKey } from '../../(root)/_hooks/use-users';
+import { useCreateUser } from '../_hooks/use-create-user';
 import { createUserSchema, CreateUserSchemaType } from './create-user-schema';
 
 export const CreateUserForm = () => {
-  const router = useRouter();
-  const queryClient = useQueryClient();
+  const { mutateAsync } = useCreateUser();
 
   const form = useForm<CreateUserSchemaType>({
     resolver: zodResolver(createUserSchema),
@@ -52,25 +47,7 @@ export const CreateUserForm = () => {
       formData.append(key, value);
     });
 
-    const { error, data } = await createUser(formData);
-    if (error || !data) return toast.error(error);
-
-    toast.success('User created successfully');
-    // queryClient.invalidateQueries({
-    //   predicate: (query) => {
-    //     if (query.queryKey[0] === 'users') return true;
-    //     if (query.queryKey[0] === 'users count') return true;
-    //     return false;
-    //   },
-    // });
-    queryClient.setQueryData<IUser[]>(usersQueryKey, (oldData) => {
-      if (!oldData) return undefined;
-      return [data, ...oldData];
-    });
-
-    setTimeout(() => {
-      router.push('/dashboard/users');
-    }, 1000);
+    await mutateAsync(formData);
   };
 
   return (

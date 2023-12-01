@@ -7,14 +7,14 @@ interface UseUsersProps {
   currentPage: number;
   pageSize: number;
   filter: {
-    role: Role[];
     query: string;
+    role: Role[];
   };
 }
 
-export const usersQueryKey = [
+export const defaultUsersQueryKey = [
   'users',
-  { currentPage: 0, pageSize: 10, filter: { role: [], query: '' } },
+  { currentPage: 0, pageSize: 10, filter: { query: '', role: [] } },
 ];
 
 export const useUsers = ({ currentPage, pageSize, filter }: UseUsersProps) => {

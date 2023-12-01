@@ -1,13 +1,10 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 
-import { IUser, updateUserById } from '@/actions/users-actions';
+import { IUser } from '@/actions/users-actions';
 import { AvatarInput } from '@/components/avatar-input';
 import { Button } from '@/components/ui/button';
 import {
@@ -28,6 +25,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
+import { useUpdateUser } from '../_hooks/use-update-user';
 import { EditUserSchema, editUserSchema } from './edit-user-schema';
 
 interface EditUserFormProps {
@@ -35,8 +33,7 @@ interface EditUserFormProps {
 }
 
 export const EditUserForm = ({ user }: EditUserFormProps) => {
-  const router = useRouter();
-  const queryClient = useQueryClient();
+  const { mutateAsync } = useUpdateUser();
 
   const form = useForm<EditUserSchema>({
     resolver: zodResolver(editUserSchema),
@@ -60,24 +57,7 @@ export const EditUserForm = ({ user }: EditUserFormProps) => {
       formData.append(key, value);
     });
 
-    const { error } = await updateUserById({
-      id: user.id,
-      data: formData,
-    });
-
-    if (error) return toast.error(error);
-
-    toast.success('User updated successfully');
-    queryClient.invalidateQueries({
-      predicate: ({ queryKey }) => {
-        if (queryKey[0] === 'users') return true;
-        if (queryKey[0] === 'user' && queryKey[1] === user.id) return true;
-        return false;
-      },
-    });
-    setTimeout(() => {
-      router.push('/dashboard/users');
-    }, 1000);
+    await mutateAsync({ id: user.id, data: formData });
   };
 
   return (

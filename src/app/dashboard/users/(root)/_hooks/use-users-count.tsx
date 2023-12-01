@@ -5,10 +5,12 @@ import { getUsersCount } from '@/actions/users-actions';
 
 interface UseUsersCountProps {
   filter: {
-    role: Role[];
     query: string;
+    role: Role[];
   };
 }
+
+export const defaultUsersCountQueryKey = ['users count', { filter: { query: '', role: [] } }];
 
 export const useUsersCount = ({ filter }: UseUsersCountProps) => {
   let where: Prisma.UserFindManyArgs['where'] = {};

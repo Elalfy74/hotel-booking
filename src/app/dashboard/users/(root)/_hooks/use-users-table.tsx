@@ -10,8 +10,8 @@ export const useUsersTable = () => {
   // Handle Users Filter
   const usersFilter = useUsersFilter();
   // Filter users by searchValue and selectedRoles
-  const filter = { query: usersFilter.searchValue, role: usersFilter.selectedRoles };
 
+  const filter = { query: usersFilter.searchValue, role: usersFilter.selectedRoles };
   // Fetch users count
   const {
     data: usersCount,
