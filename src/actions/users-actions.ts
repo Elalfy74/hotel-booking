@@ -105,8 +105,8 @@ export const getUsersCount = asyncAdminHandler(async (args: Prisma.UserFindManyA
   });
 });
 
-export const getUserById = asyncAdminHandler(async (id: string): Promise<IUser> => {
-  const user = await prisma.user.findUnique({
+export const getUserById = asyncAdminHandler(async (id: string): Promise<IUser | null> => {
+  return prisma.user.findUnique({
     where: {
       id,
     },
@@ -124,10 +124,6 @@ export const getUserById = asyncAdminHandler(async (id: string): Promise<IUser> 
       },
     },
   });
-
-  if (!user) throw new Error('User does not exist');
-
-  return user;
 });
 
 export const updateUserById = asyncAdminHandler(

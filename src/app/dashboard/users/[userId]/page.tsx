@@ -1,15 +1,13 @@
-'use client';
-
 import { ArrowLeftIcon } from 'lucide-react';
 import Link from 'next/link';
 
 import { EditUser } from './_components/edit-user';
 
 interface SingleUserPageProps {
-  params: {
-    userId: string;
-  };
+  params: { userId: string };
 }
+
+export const dynamic = 'force-static';
 
 const SingleUserPage = ({ params: { userId } }: SingleUserPageProps) => {
   return (
