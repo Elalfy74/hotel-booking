@@ -11,11 +11,11 @@ import { useUsersFilter } from '../_hooks/use-users-filter';
 interface UsersFilterProps extends ReturnType<typeof useUsersFilter> {}
 
 export const UsersFilter = (props: UsersFilterProps) => {
-  const { searchValue, setSearchValue, selectedRoles, setSelectedRoles, resetFilter } = props;
-
-  const isFiltering = searchValue.length > 0 || selectedRoles.length > 0;
+  const { setSearchValue, selectedRoles, setSelectedRoles, resetFilter } = props;
 
   const [value, setValue] = useState('');
+
+  const isFiltering = value.length > 0 || selectedRoles.length > 0;
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -33,6 +33,7 @@ export const UsersFilter = (props: UsersFilterProps) => {
   return (
     <>
       <DataTableSearchFilter value={value} setValue={setValue} placeholder="Filter Users..." />
+
       <DataTableFacetedFilter
         title="Role"
         options={options}
