@@ -15,9 +15,10 @@ import { CustomAvatar } from './custom-avatar';
 interface UserAvatarButtonProps {
   avatar?: string | null;
   fallBack: string;
+  isAdmin: boolean;
 }
 
-export const UserAvatarButton = ({ avatar, fallBack }: UserAvatarButtonProps) => {
+export const UserAvatarButton = ({ avatar, fallBack, isAdmin }: UserAvatarButtonProps) => {
   const handleLogout = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     signOut({
@@ -31,13 +32,12 @@ export const UserAvatarButton = ({ avatar, fallBack }: UserAvatarButtonProps) =>
         <CustomAvatar src={avatar}>{fallBack}</CustomAvatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem className="cursor-pointer" asChild>
-          <Link href="/dashboard">Admin Mode</Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuItem className="cursor-pointer">
-          <span>Profile</span>
-        </DropdownMenuItem>
+        {isAdmin && (
+          <DropdownMenuItem className="cursor-pointer" asChild>
+            <Link href="/dashboard">Admin Mode</Link>
+          </DropdownMenuItem>
+        )}
+        <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
 
         <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
           Logout

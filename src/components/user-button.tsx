@@ -14,8 +14,9 @@ export const UserButton = () => {
   if (session.data)
     return (
       <UserAvatarButton
-        avatar={session.data?.user?.image || undefined}
-        fallBack={session.data?.user?.name?.substring(0, 1) || 'A'}
+        avatar={session.data.user.image || undefined}
+        isAdmin={session.data.user.role === 'ADMIN'}
+        fallBack={session.data.user.name?.substring(0, 1) || 'A'}
       />
     );
 
