@@ -22,3 +22,5 @@ export const useAppPagination = (props?: UsePaginationConfig) => {
     resetPage,
   };
 };
+
+export type GetPaginationReturnType = ReturnType<typeof useAppPagination>;

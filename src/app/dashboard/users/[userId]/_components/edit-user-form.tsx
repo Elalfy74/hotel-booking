@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { IUser, updateUserById } from '@/actions/users-actions';
-import { AvatarInput } from '@/components/avatar-input.client';
+import { AvatarInput } from '@/components/avatar-input';
 import { Button } from '@/components/ui/button';
 import {
   Form,

@@ -1,4 +1,4 @@
-import DeleteManyButton from '@/app/dashboard/_components/delete-many-button';
+import { DeleteManyButton } from '@/app/dashboard/_components/delete-many-button';
 import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { useDeleteManyUsers } from '../_hooks/use-delete-many-users';

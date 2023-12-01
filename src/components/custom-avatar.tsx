@@ -1,3 +1,5 @@
+'use client';
+
 import { UserIcon } from 'lucide-react';
 import Image from 'next/image';
 

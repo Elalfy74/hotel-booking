@@ -1,9 +1,10 @@
 import Link from 'next/link';
 
-import { SidebarUser } from '../sidebar-user';
-import { ThemeSwitcher } from '../theme-switcher';
-import { Logo } from '../ui/logo';
+import { ThemeSwitcher } from '@/components/theme-switcher';
+import { Logo } from '@/components/ui/logo';
+
 import { Nav } from './nav';
+import { SidebarUser } from './sidebar-user';
 
 export function SideBar() {
   return (

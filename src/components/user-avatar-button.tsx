@@ -19,13 +19,6 @@ interface UserAvatarButtonProps {
 }
 
 export const UserAvatarButton = ({ avatar, fallBack, isAdmin }: UserAvatarButtonProps) => {
-  const handleLogout = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.preventDefault();
-    signOut({
-      callbackUrl: '/',
-    });
-  };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="rounded-full">
@@ -39,7 +32,14 @@ export const UserAvatarButton = ({ avatar, fallBack, isAdmin }: UserAvatarButton
         )}
         <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
 
-        <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => {
+            signOut({
+              callbackUrl: '/',
+            });
+          }}
+        >
           Logout
         </DropdownMenuItem>
       </DropdownMenuContent>

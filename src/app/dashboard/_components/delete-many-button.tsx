@@ -1,3 +1,5 @@
+'use client';
+
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -19,7 +21,7 @@ interface DeleteManyButtonProps {
   onDelete: () => void;
 }
 
-const DeleteManyButton = (props: DeleteManyButtonProps) => {
+export const DeleteManyButton = (props: DeleteManyButtonProps) => {
   const { opened, setOpened, isPending, isDisabled, onDelete } = props;
 
   return (
@@ -47,4 +49,3 @@ const DeleteManyButton = (props: DeleteManyButtonProps) => {
     </AlertDialog>
   );
 };
-export default DeleteManyButton;

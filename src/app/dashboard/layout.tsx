@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import { SideBar } from '@/components/layouts/sidebar';
+import { SideBar } from './_components/sidebar';
 
 export const metadata: Metadata = {
   title: 'Hotel Booking Dashboard',
