@@ -6,7 +6,7 @@ import NextTopLoader from 'nextjs-toploader';
 import { Toaster } from 'sonner';
 
 import { AppQueryProvider } from '@/components/providers/app-query-provider';
-import { AppSessionProvider } from '@/components/providers/app-session-provider';
+import { ClientSessionSetter } from '@/components/providers/client-session-setter';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { cn } from '@/lib/utils';
 
@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           enableSystem
           disableTransitionOnChange
         >
-          <AppSessionProvider />
+          <ClientSessionSetter />
           <AppQueryProvider>
             <NextTopLoader />
             <Toaster richColors />
