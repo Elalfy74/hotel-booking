@@ -60,7 +60,7 @@ export function asyncAuthHandler<T, U>(fn: AsyncFunction<T, U>): AsyncFunction<A
 export function asyncAdminHandler<T, U>(fn: AsyncFunction<T, U>): AsyncFunction<ActionRes<T>, U> {
   return async function (args: U) {
     try {
-      await checkAdmin();
+      // await checkAdmin();
 
       const data = await fn(args);
       return { data };
