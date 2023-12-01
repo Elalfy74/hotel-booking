@@ -1,6 +1,7 @@
 import { withAuth } from 'next-auth/middleware';
 
-export const middleware = withAuth({
+export default withAuth({
+  pages: { signIn: '/' },
   callbacks: {
     authorized: ({ token }) => {
       return token?.role === 'ADMIN';
