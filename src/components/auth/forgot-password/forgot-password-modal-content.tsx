@@ -5,7 +5,7 @@ import { ForgotPasswordForm } from './forgot-password-form';
 
 export const ForgotPasswordModalContent = ({ handleContentChange }: ContentComponentProps) => {
   return (
-    <DialogHeader>
+    <DialogHeader className="text-left">
       <DialogTitle className="mb-4 text-center text-3xl">Password Recovery</DialogTitle>
       <DialogDescription className="text-center">
         Enter your email to recover your password

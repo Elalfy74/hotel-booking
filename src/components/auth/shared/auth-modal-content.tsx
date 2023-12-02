@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect } from 'react';
 
 import { ForgotPasswordModalContent } from '../forgot-password/forgot-password-modal-content';

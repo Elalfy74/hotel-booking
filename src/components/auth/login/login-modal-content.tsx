@@ -9,7 +9,7 @@ import { LoginForm } from './login-form';
 export const LoginModalContent = ({ handleContentChange }: ContentComponentProps) => {
   return (
     <>
-      <DialogHeader>
+      <DialogHeader className="text-left">
         <DialogTitle className="mb-4 text-center text-3xl">Welcome Back!</DialogTitle>
         <div>
           <SocialAuth />
@@ -17,7 +17,7 @@ export const LoginModalContent = ({ handleContentChange }: ContentComponentProps
           <LoginForm handleForgotPassword={() => handleContentChange('forgotPassword')} />
         </div>
       </DialogHeader>
-      <DialogFooter className="items-center !justify-center text-sm text-muted-foreground">
+      <DialogFooter className="flex-row items-center !justify-center  text-sm text-muted-foreground">
         Doesn&apos;t have an account?
         <Button variant="link" size="sm" onClick={() => handleContentChange('signUp')}>
           Sign up
