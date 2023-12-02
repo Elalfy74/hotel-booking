@@ -2,17 +2,18 @@ import { DeleteManyButton } from '@/app/dashboard/_components/delete-many-button
 import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { useDeleteManyUsers } from '../_hooks/use-delete-many-users';
+import { UserTableKeys } from '../_hooks/use-users-table';
 
 export interface DeleteManyButtonProps {
   ids: string[];
-  onDone: any;
+  onDone: () => void;
 }
 
 interface DeleteManyButtonWithKeysProps extends DeleteManyButtonProps {
-  keys: any[];
+  keys: UserTableKeys;
 }
 
-export const deleteButtonWithKeys = (keys: any[]) => {
+export const deleteButtonWithKeys = (keys: UserTableKeys) => {
   return function DeleteButtonWithKeys(props: DeleteManyButtonProps) {
     return <DeleteManyUsersButton keys={keys} {...props} />;
   };

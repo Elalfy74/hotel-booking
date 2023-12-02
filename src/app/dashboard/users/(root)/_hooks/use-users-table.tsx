@@ -40,7 +40,7 @@ export const useUsersTable = () => {
   });
 
   const keys = useMemo(
-    () => [usersQueryKey, usersCountQueryKey],
+    () => ({ usersQueryKey, usersCountQueryKey }),
     [usersQueryKey, usersCountQueryKey],
   );
 
@@ -56,3 +56,5 @@ export const useUsersTable = () => {
     keys,
   };
 };
+
+export type UserTableKeys = ReturnType<typeof useUsersTable>['keys'];

@@ -1,7 +1,7 @@
-import { Prisma, Role } from '@prisma/client';
+import { type Prisma, type Role } from '@prisma/client';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { getUsers } from '@/actions/users-actions';
+import { getUsers } from '../../_actions/get-users';
 
 interface UseUsersProps {
   currentPage: number;

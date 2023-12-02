@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/select';
 
 import { useCreateUser } from '../_hooks/use-create-user';
-import { createUserSchema, CreateUserSchemaType } from './create-user-schema';
+import { createUserSchema, type CreateUserSchemaType } from './create-user-schema';
 
 export const CreateUserForm = () => {
   const { mutateAsync } = useCreateUser();

@@ -1,7 +1,7 @@
-import { Prisma, Role } from '@prisma/client';
+import { type Prisma, type Role } from '@prisma/client';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { getUsersCount } from '@/actions/users-actions';
+import { getUsersCount } from '../../_actions/get-users-count';
 
 interface UseUsersCountProps {
   filter: {

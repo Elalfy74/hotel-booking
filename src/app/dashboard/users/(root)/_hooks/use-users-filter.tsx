@@ -1,4 +1,4 @@
-import { Role } from '@prisma/client';
+import { type Role } from '@prisma/client';
 import { useState } from 'react';
 
 export const useUsersFilter = () => {

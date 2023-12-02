@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 
-import { IUser } from '@/actions/users-actions';
 import { AvatarInput } from '@/components/avatar-input';
 import { Button } from '@/components/ui/button';
 import {
@@ -25,6 +24,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
+import { type IUser } from '../../_actions/user.type';
 import { useUpdateUser } from '../_hooks/use-update-user';
 import { EditUserSchema, editUserSchema } from './edit-user-schema';
 

@@ -14,7 +14,7 @@ import {
 import { useState } from 'react';
 
 import { DeleteManyButtonProps } from '@/app/dashboard/users/(root)/_components/delete-many-users-button';
-import { GetPaginationReturnType } from '@/lib/utils';
+import { GetPaginationReturnType } from '@/hooks/use-app-pagination';
 
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableToolbar } from './data-table-toolbar';

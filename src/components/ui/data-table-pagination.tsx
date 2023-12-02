@@ -5,7 +5,7 @@ import {
   DoubleArrowRightIcon,
 } from '@radix-ui/react-icons';
 
-import { GetPaginationReturnType } from '@/lib/utils';
+import { type GetPaginationReturnType } from '@/hooks/use-app-pagination';
 
 import { Button } from './button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './select';

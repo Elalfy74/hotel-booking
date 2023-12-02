@@ -4,7 +4,7 @@ import { DefaultSession, NextAuthOptions } from 'next-auth';
 import credentialsProvider from 'next-auth/providers/credentials';
 import githubProvider, { GithubProfile } from 'next-auth/providers/github';
 
-import { loginUser } from '@/actions/users-actions';
+import { loginUser } from '@/actions/auth-actions';
 import prisma from '@/lib/prisma';
 
 declare module 'next-auth' {

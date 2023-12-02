@@ -7,7 +7,7 @@ import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { signUpUser } from '@/actions/users-actions';
+import { signUpUser } from '@/actions/auth-actions';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {

@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { deleteManyUsers } from '@/actions/users-actions';
-
+import { deleteManyUsers } from '../../_actions/delete-many-users';
+import { type UserTableKeys } from './use-users-table';
 import { reValidateAfterDelete } from './utils';
 
 interface UseDeleteManyUsersProps {
   onSuccess: () => void;
-  keys: any[];
+  keys: UserTableKeys;
 }
 
 export const useDeleteManyUsers = ({ onSuccess, keys }: UseDeleteManyUsersProps) => {

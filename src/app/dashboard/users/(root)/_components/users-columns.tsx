@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
+import { type ColumnDef } from '@tanstack/react-table';
 
-import { IUser } from '@/actions/users-actions';
 import { CustomAvatar } from '@/components/custom-avatar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
 import { DataTableRowActions } from '@/components/ui/data-table-row-actions';
 import { useDisclosure } from '@/hooks/use-disclosure';
 
+import { type IUser } from '../../_actions/user.type';
 import { useDeleteUser } from '../_hooks/use-delete-user';
+import { UserTableKeys } from '../_hooks/use-users-table';
 
-export const columns = (keys: any[]): ColumnDef<IUser>[] => {
+export const columns = (keys: UserTableKeys): ColumnDef<IUser>[] => {
   return [
     {
       id: 'select',

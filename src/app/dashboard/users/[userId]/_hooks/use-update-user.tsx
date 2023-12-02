@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-import { type GetUsersReturnType, updateUserById } from '@/actions/users-actions';
-
+import { type GetUsersReturnType } from '../../_actions/get-users';
+import { updateUser } from '../../_actions/update-user';
 import { defaultUsersQueryKey } from '../../(root)/_hooks/use-users';
 import { defaultUsersCountQueryKey } from '../../(root)/_hooks/use-users-count';
 
@@ -15,7 +15,7 @@ export const useUpdateUser = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: updateUserById,
+    mutationFn: updateUser,
     onSuccess: ({ data, error }, { id }) => {
       if (error || !data) return toast.error(error);
 
