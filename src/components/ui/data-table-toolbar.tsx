@@ -2,7 +2,7 @@
 
 import { Table } from '@tanstack/react-table';
 
-import { DeleteManyButtonProps } from '@/app/dashboard/users/(root)/_components/delete-many-users-button';
+import { DeleteManyButtonProps } from '@/app/dashboard/users/(pages)/(root)/_components/delete-many-users-button';
 
 import { DataTableViewOptions } from './data-table-view-options';
 

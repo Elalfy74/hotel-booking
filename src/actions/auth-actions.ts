@@ -9,11 +9,6 @@ import prisma from '@/lib/prisma';
 
 import { asyncHandler, comparePassword, hashPassword } from './utils';
 
-export interface ActionRes<T> {
-  data?: T;
-  error?: string;
-}
-
 export const loginUser = asyncHandler(async (data: LoginSchemaType): Promise<User> => {
   // Validate data
   const isValid = loginSchema.safeParse(data);

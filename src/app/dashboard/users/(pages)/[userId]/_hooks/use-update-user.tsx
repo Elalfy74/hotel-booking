@@ -2,8 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-import { type GetUsersReturnType } from '../../_actions/get-users';
-import { updateUser } from '../../_actions/update-user';
+import { type GetUsersReturnType, updateUser } from '../../../_actions';
 import { defaultUsersQueryKey } from '../../(root)/_hooks/use-users';
 import { defaultUsersCountQueryKey } from '../../(root)/_hooks/use-users-count';
 

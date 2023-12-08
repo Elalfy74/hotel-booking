@@ -8,7 +8,6 @@ import { EditUserSkeleton } from './edit-user-skeleton';
 
 export const EditUser = ({ userId }: { userId: string }) => {
   const { data, isLoading } = useUser(userId);
-
   // If there's an error, throw it to the error boundary
   if (data?.error) {
     throw new Error(data.error);

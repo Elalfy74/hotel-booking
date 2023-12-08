@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { deleteManyUsers } from '../../_actions/delete-many-users';
+import { deleteManyUsers } from '../../../_actions';
 import { type UserTableKeys } from './use-users-table';
 import { reValidateAfterDelete } from './utils';
 

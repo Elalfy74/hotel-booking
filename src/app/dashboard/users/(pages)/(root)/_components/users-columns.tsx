@@ -9,11 +9,11 @@ import { DataTableColumnHeader } from '@/components/ui/data-table-column-header'
 import { DataTableRowActions } from '@/components/ui/data-table-row-actions';
 import { useDisclosure } from '@/hooks/use-disclosure';
 
-import { type IUser } from '../../_actions/user.type';
+import { UserDto } from '../../../_actions/user.dto';
 import { useDeleteUser } from '../_hooks/use-delete-user';
 import { UserTableKeys } from '../_hooks/use-users-table';
 
-export const columns = (keys: UserTableKeys): ColumnDef<IUser>[] => {
+export const columns = (keys: UserTableKeys): ColumnDef<UserDto>[] => {
   return [
     {
       id: 'select',
@@ -81,7 +81,7 @@ export const columns = (keys: UserTableKeys): ColumnDef<IUser>[] => {
         return <DataTableColumnHeader column={column} title="Provider" />;
       },
       cell: ({ row }) => {
-        return <div>{row.original.accounts[0]?.provider || 'Credentials'}</div>;
+        return <span className="capitalize">{row.original.provider}</span>;
       },
     },
 

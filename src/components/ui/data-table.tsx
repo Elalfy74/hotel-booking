@@ -13,7 +13,7 @@ import {
 } from '@tanstack/react-table';
 import { useState } from 'react';
 
-import { DeleteManyButtonProps } from '@/app/dashboard/users/(root)/_components/delete-many-users-button';
+import { DeleteManyButtonProps } from '@/app/dashboard/users/(pages)/(root)/_components/delete-many-users-button';
 import { GetPaginationReturnType } from '@/hooks/use-app-pagination';
 
 import { DataTablePagination } from './data-table-pagination';

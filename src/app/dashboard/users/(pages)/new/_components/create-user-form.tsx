@@ -24,40 +24,28 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import { type IUser } from '../../_actions/user.type';
-import { useUpdateUser } from '../_hooks/use-update-user';
-import { EditUserSchema, editUserSchema } from './edit-user-schema';
+import { createUserSchema, type CreateUserSchemaType } from '../../../_schemas';
+import { useCreateUser } from '../_hooks/use-create-user';
 
-interface EditUserFormProps {
-  user: IUser;
-}
+export const CreateUserForm = () => {
+  const { mutateAsync } = useCreateUser();
 
-export const EditUserForm = ({ user }: EditUserFormProps) => {
-  const { mutateAsync } = useUpdateUser();
-
-  const form = useForm<EditUserSchema>({
-    resolver: zodResolver(editUserSchema),
+  const form = useForm<CreateUserSchemaType>({
+    resolver: zodResolver(createUserSchema),
     defaultValues: {
-      firstName: user.firstName || '',
-      lastName: user.lastName || '',
-      email: user.email,
-      role: user.role,
-      image: undefined,
+      role: 'USER',
     },
   });
 
-  const onSubmit = async ({ image, ...values }: EditUserSchema) => {
+  const onSubmit = async ({ image, ...values }: CreateUserSchemaType) => {
     const formData = new FormData();
 
-    if (image && image instanceof File) {
-      formData.append('image', image);
-    }
-
+    formData.append('image', image);
     Object.entries(values).forEach(([key, value]) => {
       formData.append(key, value);
     });
 
-    await mutateAsync({ id: user.id, data: formData });
+    await mutateAsync(formData);
   };
 
   return (
@@ -69,13 +57,7 @@ export const EditUserForm = ({ user }: EditUserFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <AvatarInput
-                  onChange={field.onChange}
-                  defaultPreview={user.image}
-                  width={300}
-                  height={300}
-                  priority
-                />
+                <AvatarInput onChange={field.onChange} priority />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -119,49 +101,64 @@ export const EditUserForm = ({ user }: EditUserFormProps) => {
             <FormItem>
               <FormLabel>email address</FormLabel>
               <FormControl>
-                <Input placeholder="email@example.com" {...field} autoComplete="email" />
+                <Input
+                  placeholder="email@example.com"
+                  type="email"
+                  autoComplete="email"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <div className="grid grid-cols-2 gap-x-6">
-          <FormField
-            control={form.control}
-            name="role"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Role</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger className="w-60">
-                      <SelectValue />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="USER">USER</SelectItem>
-                    <SelectItem value="ADMIN">ADMIN</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>password</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="*******"
+                  type="password"
+                  autoComplete="current-password"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <FormItem>
-            <FormLabel>Provider</FormLabel>
-            <FormControl className="capitalize">
-              <Input value={user.accounts[0]?.provider || 'Credentials'} disabled />
-            </FormControl>
-          </FormItem>
-        </div>
+        <FormField
+          control={form.control}
+          name="role"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Role</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-60">
+                    <SelectValue />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="USER">USER</SelectItem>
+                  <SelectItem value="ADMIN">ADMIN</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <div className="flex justify-end space-x-4">
           <Button variant="secondary" asChild>
             <Link href="/dashboard/users">Discard</Link>
           </Button>
-          <Button type="submit" disabled={form.formState.isSubmitting || !form.formState.isDirty}>
+          <Button type="submit" disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting ? <Loader className="h-2 w-2 bg-white" /> : 'Save Changes'}
           </Button>
         </div>

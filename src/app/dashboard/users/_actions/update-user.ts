@@ -1,22 +1,33 @@
 'use server';
 
-import { type Role } from '@prisma/client';
-
 import { asyncAdminHandler } from '@/actions/utils';
 import prisma from '@/lib/prisma';
 import { utapi } from '@/lib/uploadthing';
+import { serialize } from '@/lib/utils';
 
-import { type IUser } from './user.type';
+import { updateUserSchema } from '../_schemas';
+import { UserDto } from './user.dto';
 
 export const updateUser = asyncAdminHandler(
-  async ({ id, data }: { id: string; data: FormData }): Promise<IUser> => {
+  async ({ id, formData }: { id: string; formData: FormData }): Promise<UserDto> => {
+    // Convert FormData to object
+    const actionData = Object.fromEntries(formData);
+
+    // Validate Data
+    const validation = updateUserSchema.safeParse(actionData);
+    if (!validation.success) {
+      throw new Error(validation.error.message);
+    }
+
+    const data = validation.data;
+
     // Check if user exists
     const isUserExists = await prisma.user.findUnique({ where: { id } });
     if (!isUserExists) throw new Error('User does not exist');
 
     // Upload image
     let uploadedImage;
-    const imageFile = data.get('image') as File;
+    const imageFile = data.image as File;
 
     if (imageFile) {
       uploadedImage = await utapi.uploadFiles(imageFile);
@@ -26,22 +37,12 @@ export const updateUser = asyncAdminHandler(
     const updatedUser = await prisma.user.update({
       where: { id },
       data: {
-        firstName: data.get('firstName') as string | undefined,
-        lastName: data.get('lastName') as string | undefined,
-        email: data.get('email') as string | undefined,
-        role: data.get('role') as Role | undefined,
-        image: uploadedImage?.data.url || undefined,
+        ...data,
+        image: uploadedImage?.data.url,
       },
+      include: { accounts: true },
     });
 
-    return {
-      id: updatedUser.id,
-      firstName: updatedUser.firstName,
-      lastName: updatedUser.lastName,
-      email: updatedUser.email,
-      role: updatedUser.role,
-      image: updatedUser.image,
-      accounts: [],
-    };
+    return serialize(UserDto, updatedUser);
   },
 );

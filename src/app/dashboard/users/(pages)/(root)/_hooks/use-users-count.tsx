@@ -1,23 +1,18 @@
 import { type Prisma, type Role } from '@prisma/client';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { getUsers } from '../../_actions/get-users';
+import { getUsersCount } from '../../../_actions';
 
-interface UseUsersProps {
-  currentPage: number;
-  pageSize: number;
+interface UseUsersCountProps {
   filter: {
     query: string;
     role: Role[];
   };
 }
 
-export const defaultUsersQueryKey = [
-  'users',
-  { currentPage: 0, pageSize: 10, filter: { query: '', role: [] } },
-];
+export const defaultUsersCountQueryKey = ['users count', { filter: { query: '', role: [] } }];
 
-export const useUsers = ({ currentPage, pageSize, filter }: UseUsersProps) => {
+export const useUsersCount = ({ filter }: UseUsersCountProps) => {
   let where: Prisma.UserFindManyArgs['where'] = {};
 
   if (filter.query.trim().length > 0) {
@@ -31,16 +26,11 @@ export const useUsers = ({ currentPage, pageSize, filter }: UseUsersProps) => {
     where.role = { in: filter.role };
   }
 
-  const queryKey = ['users', { currentPage, pageSize, filter }];
+  const queryKey = ['users count', { filter }];
 
   const query = useQuery({
     queryKey,
-    queryFn: () =>
-      getUsers({
-        skip: currentPage * pageSize,
-        take: pageSize,
-        where,
-      }),
+    queryFn: () => getUsersCount({ where }),
     placeholderData: keepPreviousData,
   });
 
