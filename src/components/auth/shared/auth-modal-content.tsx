@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect } from 'react';
 
 import { ForgotPasswordModalContent } from '../forgot-password/forgot-password-modal-content';
@@ -11,12 +9,10 @@ interface AuthModalContentProps {
   currentContentKey: ContentKey;
   resetContent: () => void;
   handleContentChange: (contentKey: ContentKey) => void;
-  close: () => void;
 }
 
 export type ContentComponentProps = {
   handleContentChange: (contentKey: ContentKey) => void;
-  close: () => void;
 };
 
 type Contents = Record<ContentKey, React.FC<ContentComponentProps>>;
@@ -31,7 +27,6 @@ export const AuthModalContent = ({
   currentContentKey,
   resetContent,
   handleContentChange,
-  close,
 }: AuthModalContentProps) => {
   const ContentComponent = contents[currentContentKey];
 
@@ -39,5 +34,5 @@ export const AuthModalContent = ({
     resetContent();
   }, [resetContent]);
 
-  return <ContentComponent handleContentChange={handleContentChange} close={close} />;
+  return <ContentComponent handleContentChange={handleContentChange} />;
 };

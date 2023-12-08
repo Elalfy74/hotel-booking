@@ -6,18 +6,18 @@ import { ContentComponentProps } from '../shared/auth-modal-content';
 import { SocialAuth } from '../shared/social-auth';
 import { SignUpForm } from './sign-up-form';
 
-export const SignUpModalContent = ({ handleContentChange, close }: ContentComponentProps) => {
+export const SignUpModalContent = ({ handleContentChange }: ContentComponentProps) => {
   return (
     <>
-      <DialogHeader>
+      <DialogHeader className="text-left">
         <DialogTitle className="mb-4 text-center text-3xl">Let&apos;s go</DialogTitle>
         <div>
           <SocialAuth />
           <Divider>Or continue with</Divider>
-          <SignUpForm onSuccess={close} />
+          <SignUpForm />
         </div>
       </DialogHeader>
-      <DialogFooter className="items-center !justify-center text-sm text-muted-foreground">
+      <DialogFooter className="flex-row items-center !justify-center text-sm text-muted-foreground">
         Already have an account?
         <Button variant="link" size="sm" onClick={() => handleContentChange('login')}>
           Login

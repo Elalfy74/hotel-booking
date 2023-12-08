@@ -20,13 +20,13 @@ export const ThemeSwitcher = () => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
-
   const themeElements = {
     light: <SunIcon className="h-4 w-4" />,
     dark: <MoonIcon className="h-4 w-4" />,
     system: <DesktopIcon className="h-4 w-4" />,
   };
+
+  if (!mounted) return <Button variant="outline">{themeElements['system']}</Button>;
 
   return (
     <DropdownMenu>

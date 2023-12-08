@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -22,11 +23,11 @@ import { AuthInput } from '../shared/auth-input';
 import { loginSchema, LoginSchemaType } from './login-schema';
 
 interface LoginFormProps {
-  handleForgotPassword: () => void;
-  onSuccess: () => void;
+  handleForgotPassword?: () => void;
 }
 
-export const LoginForm = ({ handleForgotPassword, onSuccess }: LoginFormProps) => {
+export const LoginForm = ({ handleForgotPassword }: LoginFormProps) => {
+  const router = useRouter();
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
   });
@@ -45,8 +46,15 @@ export const LoginForm = ({ handleForgotPassword, onSuccess }: LoginFormProps) =
     }
 
     if (res?.ok) {
-      onSuccess();
+      window.location.href = '/';
     }
+  };
+
+  const onForgotPassword = () => {
+    if (handleForgotPassword) {
+      return handleForgotPassword();
+    }
+    router.push('/forgot-password');
   };
 
   return (
@@ -94,7 +102,7 @@ export const LoginForm = ({ handleForgotPassword, onSuccess }: LoginFormProps) =
                   type="button"
                   className="p-0"
                   size="sm"
-                  onClick={handleForgotPassword}
+                  onClick={onForgotPassword}
                 >
                   Forgot Password?
                 </Button>

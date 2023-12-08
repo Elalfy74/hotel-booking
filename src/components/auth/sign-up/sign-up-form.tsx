@@ -2,11 +2,12 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { createUser } from '@/actions/create-user';
+import { signUpUser } from '@/actions/auth-actions';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,11 +23,9 @@ import { Loader } from '@/components/ui/loader';
 import { AuthInput } from '../shared/auth-input';
 import { signUpSchema, SignUpSchemaType } from './sign-up-schema';
 
-interface SignUpFormProps {
-  onSuccess: () => void;
-}
+export const SignUpForm = () => {
+  const router = useRouter();
 
-export const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
   const form = useForm<SignUpSchemaType>({
     resolver: zodResolver(signUpSchema),
   });
@@ -34,7 +33,7 @@ export const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
   const [error, setError] = useState<null | string>(null);
 
   const onSubmit = async (values: SignUpSchemaType) => {
-    const { error } = await createUser(values);
+    const { error } = await signUpUser(values);
 
     if (error) {
       return setError(error);
@@ -51,7 +50,7 @@ export const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
     }
 
     if (res?.ok) {
-      onSuccess();
+      router.replace('/');
     }
   };
 
