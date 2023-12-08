@@ -1,8 +1,8 @@
 import { DeleteManyButton } from '@/app/dashboard/_components/delete-many-button';
 import { useDisclosure } from '@/hooks/use-disclosure';
 
-import { useDeleteManyUsers } from '../_hooks/use-delete-many-users';
-import { UserTableKeys } from '../_hooks/use-users-table';
+import { type CountriesTableKeys } from '../_hooks/use-countries-table';
+import { useDeleteManyCountries } from '../_hooks/use-delete-many-countries';
 
 export interface DeleteManyButtonProps {
   ids: string[];
@@ -10,20 +10,20 @@ export interface DeleteManyButtonProps {
 }
 
 interface DeleteManyButtonWithKeysProps extends DeleteManyButtonProps {
-  keys: UserTableKeys;
+  keys: CountriesTableKeys;
 }
 
-export const deleteManyUsersButtonWithKeys = (keys: UserTableKeys) => {
+export const deleteManyCountriesButtonWithKeys = (keys: CountriesTableKeys) => {
   return function DeleteButtonWithKeys(props: DeleteManyButtonProps) {
-    return <DeleteManyUsersButton keys={keys} {...props} />;
+    return <DeleteManyCountriesButton keys={keys} {...props} />;
   };
 };
 
-const DeleteManyUsersButton = ({ keys, ids, onDone }: DeleteManyButtonWithKeysProps) => {
+const DeleteManyCountriesButton = ({ keys, ids, onDone }: DeleteManyButtonWithKeysProps) => {
   // For the AlertDialog
   const [opened, { close, setOpened }] = useDisclosure();
 
-  const { mutate, isPending } = useDeleteManyUsers({
+  const { mutate, isPending } = useDeleteManyCountries({
     keys,
     onSuccess: () => {
       close();
@@ -31,15 +31,13 @@ const DeleteManyUsersButton = ({ keys, ids, onDone }: DeleteManyButtonWithKeysPr
     },
   });
 
-  const onDelete = () => mutate(ids);
-
   return (
     <DeleteManyButton
       opened={opened}
       setOpened={setOpened}
       isDisabled={ids.length === 0}
       isPending={isPending}
-      onDelete={onDelete}
+      onDelete={() => mutate(ids)}
     />
   );
 };

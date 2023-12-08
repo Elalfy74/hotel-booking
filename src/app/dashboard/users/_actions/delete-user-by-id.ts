@@ -2,16 +2,11 @@
 
 import { asyncAdminHandler } from '@/actions/utils';
 import prisma from '@/lib/prisma';
-import { serialize } from '@/lib/utils';
 
-import { UserDto } from './user.dto';
-
-export const deleteUserById = asyncAdminHandler(async (id: string): Promise<UserDto | null> => {
+export const deleteUserById = asyncAdminHandler(async (id: string): Promise<void> => {
   const user = await prisma.user.delete({
     where: { id },
   });
 
-  if (!user) return null;
-
-  return serialize(UserDto, user);
+  if (!user) throw new Error('User not found');
 });

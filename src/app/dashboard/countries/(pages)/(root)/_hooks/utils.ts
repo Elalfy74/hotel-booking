@@ -1,9 +1,9 @@
 import { type QueryClient } from '@tanstack/react-query';
 
-import { UserTableKeys } from './use-users-table';
+import { CountriesTableKeys } from './use-countries-table';
 
 interface IReValidateAfterDelete {
-  keys: UserTableKeys;
+  keys: CountriesTableKeys;
   queryClient: QueryClient;
   amount?: number;
 }
@@ -20,10 +20,10 @@ export function reValidateAfterDelete({ keys, queryClient, amount = 1 }: IReVali
     keysAsString.set(k, JSON.stringify(keys[k]));
   }
 
-  // Remove all users queries except the current one
+  // Remove all queries except the current one
   queryClient.removeQueries({
     predicate: (query) => {
-      // If the query is not a user query, return false to not remove it
+      // If the query is not a country query, return false to not remove it
       if (!keysAsArray.includes(query.queryKey[0] as string)) return false;
 
       const stringQueryKey = JSON.stringify(query.queryKey);
@@ -42,17 +42,20 @@ export function reValidateAfterDelete({ keys, queryClient, amount = 1 }: IReVali
   });
 
   // Update the current Count query locally
-  queryClient.setQueryData<{ data: number; error?: string }>(keys.usersCountQueryKey, (oldData) => {
-    if (!oldData) return oldData;
+  queryClient.setQueryData<{ data: number; error?: string }>(
+    keys.countriesCountQueryKey,
+    (oldData) => {
+      if (!oldData) return oldData;
 
-    return {
-      ...oldData,
-      data: oldData.data - amount,
-    };
-  });
+      return {
+        ...oldData,
+        data: oldData.data - amount,
+      };
+    },
+  );
 
-  // Invalidate the current users to refetch the data as it should be equal to the page size
+  // Invalidate the current countries to refetch the data as it should be equal to the page size
   queryClient.invalidateQueries({
-    queryKey: keys.usersQueryKey,
+    queryKey: keys.countriesQueryKey,
   });
 }

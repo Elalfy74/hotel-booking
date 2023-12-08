@@ -4,7 +4,7 @@ import { AppLoading } from '@/components/app-loading';
 import { DataTable } from '@/components/ui/data-table';
 
 import { useUsersTable } from '../_hooks/use-users-table';
-import { deleteButtonWithKeys } from './delete-many-users-button';
+import { deleteManyUsersButtonWithKeys } from './delete-many-users-button';
 import { columns } from './users-columns';
 import { UsersFilter } from './users-filter';
 
@@ -32,7 +32,7 @@ export const UsersTable = () => {
     return <AppLoading />;
   }
 
-  const DeleteButton = deleteButtonWithKeys(keys);
+  const DeleteButton = deleteManyUsersButtonWithKeys(keys);
 
   return (
     <DataTable
