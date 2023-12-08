@@ -16,7 +16,7 @@ export const useUsersTable = () => {
   const {
     data: usersCount,
     isLoading: usersCountLoading,
-    isFetching: useCountFetching,
+    isFetching: usersCountFetching,
     queryKey: usersCountQueryKey,
   } = useUsersCount({ filter });
 
@@ -31,7 +31,7 @@ export const useUsersTable = () => {
   const {
     data: usersData,
     isLoading: usersLoading,
-    isFetching: userFetching,
+    isFetching: usersFetching,
     queryKey: usersQueryKey,
   } = useUsers({
     currentPage: pagination.currentPage,
@@ -47,10 +47,10 @@ export const useUsersTable = () => {
   return {
     usersData,
     usersLoading,
-    userFetching,
+    userFetching: usersFetching,
     usersCount,
     usersCountLoading,
-    useCountFetching,
+    useCountFetching: usersCountFetching,
     usersFilter,
     pagination,
     keys,
