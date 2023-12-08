@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/select';
 
 import { UserDto } from '../../../_actions';
-import { type UpdateUserSchema, updateUserSchema } from '../../../_schemas';
+import { updateUserSchema, type UpdateUserSchemaType } from '../../../_schemas';
 import { useUpdateUser } from '../_hooks/use-update-user';
 
 interface EditUserFormProps {
@@ -33,7 +33,7 @@ interface EditUserFormProps {
 export const EditUserForm = ({ user }: EditUserFormProps) => {
   const { mutateAsync } = useUpdateUser();
 
-  const form = useForm<UpdateUserSchema>({
+  const form = useForm<UpdateUserSchemaType>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
       firstName: user.firstName || '',
@@ -44,7 +44,7 @@ export const EditUserForm = ({ user }: EditUserFormProps) => {
     },
   });
 
-  const onSubmit = async ({ image, ...values }: UpdateUserSchema) => {
+  const onSubmit = async ({ image, ...values }: UpdateUserSchemaType) => {
     const formData = new FormData();
 
     if (image) {

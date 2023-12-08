@@ -34,10 +34,12 @@ export const CreateUserForm = () => {
     resolver: zodResolver(createUserSchema),
     defaultValues: {
       role: 'USER',
+      image: undefined,
     },
   });
 
   const onSubmit = async ({ image, ...values }: CreateUserSchemaType) => {
+    console.log(values);
     const formData = new FormData();
 
     formData.append('image', image);
