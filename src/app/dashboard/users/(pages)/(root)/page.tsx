@@ -5,7 +5,7 @@ import { UsersTable } from './_components/users-table';
 const UsersPage = async () => {
   return (
     <>
-      <Heading title="users" />
+      <Heading title="users" singleTile="user" />
       <UsersTable />
     </>
   );

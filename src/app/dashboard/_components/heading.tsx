@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 
 interface HeadingProps {
   title: string;
+  singleTile: string;
   subtitle?: string;
 }
 
-export const Heading = ({ title, subtitle }: HeadingProps) => {
+export const Heading = ({ title, singleTile, subtitle }: HeadingProps) => {
   return (
     <div className="mb-10 flex items-center justify-between">
       <div className="space-y-2">
@@ -18,7 +19,7 @@ export const Heading = ({ title, subtitle }: HeadingProps) => {
       <Button size="lg" asChild>
         <Link href={`/dashboard/${title}/new`}>
           <PlusCircleIcon className="mr-2 h-4 w-4" />
-          Add {title}
+          Add {singleTile}
         </Link>
       </Button>
     </div>

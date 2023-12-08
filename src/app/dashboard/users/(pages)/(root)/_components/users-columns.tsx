@@ -98,6 +98,7 @@ export const columns = (keys: UserTableKeys): ColumnDef<UserDto>[] => {
         return (
           <DataTableRowActions
             id={id}
+            entity="users"
             handleDelete={() => mutate(id)}
             isPending={isPending}
             opened={opened}
