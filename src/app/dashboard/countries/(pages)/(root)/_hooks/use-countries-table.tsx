@@ -16,7 +16,7 @@ export const useCountriesTable = () => {
   // Fetch countries count
   const {
     data: countriesCount,
-    isLoading: countriesCountLoading,
+    isPending: countriesCountLoading,
     isFetching: countriesCountFetching,
     queryKey: countriesCountQueryKey,
   } = useCountriesCount({ filter });
@@ -31,7 +31,7 @@ export const useCountriesTable = () => {
   // Fetch countries based on pagination and filter
   const {
     data: countriesData,
-    isLoading: countriesLoading,
+    isPending: countriesLoading,
     isFetching: countriesFetching,
     queryKey: countriesQueryKey,
   } = useCountries({

@@ -12,25 +12,25 @@ export const UsersTable = () => {
   const {
     usersData,
     usersLoading,
-    userFetching,
+    usersFetching,
 
     usersCount,
     usersCountLoading,
-    useCountFetching,
+    usersCountFetching,
 
     usersFilter,
     pagination,
     keys,
   } = useUsersTable();
 
-  // Handle Data Fetching Errors
-  if (usersData?.error) throw new Error(usersData.error);
-  if (usersCount?.error) throw new Error(usersCount.error);
-
   // Handle Loading State
   if (usersLoading || usersCountLoading || !usersData?.data || usersCount?.data === undefined) {
     return <AppLoading />;
   }
+
+  // Handle Data Fetching Errors
+  if (usersData?.error) throw new Error(usersData.error);
+  if (usersCount?.error) throw new Error(usersCount.error);
 
   const DeleteButton = deleteManyUsersButtonWithKeys(keys);
 
@@ -38,7 +38,7 @@ export const UsersTable = () => {
     <DataTable
       columns={columns(keys)}
       data={usersData.data}
-      isLoading={userFetching || useCountFetching}
+      isLoading={usersFetching || usersCountFetching}
       filter={<UsersFilter {...usersFilter} resetPage={pagination.resetPage} />}
       deleteBtn={DeleteButton}
       {...pagination}

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { DataTableFacetedFilter, FacetedOption } from '@/components/ui/data-table-faceted-filter';
 import { DataTableResetFilter } from '@/components/ui/data-table-reset-filter';
 import { DataTableSearchFilter } from '@/components/ui/data-table-search-filter';
+import { DataTableSelectFilter } from '@/components/ui/data-table-select-filter';
 
 import { useCountriesFilter } from '../_hooks/use-countries-filter';
 
@@ -16,7 +17,7 @@ export const CountriesFilter = (props: CountriesFilterProps) => {
   const { setSearchValue, isFeatured, setIsFeatured, resetFilter, resetPage } = props;
 
   const [value, setValue] = useState('');
-  const isFiltering = value.length > 0 || isFeatured === true;
+  const isFiltering = value.length > 0 || isFeatured !== undefined;
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -31,8 +32,12 @@ export const CountriesFilter = (props: CountriesFilterProps) => {
     setValue(value);
   };
 
-  const handleIsFeatured = (isFeatured: boolean) => {
-    setIsFeatured(isFeatured);
+  const handleIsFeatured = (value: boolean) => {
+    if (value === isFeatured) {
+      setIsFeatured(undefined);
+    } else {
+      setIsFeatured(value);
+    }
     resetPage();
   };
 
@@ -50,27 +55,26 @@ export const CountriesFilter = (props: CountriesFilterProps) => {
         placeholder="Filter Countries..."
       />
 
-      {/* <DataTableFacetedFilter
-        title="isFeatured"
+      <DataTableSelectFilter
         options={options}
-        selectedValues={isFeatured}
-        onSelectedValuesChange={handleSelectedRolesChange}
-      /> */}
+        onSelectedValueChange={handleIsFeatured}
+        selectedValue={isFeatured}
+      />
 
       {isFiltering && <DataTableResetFilter reset={reset} />}
     </>
   );
 };
 
-const options: FacetedOption[] = [
+const options: FacetedOption<boolean>[] = [
   {
     label: 'Featured',
-    value: '1',
+    value: true,
     icon: ShieldCheckIcon,
   },
   {
     label: 'Not Featured',
-    value: '0',
+    value: false,
     icon: ShieldXIcon,
   },
 ];

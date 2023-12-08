@@ -17,4 +17,4 @@ export const getCountries = asyncAdminHandler(
     });
   },
 );
-export type GeCountriesReturnType = AwaitedReturn<typeof getCountries>;
+export type GetCountriesReturnType = AwaitedReturn<typeof getCountries>;

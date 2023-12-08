@@ -1,32 +1,17 @@
-import { type Prisma, type Role } from '@prisma/client';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { getUsersCount } from '../../../_actions';
+import { getUsersWhereFilter, type UsersFilter } from './utils';
 
 interface UseUsersCountProps {
-  filter: {
-    query: string;
-    role: Role[];
-  };
+  filter: UsersFilter;
 }
 
 export const defaultUsersCountQueryKey = ['users count', { filter: { query: '', role: [] } }];
 
 export const useUsersCount = ({ filter }: UseUsersCountProps) => {
-  let where: Prisma.UserFindManyArgs['where'] = {};
-
-  if (filter.query.trim().length > 0) {
-    where.OR = [
-      { firstName: { contains: filter.query, mode: 'insensitive' } },
-      { lastName: { contains: filter.query, mode: 'insensitive' } },
-    ];
-  }
-
-  if (filter.role.length > 0) {
-    where.role = { in: filter.role };
-  }
-
   const queryKey = ['users count', { filter }];
+  const where = getUsersWhereFilter(filter);
 
   const query = useQuery({
     queryKey,

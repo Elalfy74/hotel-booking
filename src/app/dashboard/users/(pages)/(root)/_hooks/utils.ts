@@ -1,3 +1,4 @@
+import { Prisma, type Role } from '@prisma/client';
 import { type QueryClient } from '@tanstack/react-query';
 
 import { UserTableKeys } from './use-users-table';
@@ -20,7 +21,7 @@ export function reValidateAfterDelete({ keys, queryClient, amount = 1 }: IReVali
     keysAsString.set(k, JSON.stringify(keys[k]));
   }
 
-  // Remove all users queries except the current one
+  // Remove all users queries except the current users one
   queryClient.removeQueries({
     predicate: (query) => {
       // If the query is not a user query, return false to not remove it
@@ -55,4 +56,25 @@ export function reValidateAfterDelete({ keys, queryClient, amount = 1 }: IReVali
   queryClient.invalidateQueries({
     queryKey: keys.usersQueryKey,
   });
+}
+
+export interface UsersFilter {
+  query: string;
+  role: Role[];
+}
+export function getUsersWhereFilter(filter: UsersFilter) {
+  let where: Prisma.UserFindManyArgs['where'] = {};
+
+  if (filter.query.trim().length > 0) {
+    where.OR = [
+      { firstName: { contains: filter.query, mode: 'insensitive' } },
+      { lastName: { contains: filter.query, mode: 'insensitive' } },
+    ];
+  }
+
+  if (filter.role.length > 0) {
+    where.role = { in: filter.role };
+  }
+
+  return where;
 }

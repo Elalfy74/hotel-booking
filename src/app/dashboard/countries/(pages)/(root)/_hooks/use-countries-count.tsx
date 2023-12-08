@@ -1,13 +1,10 @@
-import { type Prisma } from '@prisma/client';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { getCountriesCount } from '../../../_actions';
+import { type CountriesFilter, getCountriesWhereFilter } from './utils';
 
 interface UseCountriesCountProps {
-  filter: {
-    query: string;
-    isFeatured: boolean | undefined;
-  };
+  filter: CountriesFilter;
 }
 
 export const defaultCountriesCountQueryKey = [
@@ -16,17 +13,8 @@ export const defaultCountriesCountQueryKey = [
 ];
 
 export const useCountriesCount = ({ filter }: UseCountriesCountProps) => {
-  let where: Prisma.CountryCountArgs['where'] = {};
-
-  if (filter.query.trim().length > 0) {
-    where.name = { contains: filter.query, mode: 'insensitive' };
-  }
-
-  if (filter.isFeatured !== undefined) {
-    where.isFeatured = filter.isFeatured;
-  }
-
   const queryKey = ['countries count', { filter }];
+  const where = getCountriesWhereFilter(filter);
 
   const query = useQuery({
     queryKey,

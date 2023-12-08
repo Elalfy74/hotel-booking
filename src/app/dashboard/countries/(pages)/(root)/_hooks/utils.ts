@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { type QueryClient } from '@tanstack/react-query';
 
 import { CountriesTableKeys } from './use-countries-table';
@@ -58,4 +59,22 @@ export function reValidateAfterDelete({ keys, queryClient, amount = 1 }: IReVali
   queryClient.invalidateQueries({
     queryKey: keys.countriesQueryKey,
   });
+}
+
+export interface CountriesFilter {
+  query: string;
+  isFeatured: boolean | undefined;
+}
+export function getCountriesWhereFilter(filter: CountriesFilter) {
+  let where: Prisma.CountryFindManyArgs['where'] = {};
+
+  if (filter.query.trim().length > 0) {
+    where.name = { contains: filter.query, mode: 'insensitive' };
+  }
+
+  if (filter.isFeatured !== undefined) {
+    where.isFeatured = filter.isFeatured;
+  }
+
+  return where;
 }

@@ -13,6 +13,7 @@ import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { CountriesTableKeys } from '../_hooks/use-countries-table';
 import { useDeleteCountry } from '../_hooks/use-delete-country';
+import { useToggleFeatureCountry } from '../_hooks/use-toggle-feature-country';
 
 export const columns = (keys: CountriesTableKeys): ColumnDef<Country>[] => [
   {
@@ -66,7 +67,10 @@ export const columns = (keys: CountriesTableKeys): ColumnDef<Country>[] => [
       return <DataTableColumnHeader column={column} title="Featured" />;
     },
     cell: ({ row }) => {
-      return <Switch checked={row.original.isFeatured} />;
+      const id = row.original.id;
+
+      const { mutate } = useToggleFeatureCountry({ keys });
+      return <Switch checked={row.original.isFeatured} onCheckedChange={() => mutate(id)} />;
     },
   },
 

@@ -13,6 +13,10 @@ export const useUpdateUser = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
+  const keysAsArray = [defaultUsersQueryKey, defaultUsersCountQueryKey].map(
+    (value) => value[0],
+  ) as string[];
+
   return useMutation({
     mutationFn: updateUser,
     onSuccess: ({ data, error }, { id }) => {
@@ -23,6 +27,8 @@ export const useUpdateUser = () => {
       // Remove all users queries except the default one
       queryClient.removeQueries({
         predicate: ({ queryKey }) => {
+          if (!keysAsArray.includes(queryKey[0] as string)) return false;
+
           const queryKeyAsString = JSON.stringify(queryKey);
 
           if (queryKeyAsString === defaultUsersQueryKeyAsString) return false;

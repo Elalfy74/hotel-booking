@@ -17,6 +17,10 @@ export const useCreateUser = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
+  const keysAsArray = [defaultUsersQueryKey, defaultUsersCountQueryKey].map(
+    (value) => value[0],
+  ) as string[];
+
   return useMutation({
     mutationFn: createUser,
     onSuccess: ({ error, data }) => {
@@ -24,9 +28,11 @@ export const useCreateUser = () => {
 
       toast.success('User created successfully');
 
-      // Remove all users queries except the default one
+      // Remove all users queries except the default users one
       queryClient.removeQueries({
         predicate: ({ queryKey }) => {
+          if (!keysAsArray.includes(queryKey[0] as string)) return false;
+
           const queryKeyAsString = JSON.stringify(queryKey);
 
           if (queryKeyAsString === defaultUsersQueryKeyAsString) return false;
