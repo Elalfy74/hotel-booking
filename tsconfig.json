@@ -34,7 +34,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/dashboard/users/_schemas/update-user-tsx"
+    "src/app/dashboard/(pages)/users/_schemas/update-user-tsx"
   ],
   "exclude": [
     "node_modules"
