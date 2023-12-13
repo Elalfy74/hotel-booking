@@ -1,6 +1,6 @@
 'use client';
 
-import { BarChart3Icon, Users2Icon } from 'lucide-react';
+import { BarChart3Icon, GlobeIcon, Users2Icon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -13,6 +13,7 @@ const navigation = [
     href: '/dashboard',
   },
   { name: 'Users', icon: Users2Icon, href: '/dashboard/users' },
+  { name: 'Countries', icon: GlobeIcon, href: '/dashboard/countries' },
 ];
 
 export const Nav = () => {

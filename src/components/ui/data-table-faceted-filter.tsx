@@ -21,7 +21,7 @@ import { Separator } from './separator';
 export interface FacetedOption<T = string> {
   label: string;
   value: T;
-  icon?: LucideIcon;
+  icon: LucideIcon;
 }
 
 interface DataTableFacetedFilterProps<T> {

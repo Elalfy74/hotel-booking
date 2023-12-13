@@ -1,5 +1,3 @@
-'use client';
-
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
@@ -24,6 +22,7 @@ import { Loader } from './loader';
 
 interface DataTableRowActionsProps {
   id: string;
+  entity: string;
   handleDelete: () => void;
   isPending: boolean;
   opened: boolean;
@@ -32,6 +31,7 @@ interface DataTableRowActionsProps {
 
 export function DataTableRowActions({
   id,
+  entity,
   handleDelete,
   isPending,
   opened,
@@ -48,7 +48,7 @@ export function DataTableRowActions({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href={`/dashboard/users/${id}`}>Edit</Link>
+            <Link href={`/dashboard/${entity}/${id}`}>Edit</Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer" asChild>
             <AlertDialogTrigger className="h-full w-full">Delete</AlertDialogTrigger>
