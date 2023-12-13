@@ -27,10 +27,7 @@ export const getCities = asyncAdminHandler(
       },
     });
 
-    console.log(cities);
-    const res = serialize(CityDto, cities);
-
-    return res;
+    return serialize(CityDto, cities);
   },
 );
 export type GetCitiesReturnType = AwaitedReturn<typeof getCities>;
