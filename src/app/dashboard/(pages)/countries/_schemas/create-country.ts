@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-import { imageSchema } from '@/lib/utils';
+import { booleanSchema, imageSchema } from '@/lib/utils';
 
 export const createCountrySchema = z.object({
   name: z.string().min(2).max(255),
   image: imageSchema,
-  isFeatured: z.coerce.boolean().default(false),
+  isFeatured: booleanSchema,
 });
 export type CreateCountryType = z.infer<typeof createCountrySchema>;
