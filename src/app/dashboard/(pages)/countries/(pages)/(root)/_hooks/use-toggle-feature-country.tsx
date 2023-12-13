@@ -6,15 +6,19 @@ import { CountriesTableKeys } from './use-countries-table';
 
 interface UseToggleFeatureCountryProps {
   keys: CountriesTableKeys;
+  onChange: () => void;
 }
 
-export const useToggleFeatureCountry = ({ keys }: UseToggleFeatureCountryProps) => {
+export const useToggleFeatureCountry = ({ keys, onChange }: UseToggleFeatureCountryProps) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: toggleCountryIsFeatured,
     onMutate(variables) {
       const previousData = queryClient.getQueryData<GetCountriesReturnType>(keys.countriesQueryKey);
+
+      // To fix animation
+      onChange();
 
       queryClient.setQueryData<GetCountriesReturnType>(keys.countriesQueryKey, (oldData) => {
         if (!oldData || !oldData.data) return undefined;
@@ -36,8 +40,6 @@ export const useToggleFeatureCountry = ({ keys }: UseToggleFeatureCountryProps) 
       if (error) {
         toast.error(error);
         queryClient.setQueryData(keys.countriesQueryKey, context?.previousData);
-      } else {
-        toast.success('Country updated successfully');
       }
     },
   });

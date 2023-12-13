@@ -3,6 +3,7 @@
 
 import { type Country } from '@prisma/client';
 import { type ColumnDef } from '@tanstack/react-table';
+import { useState } from 'react';
 
 import { CustomAvatar } from '@/components/custom-avatar';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -68,9 +69,16 @@ export const columns = (keys: CountriesTableKeys): ColumnDef<Country>[] => [
     },
     cell: ({ row }) => {
       const id = row.original.id;
+      const [checked, setChecked] = useState(row.original.isFeatured);
 
-      const { mutate } = useToggleFeatureCountry({ keys });
-      return <Switch checked={row.original.isFeatured} onCheckedChange={() => mutate(id)} />;
+      const toggle = () => setChecked((prev) => !prev);
+
+      const { mutate } = useToggleFeatureCountry({
+        keys,
+        onChange: toggle,
+      });
+
+      return <Switch checked={checked} onCheckedChange={() => mutate(id)} />;
     },
   },
 
