@@ -6,13 +6,13 @@ import { DataTableResetFilter } from '@/components/ui/data-table-reset-filter';
 import { DataTableSearchFilter } from '@/components/ui/data-table-search-filter';
 import { DataTableSelectFilter } from '@/components/ui/data-table-select-filter';
 
-import { useCountriesFilter } from '../_hooks/use-countries-filter';
+import { useCitiesFilter } from '../_hooks/use-cities-filter';
 
-interface CountriesFilterProps extends ReturnType<typeof useCountriesFilter> {
+interface CitiesFilterProps extends ReturnType<typeof useCitiesFilter> {
   resetPage: () => void;
 }
 
-export const CountriesFilter = (props: CountriesFilterProps) => {
+export const CitiesFilter = (props: CitiesFilterProps) => {
   const { setSearchValue, isFeatured, setIsFeatured, resetFilter, resetPage } = props;
 
   const [value, setValue] = useState('');
@@ -51,7 +51,7 @@ export const CountriesFilter = (props: CountriesFilterProps) => {
       <DataTableSearchFilter
         value={value}
         setValue={handleValueChange}
-        placeholder="Filter Countries..."
+        placeholder="Filter Cities..."
       />
 
       <DataTableSelectFilter

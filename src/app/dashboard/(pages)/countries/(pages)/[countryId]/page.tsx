@@ -11,7 +11,7 @@ export const dynamic = 'force-static';
 export default function SingleCountryPage({ params: { countryId } }: SingleCountryPageProps) {
   return (
     <>
-      <SingleItemHeading title="countries" singleTile="Country" />
+      <SingleItemHeading title="countries" singleTile="Country" action="edit" />
       <EditCountry countryId={countryId} />
     </>
   );

@@ -11,7 +11,7 @@ export const dynamic = 'force-static';
 const SingleUserPage = ({ params: { userId } }: SingleUserPageProps) => {
   return (
     <>
-      <SingleItemHeading title="users" singleTile="User" />
+      <SingleItemHeading title="users" singleTile="User" action="edit" />
       <EditUser userId={userId} />
     </>
   );

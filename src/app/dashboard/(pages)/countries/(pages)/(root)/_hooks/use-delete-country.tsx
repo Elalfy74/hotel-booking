@@ -5,12 +5,12 @@ import { deleteCountryById } from '../../../_actions';
 import { type CountriesTableKeys } from './use-countries-table';
 import { reValidateAfterDelete } from './utils';
 
-interface UseDeleteUserProps {
+interface UseDeleteCountryProps {
   onSuccess: () => void;
   keys: CountriesTableKeys;
 }
 
-export const useDeleteCountry = ({ onSuccess, keys }: UseDeleteUserProps) => {
+export const useDeleteCountry = ({ onSuccess, keys }: UseDeleteCountryProps) => {
   const queryClient = useQueryClient();
 
   return useMutation({
