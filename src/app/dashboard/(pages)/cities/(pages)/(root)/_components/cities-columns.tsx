@@ -2,7 +2,7 @@
 'use client';
 
 import { type ColumnDef } from '@tanstack/react-table';
-import { Link } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import { CustomAvatar } from '@/components/custom-avatar';
@@ -84,14 +84,27 @@ export const columns = (keys: CitiesTableKeys): ColumnDef<CityDto>[] => [
     },
   },
 
+  //TODO test logic
   {
     accessorKey: 'country',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Country" />,
     cell: ({ row }) => {
+      const country = {
+        id: row.original.country.id,
+        name: row.original.country.name,
+        image: row.original.country.image,
+        isFeatured: row.original.country.isFeatured,
+      };
+
       return (
-        <Button asChild variant="link">
-          <Link href={`/dashboard/countries/${row.original.country.id}`}>
-            {row.original.country.name}
+        <Button asChild variant="link" className="p-0">
+          <Link
+            href={{
+              pathname: `/dashboard/countries/${country.id}`,
+              query: { country: JSON.stringify(country) },
+            }}
+          >
+            {country.name}
           </Link>
         </Button>
       );

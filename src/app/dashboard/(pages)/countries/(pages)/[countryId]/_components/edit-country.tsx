@@ -1,13 +1,20 @@
 'use client';
 
+import { Country } from '@prisma/client';
 import { notFound } from 'next/navigation';
 
 import { useCountry } from '../_hooks/use-country';
 import { EditCountryForm } from './edit-country-form';
 import { EditCountrySkeleton } from './edit-country-skeleton';
 
-export const EditCountry = ({ countryId }: { countryId: string }) => {
-  const { data, isLoading } = useCountry(countryId);
+export const EditCountry = ({
+  countryId,
+  initialData,
+}: {
+  countryId: string;
+  initialData?: Country;
+}) => {
+  const { data, isLoading } = useCountry(countryId, initialData);
 
   if (isLoading) {
     return <EditCountrySkeleton />;
