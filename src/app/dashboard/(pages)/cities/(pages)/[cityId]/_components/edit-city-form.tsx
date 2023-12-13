@@ -96,7 +96,7 @@ export const EditCityForm = ({ city }: EditCityFormProps) => {
 
         <div className="flex justify-end space-x-4">
           <Button variant="secondary" asChild>
-            <Link href="/dashboard/countries">Discard</Link>
+            <Link href="/dashboard/cities">Discard</Link>
           </Button>
           <Button type="submit" disabled={form.formState.isSubmitting || !form.formState.isDirty}>
             {form.formState.isSubmitting ? <Loader className="h-2 w-2 bg-white" /> : 'Save Changes'}
