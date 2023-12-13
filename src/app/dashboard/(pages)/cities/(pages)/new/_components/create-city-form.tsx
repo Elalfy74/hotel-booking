@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 
-import { Dropzone } from '@/components/dropzone';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -19,7 +18,9 @@ import { Loader } from '@/components/ui/loader';
 import { Switch } from '@/components/ui/switch';
 
 import { createCitySchema, type CreateCityType } from '../../../_schemas';
-import { useCreateCity } from '../_hooks/use-create-country';
+import { useCreateCity } from '../_hooks/use-create-city';
+import { CountryInput } from './country-input';
+import { ImagesDropzone } from './images-dropzone';
 
 export const CreateCityForm = () => {
   const { mutateAsync } = useCreateCity();
@@ -32,29 +33,33 @@ export const CreateCityForm = () => {
   });
 
   const onSubmit = async ({ images, ...values }: CreateCityType) => {
-    // const formData = new FormData();
-    // formData.append('image', image);
-    // Object.entries(values).forEach(([key, value]) => {
-    //   formData.append(key, String(value));
-    // });
-    // await mutateAsync(formData);
+    const formData = new FormData();
+
+    images.forEach((image) => {
+      formData.append('images', image);
+    });
+
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, String(value));
+    });
+    await mutateAsync(formData);
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 max-w-4xl space-y-6">
-        {/* <FormField
+        <FormField
           control={form.control}
-          name="image"
+          name="images"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Dropzone onChange={field.onChange} />
+                <ImagesDropzone onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
 
         <FormField
           control={form.control}
@@ -64,6 +69,20 @@ export const CreateCityForm = () => {
               <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input placeholder="name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="countryId"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="block">Country</FormLabel>
+              <FormControl>
+                <CountryInput onSelect={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
