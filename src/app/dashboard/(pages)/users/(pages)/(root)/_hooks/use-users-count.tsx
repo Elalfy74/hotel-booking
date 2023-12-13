@@ -7,7 +7,10 @@ interface UseUsersCountProps {
   filter: UsersFilter;
 }
 
-export const defaultUsersCountQueryKey = ['users count', { filter: { query: '', role: [] } }];
+export const defaultUsersCountQueryKey = [
+  'users count',
+  { filter: { query: '', role: [] } },
+] as const;
 
 export const useUsersCount = ({ filter }: UseUsersCountProps) => {
   const queryKey = ['users count', { filter }];

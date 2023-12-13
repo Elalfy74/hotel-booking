@@ -10,7 +10,7 @@ interface UseCountriesCountProps {
 export const defaultCountriesCountQueryKey = [
   'countries count',
   { filter: { query: '', isFeatured: undefined } },
-];
+] as const;
 
 export const useCountriesCount = ({ filter }: UseCountriesCountProps) => {
   const queryKey = ['countries count', { filter }];
