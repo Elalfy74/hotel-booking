@@ -1,13 +1,13 @@
-import { useCreateItem } from '@/app/dashboard/_hooks/use-create-item';
+import { useUpdateItem } from '@/app/dashboard/_hooks/use-update-item';
 
-import { createCountry } from '../../../_actions';
+import { updateCountry } from '../../../_actions';
 import { defaultCountriesQueryKey } from '../../(root)/_hooks/use-countries';
 import { defaultCountriesCountQueryKey } from '../../(root)/_hooks/use-countries-count';
 
-export const useCreateCountry = () => {
-  return useCreateItem({
+export const useUpdateCountry = () => {
+  return useUpdateItem({
     itemName: 'country',
-    mutationFn: createCountry,
+    mutationFn: updateCountry,
     defaultKeys: {
       arrayOfItemsKey: defaultCountriesQueryKey,
       countKey: defaultCountriesCountQueryKey,
