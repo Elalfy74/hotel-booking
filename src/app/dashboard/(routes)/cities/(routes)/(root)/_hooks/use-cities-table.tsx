@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 
 import { useAppPagination } from '@/hooks/use-app-pagination';
 
+import { useCities } from './use-cities';
 import { useCitiesCount } from './use-cities-count';
 import { useCitiesFilter } from './use-cities-filter';
-import { useCities } from './use-cities';
 
 export const useCitiesTable = () => {
   // Handle Cities Filter

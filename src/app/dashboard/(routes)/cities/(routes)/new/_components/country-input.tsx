@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useCountries } from '@/app/dashboard/(pages)/countries/(pages)/(root)/_hooks/use-countries';
+import { useCountries } from '@/app/dashboard/(routes)/countries/(routes)/(root)/_hooks/use-countries';
 import { Combobox, ComboboxItem } from '@/components/combobox';
 import { Button } from '@/components/ui/button';
 

@@ -2,14 +2,14 @@
 
 import { Table } from '@tanstack/react-table';
 
-import { DeleteManyButtonProps } from '@/app/dashboard/(pages)/users/(pages)/(root)/_components/delete-many-users-button';
+import { type DeleteManyItemsButtonProps } from '@/app/dashboard/_components/delete-many-button';
 
 import { DataTableViewOptions } from './data-table-view-options';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
   children: React.ReactNode;
-  deleteBtn: React.ComponentType<DeleteManyButtonProps>;
+  deleteBtn: React.ComponentType<DeleteManyItemsButtonProps>;
 }
 
 export function DataTableToolbar<TData extends { id: string }>({

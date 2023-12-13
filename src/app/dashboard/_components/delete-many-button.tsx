@@ -13,6 +13,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Loader } from '@/components/ui/loader';
 
+export interface DeleteManyItemsButtonProps {
+  ids: string[];
+  // Unselect rows after deletion
+  onDone: () => void;
+}
+
 interface DeleteManyButtonProps {
   opened: boolean;
   setOpened: (opened: boolean) => void;

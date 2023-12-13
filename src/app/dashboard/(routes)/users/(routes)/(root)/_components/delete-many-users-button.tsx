@@ -1,25 +1,23 @@
-import { DeleteManyButton } from '@/app/dashboard/_components/delete-many-button';
+import {
+  DeleteManyButton,
+  type DeleteManyItemsButtonProps,
+} from '@/app/dashboard/_components/delete-many-button';
 import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { useDeleteManyUsers } from '../_hooks/use-delete-many-users';
 import { UserTableKeys } from '../_hooks/use-users-table';
 
-export interface DeleteManyButtonProps {
-  ids: string[];
-  onDone: () => void;
-}
-
-interface DeleteManyButtonWithKeysProps extends DeleteManyButtonProps {
+interface DeleteManyItemsButtonWithKeysProps extends DeleteManyItemsButtonProps {
   keys: UserTableKeys;
 }
 
 export const deleteManyUsersButtonWithKeys = (keys: UserTableKeys) => {
-  return function DeleteButtonWithKeys(props: DeleteManyButtonProps) {
+  return function DeleteButtonWithKeys(props: DeleteManyItemsButtonProps) {
     return <DeleteManyUsersButton keys={keys} {...props} />;
   };
 };
 
-const DeleteManyUsersButton = ({ keys, ids, onDone }: DeleteManyButtonWithKeysProps) => {
+const DeleteManyUsersButton = ({ keys, ids, onDone }: DeleteManyItemsButtonWithKeysProps) => {
   // For the AlertDialog
   const [opened, { close, setOpened }] = useDisclosure();
 
