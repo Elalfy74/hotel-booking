@@ -1,11 +1,11 @@
-import { Heading } from '@/app/dashboard/_components/heading';
+import { PageHeading } from '@/app/dashboard/_components/page-heading';
 
 import { UsersTable } from './_components/users-table';
 
 const UsersPage = async () => {
   return (
     <>
-      <Heading title="users" singleTile="user" />
+      <PageHeading title="users" singleTile="user" />
       <UsersTable />
     </>
   );

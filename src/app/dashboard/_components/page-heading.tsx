@@ -3,13 +3,13 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 
-interface HeadingProps {
+interface PageHeadingProps {
   title: string;
   singleTile: string;
   subtitle?: string;
 }
 
-export const Heading = ({ title, singleTile, subtitle }: HeadingProps) => {
+export const PageHeading = ({ title, singleTile, subtitle }: PageHeadingProps) => {
   return (
     <div className="mb-10 flex items-center justify-between">
       <div className="space-y-2">
