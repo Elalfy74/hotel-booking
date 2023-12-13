@@ -1,0 +1,172 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model User {
+  id String @id @default(cuid())
+
+  firstName     String?
+  lastName      String?
+  password      String?
+  role          Role          @default(USER)
+  email         String        @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  reviews       HotelReview[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Country {
+  id String @id @default(cuid())
+
+  name       String  @unique
+  image      String
+  isFeatured Boolean @default(false)
+  cities     City[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model City {
+  id String @id @default(cuid())
+
+  name       String      @unique
+  isFeatured Boolean     @default(false)
+  images     CityImage[]
+  countryId  String
+  country    Country     @relation(fields: [countryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Hotel     Hotel[]
+}
+
+model CityImage {
+  id String @id @default(cuid())
+
+  cityId String
+  image  String
+
+  city City @relation(fields: [cityId], references: [id], onDelete: Cascade)
+}
+
+model Hotel {
+  id String @id @default(cuid())
+
+  name             String
+  description      String
+  address          String
+  distanceToDTInKm Float
+  isFeatured       Boolean            @default(false)
+  stars            Int
+  category         HotelCategory      @relation(fields: [categoryId], references: [id])
+  city             City               @relation(fields: [cityId], references: [id])
+  cityId           String
+  categoryId       String
+  features         HotelFeatureItem[]
+  images           HotelImage[]
+  rooms            HotelRoom[]
+  reviews          HotelReview[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HotelCategory {
+  id String @id @default(cuid())
+
+  name   String  @unique
+  hotels Hotel[]
+}
+
+model HotelImage {
+  id String @id @default(cuid())
+
+  hotelId String
+  image   String
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+}
+
+model HotelFeature {
+  id String @id @default(cuid())
+
+  name String @unique
+
+  hotels HotelFeatureItem[]
+}
+
+model HotelFeatureItem {
+  id String @id @default(cuid())
+
+  hotelId   String
+  featureId String
+
+  hotel   Hotel        @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  feature HotelFeature @relation(fields: [featureId], references: [id], onDelete: Cascade)
+}
+
+model HotelRoom {
+  id String @id @default(cuid())
+
+  hotelId     String
+  name        String
+  price       Int
+  beds        String
+  maxAdults   Int
+  maxChildren Int
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+}
+
+model HotelReview {
+  id String @id @default(cuid())
+
+  hotelId String
+  userId  String
+  rating  Int
+  content String
+
+  hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
