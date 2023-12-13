@@ -161,7 +161,7 @@ export const CreateUserForm = () => {
             <Link href="/dashboard/users">Discard</Link>
           </Button>
           <Button type="submit" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? <Loader className="h-2 w-2 bg-white" /> : 'Save Changes'}
+            {form.formState.isSubmitting ? <Loader className="h-2 w-2 bg-white" /> : 'Save'}
           </Button>
         </div>
       </form>
