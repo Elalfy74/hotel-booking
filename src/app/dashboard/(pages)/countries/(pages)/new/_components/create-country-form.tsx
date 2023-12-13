@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 
-import { AvatarInput } from '@/components/avatar-input';
+import { Dropzone } from '@/components/dropzone';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -26,6 +26,9 @@ export const CreateCountryForm = () => {
 
   const form = useForm<CreateCountryType>({
     resolver: zodResolver(createCountrySchema),
+    defaultValues: {
+      isFeatured: false,
+    },
   });
 
   const onSubmit = async ({ image, ...values }: CreateCountryType) => {
@@ -48,7 +51,7 @@ export const CreateCountryForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <AvatarInput onChange={field.onChange} priority />
+                <Dropzone onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -88,7 +91,7 @@ export const CreateCountryForm = () => {
             <Link href="/dashboard/countries">Discard</Link>
           </Button>
           <Button type="submit" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? <Loader className="h-2 w-2 bg-white" /> : 'Save Changes'}
+            {form.formState.isSubmitting ? <Loader className="h-2 w-2 bg-white" /> : 'Save'}
           </Button>
         </div>
       </form>
