@@ -63,7 +63,7 @@ export function reValidateAfterDelete({ keys, queryClient, amount = 1 }: IReVali
 
 export interface CountriesFilter {
   query: string;
-  isFeatured: boolean | undefined;
+  isFeatured?: boolean;
 }
 export function getCountriesWhereFilter(filter: CountriesFilter) {
   let where: Prisma.CountryFindManyArgs['where'] = {};
