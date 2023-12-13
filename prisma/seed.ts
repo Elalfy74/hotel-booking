@@ -1,7 +1,7 @@
 // import { City, Hotel, HotelReview, HotelRoom, PrismaClient, User } from '@prisma/client';
 
-// import { cities } from './cities';
-// import { countries } from './countries';
+// import cities from './cities.json';
+// import countries from './countries.json';
 // import hotels from './hotels.json';
 // import users from './users.json';
 
@@ -40,7 +40,7 @@
 //     for (const image of city.photos) {
 //       citiesImages.push({
 //         cityId: city._id.$oid,
-//         image: image,
+//         url: image,
 //       });
 //     }
 //   }
@@ -109,7 +109,7 @@
 //     for (const image of hotel.photos) {
 //       hotelsImages.push({
 //         hotelId: hotel._id.$oid,
-//         image: image,
+//         url: image,
 //       });
 //     }
 //   }
@@ -234,14 +234,14 @@
 //     // await loadCountries();
 //     // await loadCities();
 //     // await loadCitiesImages();
-//     // await loadHotelsCategories();
-//     // await loadHotels();
-//     // await loadHotelsImages();
-//     // await loadHotelsRooms();
-//     // await loadHotelsFeatures();
-//     // await loadHotelsFeaturesRelations();
-//     // await loadUsers();
-//     // await loadReviews();
+//     await loadHotelsCategories();
+//     await loadHotels();
+//     await loadHotelsImages();
+//     await loadHotelsRooms();
+//     await loadHotelsFeatures();
+//     await loadHotelsFeaturesRelations();
+//     await loadUsers();
+//     await loadReviews();
 //   } catch (e) {
 //     console.error(e);
 //     process.exit(1);
