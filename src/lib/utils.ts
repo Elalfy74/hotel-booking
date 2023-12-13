@@ -33,3 +33,12 @@ export const imageSchema = z
     (file) => file && ACCEPTED_IMAGE_TYPES.includes(file.type),
     '.jpg, .jpeg, .png and .webp files are accepted.',
   );
+
+const booleans = ['true', 'false', true, false];
+export const booleanSchema = z
+  .any()
+  .refine((val) => booleans.includes(val), { message: 'must be boolean' })
+  .transform((val) => {
+    if (val === 'true' || val === true) return true;
+    return false;
+  });
