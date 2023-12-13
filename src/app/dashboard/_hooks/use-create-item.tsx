@@ -2,9 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-import { ActionRes } from '@/actions/utils';
+import { type ActionRes } from '@/actions/utils';
 
-import { DefaultKeys, DefaultKeyType } from './utils';
+import { type DefaultKeys, type DefaultKeyType } from './utils';
 
 interface UseCreateItemProps<TResponse> {
   itemName: string;
@@ -68,6 +68,11 @@ export function useCreateItem<TResponse extends { id: string }>(
           ...oldData,
           data: newData,
         };
+      });
+
+      // Set the  item query cache
+      queryClient.setQueryData([itemName, createdItemData.id], {
+        data: createdItemData,
       });
 
       router.push(`/dashboard/${successRoute}`);
