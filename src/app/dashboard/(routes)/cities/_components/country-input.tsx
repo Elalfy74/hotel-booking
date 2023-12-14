@@ -1,15 +1,16 @@
 import { useState } from 'react';
 
 import { useCountries } from '@/app/dashboard/(routes)/countries/(routes)/(root)/_hooks/use-countries';
-import { Combobox, ComboboxItem } from '@/components/combobox';
+import { Combobox, type ComboboxItemType } from '@/components/combobox';
 import { Button } from '@/components/ui/button';
 
 interface CountryInputProps {
+  defaultSelected?: ComboboxItemType;
   onSelect: (value: string) => void;
 }
-export function CountryInput({ onSelect }: CountryInputProps) {
+export function CountryInput({ onSelect, defaultSelected }: CountryInputProps) {
   const [searchValue, setSearchValue] = useState('');
-  const [selected, setSelected] = useState<ComboboxItem | null>(null);
+  const [selected, setSelected] = useState<ComboboxItemType | null | undefined>(defaultSelected);
 
   const { data, isLoading, isFetching } = useCountries({
     currentPage: 0,
@@ -19,7 +20,7 @@ export function CountryInput({ onSelect }: CountryInputProps) {
     },
   });
 
-  const handleSelect = (item: ComboboxItem | null) => {
+  const handleSelect = (item: ComboboxItemType | null) => {
     setSelected(item);
     onSelect(item?.value ?? '');
   };
@@ -36,6 +37,14 @@ export function CountryInput({ onSelect }: CountryInputProps) {
     label: country.name,
     value: country.id,
   }));
+
+  if (selected) {
+    const isSelectedInItems = items.find((item) => item.value === selected.value);
+
+    if (!isSelectedInItems) {
+      items.unshift(selected);
+    }
+  }
 
   return (
     <Combobox

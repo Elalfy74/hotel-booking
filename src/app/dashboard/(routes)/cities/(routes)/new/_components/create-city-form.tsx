@@ -17,9 +17,9 @@ import { Input } from '@/components/ui/input';
 import { Loader } from '@/components/ui/loader';
 import { Switch } from '@/components/ui/switch';
 
+import { CountryInput } from '../../../_components/country-input';
 import { createCitySchema, type CreateCityType } from '../../../_schemas';
 import { useCreateCity } from '../_hooks/use-create-city';
-import { CountryInput } from './country-input';
 import { ImagesDropzone } from './images-dropzone';
 
 export const CreateCityForm = () => {

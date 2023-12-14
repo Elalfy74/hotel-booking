@@ -19,6 +19,7 @@ import { Loader } from '@/components/ui/loader';
 import { Switch } from '@/components/ui/switch';
 
 import { CityDto } from '../../../_actions/city.dto';
+import { CountryInput } from '../../../_components/country-input';
 import { updateCitySchema, UpdateCityType } from '../../../_schemas';
 import { useUpdateCity } from '../_hooks/use-update-city';
 import { ImagesInput } from './images-input';
@@ -37,6 +38,7 @@ export const EditCityForm = ({ city }: EditCityFormProps) => {
       isFeatured: city.isFeatured,
       images: undefined,
       removeImages: [],
+      countryId: city.country.id,
     },
   });
 
@@ -80,7 +82,7 @@ export const EditCityForm = ({ city }: EditCityFormProps) => {
         <FormField
           control={form.control}
           name="images"
-          render={({ field, formState }) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Images</FormLabel>
               <FormControl>
@@ -111,6 +113,26 @@ export const EditCityForm = ({ city }: EditCityFormProps) => {
 
         <FormField
           control={form.control}
+          name="countryId"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="block">Country</FormLabel>
+              <FormControl>
+                <CountryInput
+                  onSelect={field.onChange}
+                  defaultSelected={{
+                    label: city.country.name,
+                    value: city.country.id,
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="isFeatured"
           render={({ field }) => (
             <FormItem className="flex items-center gap-4">
@@ -123,7 +145,6 @@ export const EditCityForm = ({ city }: EditCityFormProps) => {
           )}
         />
 
-        {/* //TODO ADD COUNTRY Input */}
         <div className="flex justify-end space-x-4">
           <Button variant="secondary" asChild>
             <Link href="/dashboard/cities">Discard</Link>

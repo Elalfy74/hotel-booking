@@ -39,7 +39,6 @@ export const CreateUserForm = () => {
   });
 
   const onSubmit = async ({ image, ...values }: CreateUserSchemaType) => {
-    console.log(values);
     const formData = new FormData();
 
     formData.append('image', image);
