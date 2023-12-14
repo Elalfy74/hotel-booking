@@ -28,6 +28,7 @@ export const updateCity = asyncAdminHandler(
       images: receivedImages.length ? receivedImages : undefined,
       removeImages: receivedRemoveImages.length ? receivedRemoveImages : undefined,
     });
+
     if (!validation.success) {
       throw new Error(validation.error.message);
     }
@@ -39,11 +40,15 @@ export const updateCity = asyncAdminHandler(
     if (!isCityExist) throw new Error('City does not exist');
 
     //Upload images
-    const imageFile = images as File[];
-    const uploadedImages = await utapi.uploadFiles(imageFile);
-    const uploadedImagesURLs = uploadedImages.map((image) => ({
-      url: image.data!.url,
-    }));
+    let uploadedImagesURLs;
+
+    if (images && images.length) {
+      const imageFile = images as File[];
+      const uploadedImages = await utapi.uploadFiles(imageFile);
+      uploadedImagesURLs = uploadedImages.map((image) => ({
+        url: image.data!.url,
+      }));
+    }
 
     const updatedCity = await prisma.city.update({
       where: { id },
