@@ -41,13 +41,9 @@ export const createCity = asyncAdminHandler(async (formData: FormData): Promise<
     },
     include: {
       country: true,
+      images: true,
     },
   });
 
-  const fullCityData = {
-    ...city,
-    images: uploadedImagesURLs,
-  };
-
-  return serialize(CityDto, fullCityData);
+  return serialize(CityDto, city);
 });
