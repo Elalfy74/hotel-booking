@@ -15,17 +15,17 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 
-export type ComboboxItem = {
+export type ComboboxItemType = {
   value: string;
   label: string;
 };
 
 interface ComboboxProps {
   entityName: string;
-  items: ComboboxItem[];
+  items: ComboboxItemType[];
 
-  selected: ComboboxItem | null;
-  setSelected: (selected: ComboboxItem | null) => void;
+  selected?: ComboboxItemType | null;
+  setSelected: (selected: ComboboxItemType | null) => void;
 
   setSearchChange: (value: string) => void;
   isFetching?: boolean;
