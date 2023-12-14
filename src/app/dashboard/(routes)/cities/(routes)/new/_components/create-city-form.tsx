@@ -53,6 +53,7 @@ export const CreateCityForm = () => {
           name="images"
           render={({ field }) => (
             <FormItem>
+              <FormLabel>Images</FormLabel>
               <FormControl>
                 <ImagesDropzone onChange={field.onChange} />
               </FormControl>

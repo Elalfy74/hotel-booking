@@ -55,7 +55,7 @@ export const columns = (keys: CitiesTableKeys): ColumnDef<CityDto>[] => [
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-2 capitalize">
-          <CustomAvatar src={row.original.images[0]} width={80} height={80}>
+          <CustomAvatar src={row.original.images[0].url} width={80} height={80}>
             {row.original.name[0]}
           </CustomAvatar>
           {row.original.name}
