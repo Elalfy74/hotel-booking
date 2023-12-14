@@ -30,7 +30,9 @@ export function DataTableSelectFilter<T>(props: DataTableSelectFilterProps<T>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">{buttonLabel}</Button>
+        <Button variant="outline" size="sm">
+          {buttonLabel}
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-[5rem]">
         {props.options.map(({ label, value, icon: Icon }) => (
@@ -38,6 +40,7 @@ export function DataTableSelectFilter<T>(props: DataTableSelectFilterProps<T>) {
             key={label}
             checked={props.selectedValue === value}
             onCheckedChange={() => props.onSelectedValueChange(value)}
+            className="px-3 py-2 "
           >
             <Icon className="mr-2 h-4 w-4" />
             <span>{label}</span>
