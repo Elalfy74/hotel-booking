@@ -7,9 +7,11 @@ interface UseCitiesCountProps {
   filter: CitiesFilter;
 }
 
-export const defaultCitiesCountQueryKey = [
+type DefaultCitiesCountQueryKey = readonly ['cities count', { filter: CitiesFilter }];
+
+export const defaultCitiesCountQueryKey: DefaultCitiesCountQueryKey = [
   'cities count',
-  { filter: { query: '', isFeatured: undefined } },
+  { filter: { query: '', isFeatured: undefined, countriesFilter: [] } },
 ] as const;
 
 export const useCitiesCount = ({ filter }: UseCitiesCountProps) => {

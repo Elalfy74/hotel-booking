@@ -9,9 +9,18 @@ interface UseCitiesProps {
   filter: CitiesFilter;
 }
 
-export const defaultCitiesQueryKey = [
+type DefaultCitiesQueryKey = readonly [
   'cities',
-  { currentPage: 0, pageSize: 10, filter: { query: '', isFeatured: undefined } },
+  { currentPage: number; pageSize: number; filter: CitiesFilter },
+];
+
+export const defaultCitiesQueryKey: DefaultCitiesQueryKey = [
+  'cities',
+  {
+    currentPage: 0,
+    pageSize: 10,
+    filter: { query: '', isFeatured: undefined, countriesFilter: [] },
+  },
 ] as const;
 
 export const useCities = ({ currentPage, pageSize, filter }: UseCitiesProps) => {

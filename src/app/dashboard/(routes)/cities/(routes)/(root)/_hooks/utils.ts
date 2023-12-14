@@ -64,7 +64,9 @@ import { type QueryClient } from '@tanstack/react-query';
 export interface CitiesFilter {
   query: string;
   isFeatured: boolean | undefined;
+  countriesFilter?: string[];
 }
+
 export function getCitiesWhereFilter(filter: CitiesFilter) {
   let where: Prisma.CityFindManyArgs['where'] = {};
 
@@ -74,6 +76,14 @@ export function getCitiesWhereFilter(filter: CitiesFilter) {
 
   if (filter.isFeatured !== undefined) {
     where.isFeatured = filter.isFeatured;
+  }
+
+  if (filter.countriesFilter?.length) {
+    where.country = {
+      id: {
+        in: filter.countriesFilter,
+      },
+    };
   }
 
   return where;
