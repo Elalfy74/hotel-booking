@@ -22,9 +22,11 @@ export const SidebarUser = () => {
   return (
     <div className="flex flex-1 items-center justify-between">
       <div className="flex items-center space-x-2">
-        <CustomAvatar src={data?.user?.image} className="cursor-pointer">
-          {data?.user?.name?.[0]}
-        </CustomAvatar>
+        <CustomAvatar
+          src={data?.user?.image}
+          className="cursor-pointer"
+          fallback={data?.user?.name?.[0]}
+        />
 
         {isLoading && <Skeleton className="h-4 w-20" />}
         {!isLoading && <span className="text-sm font-medium">{data?.user?.name}</span>}
