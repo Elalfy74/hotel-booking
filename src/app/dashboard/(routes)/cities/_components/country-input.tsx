@@ -10,7 +10,7 @@ interface CountryInputProps {
 }
 export function CountryInput({ onSelect, defaultSelected }: CountryInputProps) {
   const [searchValue, setSearchValue] = useState('');
-  const [selected, setSelected] = useState<ComboboxItemType | null | undefined>(defaultSelected);
+  const [selected, setSelected] = useState<ComboboxItemType | undefined>(defaultSelected);
 
   const { data, isLoading, isFetching } = useCountries({
     currentPage: 0,
@@ -20,7 +20,7 @@ export function CountryInput({ onSelect, defaultSelected }: CountryInputProps) {
     },
   });
 
-  const handleSelect = (item: ComboboxItemType | null) => {
+  const handleSelect = (item: ComboboxItemType | undefined) => {
     setSelected(item);
     onSelect(item?.value ?? '');
   };
