@@ -11,9 +11,9 @@ import { getSelectColumn } from '@/components/ui/get-select-column';
 
 import { UserDto } from '../../../_actions/user.dto';
 import { useDeleteUser } from '../_hooks/use-delete-user';
-import { UserTableKeys } from '../_hooks/use-users-table';
+import { CurrentUserTableQKeys } from '../_hooks/use-users-table';
 
-export const columns = (keys: UserTableKeys): ColumnDef<UserDto>[] => {
+export const columns = (currentQKeys: CurrentUserTableQKeys): ColumnDef<UserDto>[] => {
   return [
     getSelectColumn(),
     getIdColumn(),
@@ -65,12 +65,12 @@ export const columns = (keys: UserTableKeys): ColumnDef<UserDto>[] => {
       cell: ({ row }) => {
         const id = row.original.id;
 
-        const { mutateAsync, isPending } = useDeleteUser({ keys });
+        const { mutate, isPending } = useDeleteUser({ currentQKeys });
 
         return (
           <DataTableRowActions
             editUrl={`/dashboard/users/${id}`}
-            handleDelete={mutateAsync.bind(null, id)}
+            handleDelete={mutate.bind(null, id)}
             isPending={isPending}
           />
         );

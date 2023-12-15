@@ -118,12 +118,12 @@ export const columns = (keys: CitiesTableKeys): ColumnDef<CityDto>[] => [
     cell: ({ row }) => {
       const id = row.original.id;
 
-      const { mutateAsync, isPending } = useDeleteCity({ keys });
+      const { mutate, isPending } = useDeleteCity({ keys });
 
       return (
         <DataTableRowActions
           editUrl={`/dashboard/cities/${id}`}
-          handleDelete={mutateAsync.bind(null, id)}
+          handleDelete={mutate.bind(null, id)}
           isPending={isPending}
         />
       );

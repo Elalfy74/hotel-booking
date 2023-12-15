@@ -89,12 +89,12 @@ export const columns = (keys: CountriesTableKeys): ColumnDef<Country>[] => [
     cell: ({ row }) => {
       const id = row.original.id;
 
-      const { mutateAsync, isPending } = useDeleteCountry({ keys });
+      const { mutate, isPending } = useDeleteCountry({ keys });
 
       return (
         <DataTableRowActions
           editUrl={`/dashboard/countries/${id}`}
-          handleDelete={mutateAsync.bind(null, id)}
+          handleDelete={mutate.bind(null, id)}
           isPending={isPending}
         />
       );
