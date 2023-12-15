@@ -36,7 +36,7 @@ export const useToggleFeatureCountry = ({ keys, onChange }: UseToggleFeatureCoun
 
       return { previousData };
     },
-    onSuccess({ error }, variables, context) {
+    onSuccess({ error }, _, context) {
       if (error) {
         toast.error(error);
         queryClient.setQueryData(keys.countriesQueryKey, context?.previousData);

@@ -6,9 +6,10 @@ import { type ColumnDef } from '@tanstack/react-table';
 import { useState } from 'react';
 
 import { CustomAvatar } from '@/components/custom-avatar';
-import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
 import { DataTableRowActions } from '@/components/ui/data-table-row-actions';
+import { getIdColumn } from '@/components/ui/get-id-column';
+import { getSelectColumn } from '@/components/ui/get-select-column';
 import { Switch } from '@/components/ui/switch';
 
 import { CountriesTableKeys } from '../_hooks/use-countries-table';
@@ -16,35 +17,8 @@ import { useDeleteCountry } from '../_hooks/use-delete-country';
 import { useToggleFeatureCountry } from '../_hooks/use-toggle-feature-country';
 
 export const columns = (keys: CountriesTableKeys): ColumnDef<Country>[] => [
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-        className="translate-y-[2px]"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="translate-y-[2px]"
-      />
-    ),
-  },
-
-  {
-    accessorKey: 'id',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Country" />,
-    cell: ({ row }) => <div className="max-w-[80px] truncate">{row.getValue('id')}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
+  getSelectColumn(),
+  getIdColumn(),
 
   {
     accessorKey: 'name',
@@ -71,8 +45,8 @@ export const columns = (keys: CountriesTableKeys): ColumnDef<Country>[] => [
     },
     cell: ({ row }) => {
       const id = row.original.id;
-      const [checked, setChecked] = useState(row.original.isFeatured);
 
+      const [checked, setChecked] = useState(row.original.isFeatured);
       const toggle = () => setChecked((prev) => !prev);
 
       const { mutate } = useToggleFeatureCountry({
