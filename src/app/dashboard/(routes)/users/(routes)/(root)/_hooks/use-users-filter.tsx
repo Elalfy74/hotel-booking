@@ -6,8 +6,8 @@ export const useUsersFilter = () => {
   const [selectedRoles, setSelectedRoles] = useState<Role[]>([]);
 
   const resetFilter = () => {
-    setSearchValue('');
-    setSelectedRoles([]);
+    if (searchValue.length > 0) setSearchValue('');
+    if (selectedRoles.length > 0) setSelectedRoles([]);
   };
 
   return {
