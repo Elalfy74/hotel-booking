@@ -7,16 +7,16 @@ import { CustomAvatar } from './custom-avatar';
 import { UserAvatarButton } from './user-avatar-button';
 
 export const UserButton = () => {
-  const session = useClientSession((state) => state.session);
+  const { data, isLoading } = useClientSession((state) => state.session);
 
-  if (session.isLoading) return <CustomAvatar />;
+  if (isLoading) return <CustomAvatar />;
 
-  if (session.data)
+  if (data)
     return (
       <UserAvatarButton
-        avatar={session.data.user.image || undefined}
-        isAdmin={session.data.user.role === 'ADMIN'}
-        fallBack={session.data.user.name?.substring(0, 1) || 'A'}
+        avatar={data.user.image || undefined}
+        isAdmin={data.user.role === 'ADMIN'}
+        fallBack={data.user.name?.substring(0, 1) || 'A'}
       />
     );
 
