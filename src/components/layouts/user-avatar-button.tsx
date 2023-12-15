@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { CustomAvatar } from './custom-avatar';
+import { CustomAvatar } from '../custom-avatar';
 
 interface UserAvatarButtonProps {
   avatar?: string | null;

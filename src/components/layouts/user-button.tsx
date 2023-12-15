@@ -2,8 +2,8 @@
 
 import { useClientSession } from '@/store/use-client-session';
 
-import { LoginModal } from './auth/login/login-modal';
-import { CustomAvatar } from './custom-avatar';
+import { LoginModal } from '../auth/login/login-modal';
+import { CustomAvatar } from '../custom-avatar';
 import { UserAvatarButton } from './user-avatar-button';
 
 export const UserButton = () => {

@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { ThemeSwitcher } from '../theme-switcher';
 import { Logo } from '../ui/logo';
-import { UserButton } from '../user-button';
+import { UserButton } from './user-button';
 
 export const Header = () => {
   return (
