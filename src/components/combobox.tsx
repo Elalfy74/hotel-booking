@@ -1,8 +1,6 @@
 'use client';
 
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
-import * as React from 'react';
-import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -13,6 +11,8 @@ import {
   CommandItem,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useDebounce } from '@/hooks/use-debounce';
+import { useDisclosure } from '@/hooks/use-disclosure';
 import { cn } from '@/lib/utils';
 
 export type ComboboxItemType = {
@@ -24,8 +24,8 @@ interface ComboboxProps {
   entityName: string;
   items: ComboboxItemType[];
 
-  selected?: ComboboxItemType | null;
-  setSelected: (selected: ComboboxItemType | null) => void;
+  selected: ComboboxItemType | undefined;
+  setSelected: (selected: ComboboxItemType | undefined) => void;
 
   setSearchChange: (value: string) => void;
   isFetching?: boolean;
@@ -37,19 +37,11 @@ export function Combobox(props: ComboboxProps) {
   const { selected, setSelected, setSearchChange, items, entityName, isFetching, className } =
     props;
 
-  const [open, setOpen] = React.useState(false);
-  const [localValue, setLocalValue] = React.useState('');
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setSearchChange(localValue);
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [localValue, setSearchChange]);
+  const [open, { setOpened, close }] = useDisclosure(false);
+  const [localValue, setLocalValue] = useDebounce({ onValueChange: setSearchChange });
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpened}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -79,25 +71,25 @@ export function Combobox(props: ComboboxProps) {
 
           {!isFetching && (
             <CommandGroup>
-              {items.map((item) => (
-                <CommandItem
-                  key={item.value}
-                  value={item.value}
-                  onSelect={() => {
-                    setSelected(selected?.value === item.value ? null : item);
-                    setOpen(false);
-                  }}
-                  className="capitalize"
-                >
-                  {item.label}
-                  <CheckIcon
-                    className={cn(
-                      'ml-auto h-4 w-4',
-                      selected?.value === item.value ? 'opacity-100' : 'opacity-0',
-                    )}
-                  />
-                </CommandItem>
-              ))}
+              {items.map((item) => {
+                const isSelected = selected?.value === item.value;
+
+                return (
+                  <CommandItem
+                    key={item.value}
+                    onSelect={() => {
+                      setSelected(isSelected ? undefined : item);
+                      close();
+                    }}
+                    className="capitalize"
+                  >
+                    {item.label}
+                    <CheckIcon
+                      className={cn('ml-auto h-4 w-4', isSelected ? 'opacity-100' : 'opacity-0')}
+                    />
+                  </CommandItem>
+                );
+              })}
             </CommandGroup>
           )}
         </Command>
