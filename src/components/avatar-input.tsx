@@ -6,11 +6,9 @@ import { usePreviewFile } from '@/hooks/use-preview-file';
 
 import { CustomAvatar, type CustomAvatarProps } from './custom-avatar';
 
-interface AvatarInputProps extends Omit<CustomAvatarProps, 'onLoad' | 'src' | 'children'> {
-  defaultPreview?: string | null | undefined;
-  value: File | undefined;
-  onChange: (file: File) => void;
-}
+interface AvatarInputProps
+  extends ImageInputProps,
+    Omit<CustomAvatarProps, 'onLoad' | 'src' | 'children'> {}
 
 export const AvatarInput = ({
   value,
@@ -19,12 +17,13 @@ export const AvatarInput = ({
   ...avatarProps
 }: AvatarInputProps) => {
   const previewFile = usePreviewFile(value);
+  const preview = previewFile ?? defaultPreview;
 
   return (
     <>
       <div className="relative w-fit">
         <CustomAvatar
-          src={previewFile ?? defaultPreview}
+          src={preview}
           className="relative h-44 w-44"
           onLoad={() => {
             if (previewFile) {
