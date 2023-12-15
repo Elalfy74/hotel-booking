@@ -11,7 +11,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
 import { DataTableRowActions } from '@/components/ui/data-table-row-actions';
 import { Switch } from '@/components/ui/switch';
-import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { CityDto } from '../../../_actions/city.dto';
 import { type CitiesTableKeys } from '../_hooks/use-cities-table';
@@ -116,21 +115,13 @@ export const columns = (keys: CitiesTableKeys): ColumnDef<CityDto>[] => [
     cell: ({ row }) => {
       const id = row.original.id;
 
-      // Delete Alert State
-      const [opened, { setOpened, close }] = useDisclosure();
-
-      const { mutate, isPending } = useDeleteCity({ onSuccess: close, keys });
+      const { mutateAsync, isPending } = useDeleteCity({ keys });
 
       return (
         <DataTableRowActions
-          id={id}
-          entity="cities"
-          handleDelete={() => {
-            mutate(id);
-          }}
+          editUrl={`/dashboard/cities/${id}`}
+          handleDelete={mutateAsync.bind(null, id)}
           isPending={isPending}
-          opened={opened}
-          setOpened={setOpened}
         />
       );
     },

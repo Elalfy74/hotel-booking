@@ -6,11 +6,10 @@ import { type CountriesTableKeys } from './use-countries-table';
 import { reValidateAfterDelete } from './utils';
 
 interface UseDeleteCountryProps {
-  onSuccess: () => void;
   keys: CountriesTableKeys;
 }
 
-export const useDeleteCountry = ({ onSuccess, keys }: UseDeleteCountryProps) => {
+export const useDeleteCountry = ({ keys }: UseDeleteCountryProps) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -19,7 +18,6 @@ export const useDeleteCountry = ({ onSuccess, keys }: UseDeleteCountryProps) => 
       if (error) return toast.error(error);
 
       toast.success('Country deleted successfully');
-      onSuccess();
 
       reValidateAfterDelete({ queryClient, keys });
     },

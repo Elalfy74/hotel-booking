@@ -10,7 +10,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
 import { DataTableRowActions } from '@/components/ui/data-table-row-actions';
 import { Switch } from '@/components/ui/switch';
-import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { CountriesTableKeys } from '../_hooks/use-countries-table';
 import { useDeleteCountry } from '../_hooks/use-delete-country';
@@ -87,21 +86,13 @@ export const columns = (keys: CountriesTableKeys): ColumnDef<Country>[] => [
     cell: ({ row }) => {
       const id = row.original.id;
 
-      // Delete Alert State
-      const [opened, { setOpened, close }] = useDisclosure();
-
-      const { mutate, isPending } = useDeleteCountry({ onSuccess: close, keys });
+      const { mutateAsync, isPending } = useDeleteCountry({ keys });
 
       return (
         <DataTableRowActions
-          id={id}
-          entity="countries"
-          handleDelete={() => {
-            mutate(id);
-          }}
+          editUrl={`/dashboard/countries/${id}`}
+          handleDelete={mutateAsync.bind(null, id)}
           isPending={isPending}
-          opened={opened}
-          setOpened={setOpened}
         />
       );
     },

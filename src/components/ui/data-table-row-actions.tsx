@@ -1,6 +1,8 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
+import { useDisclosure } from '@/hooks/use-disclosure';
+
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -21,22 +23,26 @@ import {
 import { Loader } from './loader';
 
 interface DataTableRowActionsProps {
-  id: string;
-  entity: string;
-  handleDelete: () => void;
+  editUrl: string;
+  handleDelete: () => Promise<{ error?: string }>;
   isPending: boolean;
-  opened: boolean;
-  setOpened: (value: boolean) => void;
 }
 
 export function DataTableRowActions({
-  id,
-  entity,
+  editUrl,
   handleDelete,
   isPending,
-  opened,
-  setOpened,
 }: DataTableRowActionsProps) {
+  const [opened, { setOpened, close }] = useDisclosure();
+
+  const onDeleteClick = async () => {
+    const { error } = await handleDelete();
+
+    if (!error) {
+      close();
+    }
+  };
+
   return (
     <AlertDialog open={opened} onOpenChange={setOpened}>
       <DropdownMenu>
@@ -48,7 +54,7 @@ export function DataTableRowActions({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href={`/dashboard/${entity}/${id}`}>Edit</Link>
+            <Link href={editUrl}>Edit</Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer" asChild>
             <AlertDialogTrigger className="h-full w-full">Delete</AlertDialogTrigger>
@@ -65,7 +71,7 @@ export function DataTableRowActions({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
-          <Button variant="destructive" onClick={handleDelete} disabled={isPending}>
+          <Button variant="destructive" onClick={onDeleteClick} disabled={isPending}>
             {isPending ? <Loader className="h-1.5 w-1.5 bg-white" /> : 'Delete'}
           </Button>
         </AlertDialogFooter>

@@ -6,11 +6,10 @@ import { type UserTableKeys } from './use-users-table';
 import { reValidateAfterDelete } from './utils';
 
 interface UseDeleteUserProps {
-  onSuccess: () => void;
   keys: UserTableKeys;
 }
 
-export const useDeleteUser = ({ onSuccess, keys }: UseDeleteUserProps) => {
+export const useDeleteUser = ({ keys }: UseDeleteUserProps) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -19,7 +18,6 @@ export const useDeleteUser = ({ onSuccess, keys }: UseDeleteUserProps) => {
       if (error) return toast.error(error);
 
       toast.success('User deleted successfully');
-      onSuccess();
 
       reValidateAfterDelete({ queryClient, keys });
     },

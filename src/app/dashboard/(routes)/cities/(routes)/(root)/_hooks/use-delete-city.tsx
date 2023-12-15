@@ -5,12 +5,11 @@ import { deleteCityById } from '../../../_actions';
 import { CitiesTableKeys } from './use-cities-table';
 
 interface UseDeleteCityProps {
-  onSuccess: () => void;
   keys: CitiesTableKeys;
 }
 
 // TODO: revalidate after delete
-export const useDeleteCity = ({ onSuccess, keys }: UseDeleteCityProps) => {
+export const useDeleteCity = ({ keys }: UseDeleteCityProps) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -19,7 +18,6 @@ export const useDeleteCity = ({ onSuccess, keys }: UseDeleteCityProps) => {
       if (error) return toast.error(error);
 
       toast.success('City deleted successfully');
-      onSuccess();
 
       // reValidateAfterDelete({ queryClient, keys });
     },

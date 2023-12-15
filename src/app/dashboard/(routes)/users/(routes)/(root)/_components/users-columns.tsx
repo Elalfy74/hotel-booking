@@ -7,7 +7,6 @@ import { CustomAvatar } from '@/components/custom-avatar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
 import { DataTableRowActions } from '@/components/ui/data-table-row-actions';
-import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { UserDto } from '../../../_actions/user.dto';
 import { useDeleteUser } from '../_hooks/use-delete-user';
@@ -90,19 +89,13 @@ export const columns = (keys: UserTableKeys): ColumnDef<UserDto>[] => {
       cell: ({ row }) => {
         const id = row.original.id;
 
-        // Delete Alert State
-        const [opened, { setOpened, close }] = useDisclosure();
-
-        const { mutate, isPending } = useDeleteUser({ onSuccess: close, keys });
+        const { mutateAsync, isPending } = useDeleteUser({ keys });
 
         return (
           <DataTableRowActions
-            id={id}
-            entity="users"
-            handleDelete={() => mutate(id)}
+            editUrl={`/dashboard/users/${id}`}
+            handleDelete={mutateAsync.bind(null, id)}
             isPending={isPending}
-            opened={opened}
-            setOpened={setOpened}
           />
         );
       },
