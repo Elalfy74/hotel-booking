@@ -58,7 +58,7 @@ export const CreateUserForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <AvatarInput onChange={field.onChange} priority />
+                <AvatarInput onChange={field.onChange} value={field.value} priority />
               </FormControl>
               <FormMessage />
             </FormItem>

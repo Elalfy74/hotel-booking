@@ -1,40 +1,40 @@
 import { UploadIcon, UserIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { usePreviewFile } from '@/hooks/use-preview-file';
 
-import { CustomAvatar, CustomAvatarProps } from './custom-avatar';
+import { CustomAvatar, type CustomAvatarProps } from './custom-avatar';
 
 interface AvatarInputProps extends Omit<CustomAvatarProps, 'onLoad' | 'src' | 'children'> {
+  defaultPreview?: string | null | undefined;
+  value: File | undefined;
   onChange: (file: File) => void;
-  defaultPreview?: string | null;
 }
 
-export const AvatarInput = ({ onChange, defaultPreview, ...avatarProps }: AvatarInputProps) => {
-  const [file, setFile] = useState<{ file: File; preview: string }>();
-
-  useEffect(() => {
-    return () => {
-      if (file?.preview) URL.revokeObjectURL(file.preview);
-    };
-  }, [file]);
+export const AvatarInput = ({
+  value,
+  onChange,
+  defaultPreview,
+  ...avatarProps
+}: AvatarInputProps) => {
+  const previewFile = usePreviewFile(value);
 
   return (
     <>
       <div className="relative w-fit">
         <CustomAvatar
-          src={file?.preview || defaultPreview}
+          src={previewFile ?? defaultPreview}
           className="relative h-44 w-44"
           onLoad={() => {
-            if (file?.preview) {
-              URL.revokeObjectURL(file.preview);
+            if (previewFile) {
+              URL.revokeObjectURL(previewFile);
             }
           }}
+          fallback={<UserIcon className="h-20 w-20 text-gray-400" />}
           {...avatarProps}
-        >
-          <UserIcon className="h-20 w-20 text-gray-400" />
-        </CustomAvatar>
+        />
+
         <Button
           className="absolute bottom-4 right-0 cursor-pointer bg-background"
           variant="outline"
@@ -53,11 +53,6 @@ export const AvatarInput = ({ onChange, defaultPreview, ...avatarProps }: Avatar
         className="hidden"
         onChange={(e) => {
           if (!e.target.files || e.target.files.length < 1) return;
-
-          setFile({
-            file: e.target.files[0],
-            preview: URL.createObjectURL(e.target.files[0]),
-          });
 
           onChange(e.target.files[0]);
         }}

@@ -68,6 +68,7 @@ export const EditUserForm = ({ user }: EditUserFormProps) => {
             <FormItem>
               <FormControl>
                 <AvatarInput
+                  value={field.value}
                   onChange={field.onChange}
                   defaultPreview={user.image}
                   width={300}
