@@ -12,9 +12,7 @@ export const getUserById = asyncAdminHandler(async (id: string): Promise<UserDto
     include: { accounts: true },
   });
 
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
 
   return serialize(UserDto, user);
 });
