@@ -4,9 +4,10 @@
 import { type ColumnDef } from '@tanstack/react-table';
 
 import { CustomAvatar } from '@/components/custom-avatar';
-import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
 import { DataTableRowActions } from '@/components/ui/data-table-row-actions';
+import { getIdColumn } from '@/components/ui/get-id-column';
+import { getSelectColumn } from '@/components/ui/get-select-column';
 
 import { UserDto } from '../../../_actions/user.dto';
 import { useDeleteUser } from '../_hooks/use-delete-user';
@@ -14,36 +15,8 @@ import { UserTableKeys } from '../_hooks/use-users-table';
 
 export const columns = (keys: UserTableKeys): ColumnDef<UserDto>[] => {
   return [
-    {
-      id: 'select',
-      header: ({ table }) => (
-        <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && 'indeterminate')
-          }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-          className="translate-y-[2px]"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-          className="translate-y-[2px]"
-        />
-      ),
-    },
-
-    {
-      accessorKey: 'id',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="User" />,
-      cell: ({ row }) => <div className="max-w-[80px] truncate">{row.getValue('id')}</div>,
-      enableSorting: false,
-      enableHiding: false,
-    },
+    getSelectColumn(),
+    getIdColumn(),
 
     {
       accessorKey: 'fullName',
