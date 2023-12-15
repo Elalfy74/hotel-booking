@@ -39,7 +39,7 @@ export const useUsersTable = () => {
     filter,
   });
 
-  const keys = useMemo(
+  const currentQKeys = useMemo(
     () => ({ usersQueryKey, usersCountQueryKey }),
     [usersQueryKey, usersCountQueryKey],
   );
@@ -53,8 +53,8 @@ export const useUsersTable = () => {
     usersCountFetching,
     usersFilter,
     pagination,
-    keys,
+    currentQKeys,
   };
 };
 
-export type UserTableKeys = ReturnType<typeof useUsersTable>['keys'];
+export type CurrentUserTableQKeys = ReturnType<typeof useUsersTable>['currentQKeys'];

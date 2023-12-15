@@ -24,7 +24,7 @@ import { Loader } from './loader';
 
 interface DataTableRowActionsProps {
   editUrl: string;
-  handleDelete: () => Promise<{ error?: string }>;
+  handleDelete: () => void;
   isPending: boolean;
 }
 
@@ -33,18 +33,8 @@ export function DataTableRowActions({
   handleDelete,
   isPending,
 }: DataTableRowActionsProps) {
-  const [opened, { setOpened, close }] = useDisclosure();
-
-  const onDeleteClick = async () => {
-    const { error } = await handleDelete();
-
-    if (!error) {
-      close();
-    }
-  };
-
   return (
-    <AlertDialog open={opened} onOpenChange={setOpened}>
+    <AlertDialog>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
@@ -71,7 +61,7 @@ export function DataTableRowActions({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
-          <Button variant="destructive" onClick={onDeleteClick} disabled={isPending}>
+          <Button variant="destructive" onClick={handleDelete} disabled={isPending}>
             {isPending ? <Loader className="h-1.5 w-1.5 bg-white" /> : 'Delete'}
           </Button>
         </AlertDialogFooter>

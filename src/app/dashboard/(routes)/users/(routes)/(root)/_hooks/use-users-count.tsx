@@ -13,7 +13,7 @@ export const defaultUsersCountQueryKey = [
 ] as const;
 
 export const useUsersCount = ({ filter }: UseUsersCountProps) => {
-  const queryKey = ['users count', { filter }];
+  const queryKey = ['users count', { filter }] as const;
   const where = getUsersWhereFilter(filter);
 
   const query = useQuery({

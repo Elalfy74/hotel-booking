@@ -20,7 +20,7 @@ export const UsersTable = () => {
 
     usersFilter,
     pagination,
-    keys,
+    currentQKeys,
   } = useUsersTable();
 
   // Handle Loading State
@@ -32,11 +32,11 @@ export const UsersTable = () => {
   if (usersData?.error) throw new Error(usersData.error);
   if (usersCount?.error) throw new Error(usersCount.error);
 
-  const DeleteButton = deleteManyUsersButtonWithKeys(keys);
+  const DeleteButton = deleteManyUsersButtonWithKeys(currentQKeys);
 
   return (
     <DataTable
-      columns={columns(keys)}
+      columns={columns(currentQKeys)}
       data={usersData.data}
       isLoading={usersFetching || usersCountFetching}
       filter={<UsersFilter {...usersFilter} resetPage={pagination.resetPage} />}

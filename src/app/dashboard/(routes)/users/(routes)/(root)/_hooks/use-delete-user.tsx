@@ -1,25 +1,19 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useDeleteItem } from '@/app/dashboard/_hooks/use-delete-item';
 
 import { deleteUserById } from '../../../_actions';
-import { type UserTableKeys } from './use-users-table';
-import { reValidateAfterDelete } from './utils';
+import { type CurrentUserTableQKeys } from './use-users-table';
 
 interface UseDeleteUserProps {
-  keys: UserTableKeys;
+  currentQKeys: CurrentUserTableQKeys;
 }
 
-export const useDeleteUser = ({ keys }: UseDeleteUserProps) => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: deleteUserById,
-    onSuccess: ({ error }) => {
-      if (error) return toast.error(error);
-
-      toast.success('User deleted successfully');
-
-      reValidateAfterDelete({ queryClient, keys });
+export const useDeleteUser = ({ currentQKeys }: UseDeleteUserProps) => {
+  return useDeleteItem({
+    currentKeys: {
+      arrayOfItemsKey: currentQKeys.usersQueryKey,
+      countKey: currentQKeys.usersCountQueryKey,
     },
+    itemName: 'user',
+    mutationFn: deleteUserById,
   });
 };

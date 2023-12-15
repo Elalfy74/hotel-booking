@@ -15,7 +15,7 @@ export const defaultUsersQueryKey = [
 ] as const;
 
 export const useUsers = ({ currentPage, pageSize, filter }: UseUsersProps) => {
-  const queryKey = ['users', { currentPage, pageSize, filter }];
+  const queryKey = ['users', { currentPage, pageSize, filter }] as const;
   const where = getUsersWhereFilter(filter);
 
   const query = useQuery({
