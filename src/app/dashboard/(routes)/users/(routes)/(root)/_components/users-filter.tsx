@@ -1,10 +1,11 @@
 import { Role } from '@prisma/client';
 import { ShieldAlertIcon, UserIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 import { DataTableFacetedFilter, FacetedOption } from '@/components/ui/data-table-faceted-filter';
 import { DataTableResetFilter } from '@/components/ui/data-table-reset-filter';
 import { DataTableSearchFilter } from '@/components/ui/data-table-search-filter';
+import { useDebounce } from '@/hooks/use-debounce';
 
 import { useUsersFilter } from '../_hooks/use-users-filter';
 
@@ -15,26 +16,25 @@ interface UsersFilterProps extends ReturnType<typeof useUsersFilter> {
 export const UsersFilter = (props: UsersFilterProps) => {
   const { setSearchValue, selectedRoles, setSelectedRoles, resetFilter, resetPage } = props;
 
-  const [value, setValue] = useState('');
-  const isFiltering = value.length > 0 || selectedRoles.length > 0;
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
+  const onSearchValueChange = useCallback(
+    (value: string) => {
       setSearchValue(value);
       resetPage();
-    }, 500);
+    },
+    [setSearchValue, resetPage],
+  );
 
-    return () => clearTimeout(timeout);
-  }, [value, setSearchValue, resetPage]);
+  const [value, setValue] = useDebounce({ onValueChange: onSearchValueChange });
 
-  const handleValueChange = (value: string) => {
-    setValue(value);
-  };
+  const isFiltering = value.length > 0 || selectedRoles.length > 0;
 
-  const handleSelectedRolesChange = (selectedRoles: Role[]) => {
-    setSelectedRoles(selectedRoles);
-    resetPage();
-  };
+  const handleSelectedRolesChange = useCallback(
+    (selectedRoles: Role[]) => {
+      setSelectedRoles(selectedRoles);
+      resetPage();
+    },
+    [setSelectedRoles, resetPage],
+  );
 
   const reset = () => {
     setValue('');
@@ -44,11 +44,7 @@ export const UsersFilter = (props: UsersFilterProps) => {
 
   return (
     <>
-      <DataTableSearchFilter
-        value={value}
-        setValue={handleValueChange}
-        placeholder="Filter Users..."
-      />
+      <DataTableSearchFilter value={value} setValue={setValue} placeholder="Filter Users..." />
 
       <DataTableFacetedFilter
         title="Role"
