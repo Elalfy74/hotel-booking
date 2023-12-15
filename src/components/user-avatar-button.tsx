@@ -22,7 +22,7 @@ export const UserAvatarButton = ({ avatar, fallBack, isAdmin }: UserAvatarButton
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="rounded-full">
-        <CustomAvatar src={avatar}>{fallBack}</CustomAvatar>
+        <CustomAvatar src={avatar} fallback={fallBack} />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {isAdmin && (

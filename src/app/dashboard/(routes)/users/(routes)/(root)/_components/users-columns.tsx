@@ -24,9 +24,12 @@ export const columns = (keys: UserTableKeys): ColumnDef<UserDto>[] => {
       cell: ({ row }) => {
         return (
           <div className="flex items-center gap-2">
-            <CustomAvatar src={row.original.image} width={80} height={80}>
-              {row.original.firstName?.[0] || 'A'}
-            </CustomAvatar>
+            <CustomAvatar
+              src={row.original.image}
+              width={80}
+              height={80}
+              fallback={row.original.firstName?.[0] || 'A'}
+            />
             {row.original.firstName} {row.original.lastName}
           </div>
         );

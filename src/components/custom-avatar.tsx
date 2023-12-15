@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback } from './ui/avatar';
 export interface CustomAvatarProps {
   className?: string;
   src?: string | null;
-  children?: React.ReactNode;
+  fallback?: React.ReactNode;
   onLoad?: () => void;
   width?: number;
   height?: number;
@@ -20,7 +20,7 @@ export interface CustomAvatarProps {
 export const CustomAvatar = ({
   className,
   src,
-  children,
+  fallback,
   onLoad,
   width = 32,
   height = 32,
@@ -41,7 +41,7 @@ export const CustomAvatar = ({
       )}
       {!src && (
         <AvatarFallback>
-          {children || <UserIcon className="text-muted-foreground" />}
+          {fallback || <UserIcon className="text-muted-foreground" />}
         </AvatarFallback>
       )}
     </Avatar>

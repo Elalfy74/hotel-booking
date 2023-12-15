@@ -52,9 +52,12 @@ export const columns = (keys: CountriesTableKeys): ColumnDef<Country>[] => [
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-2 capitalize">
-          <CustomAvatar src={row.original.image} width={80} height={80}>
-            {row.original.name[0]}
-          </CustomAvatar>
+          <CustomAvatar
+            src={row.original.image}
+            width={80}
+            height={80}
+            fallback={row.original.name[0]}
+          />
           {row.original.name}
         </div>
       );
