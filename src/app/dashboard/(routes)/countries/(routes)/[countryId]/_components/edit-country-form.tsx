@@ -62,7 +62,11 @@ export const EditCountryForm = ({ country }: EditCountryFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Dropzone onChange={field.onChange} defaultPreview={country.image} />
+                <Dropzone
+                  onChange={field.onChange}
+                  defaultPreview={country.image}
+                  value={field.value}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

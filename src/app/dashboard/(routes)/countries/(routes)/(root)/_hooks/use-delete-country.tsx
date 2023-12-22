@@ -1,25 +1,19 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useDeleteItem } from '@/app/dashboard/_hooks/use-delete-item';
 
 import { deleteCountryById } from '../../../_actions';
-import { type CountriesTableKeys } from './use-countries-table';
-import { reValidateAfterDelete } from './utils';
+import { type CurrentCountriesTableQKeys } from './use-countries-table';
 
 interface UseDeleteCountryProps {
-  keys: CountriesTableKeys;
+  currentQKeys: CurrentCountriesTableQKeys;
 }
 
-export const useDeleteCountry = ({ keys }: UseDeleteCountryProps) => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: deleteCountryById,
-    onSuccess: ({ error }) => {
-      if (error) return toast.error(error);
-
-      toast.success('Country deleted successfully');
-
-      reValidateAfterDelete({ queryClient, keys });
+export const useDeleteCountry = ({ currentQKeys }: UseDeleteCountryProps) => {
+  return useDeleteItem({
+    currentKeys: {
+      arrayOfItemsKey: currentQKeys.countriesQueryKey,
+      countKey: currentQKeys.countriesCountQueryKey,
     },
+    itemName: 'country',
+    mutationFn: deleteCountryById,
   });
 };

@@ -15,7 +15,7 @@ export const defaultCountriesQueryKey = [
 ] as const;
 
 export const useCountries = ({ currentPage, pageSize, filter }: UseCountriesProps) => {
-  const queryKey = ['countries', { currentPage, pageSize, filter }];
+  const queryKey = ['countries', { currentPage, pageSize, filter }] as const;
   const where = getCountriesWhereFilter(filter);
 
   const query = useQuery({

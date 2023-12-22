@@ -13,7 +13,7 @@ export const defaultCountriesCountQueryKey = [
 ] as const;
 
 export const useCountriesCount = ({ filter }: UseCountriesCountProps) => {
-  const queryKey = ['countries count', { filter }];
+  const queryKey = ['countries count', { filter }] as const;
   const where = getCountriesWhereFilter(filter);
 
   const query = useQuery({

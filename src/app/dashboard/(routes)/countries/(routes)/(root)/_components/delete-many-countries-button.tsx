@@ -1,43 +1,39 @@
-import { DeleteManyButton } from '@/app/dashboard/_components/delete-many-button';
-import { useDisclosure } from '@/hooks/use-disclosure';
+import {
+  DeleteManyButton,
+  type DeleteManyItemsButtonProps,
+} from '@/app/dashboard/_components/delete-many-button';
 
-import { type CountriesTableKeys } from '../_hooks/use-countries-table';
+import { type CurrentCountriesTableQKeys } from '../_hooks/use-countries-table';
 import { useDeleteManyCountries } from '../_hooks/use-delete-many-countries';
 
-export interface DeleteManyButtonProps {
-  ids: string[];
-  onDone: () => void;
+interface DeleteManyButtonWithKeysProps extends DeleteManyItemsButtonProps {
+  currentQKeys: CurrentCountriesTableQKeys;
 }
 
-interface DeleteManyButtonWithKeysProps extends DeleteManyButtonProps {
-  keys: CountriesTableKeys;
-}
-
-export const deleteManyCountriesButtonWithKeys = (keys: CountriesTableKeys) => {
-  return function DeleteButtonWithKeys(props: DeleteManyButtonProps) {
-    return <DeleteManyCountriesButton keys={keys} {...props} />;
+export const deleteManyCountriesButtonWithKeys = (currentQKeys: CurrentCountriesTableQKeys) => {
+  return function DeleteButtonWithKeys(props: DeleteManyItemsButtonProps) {
+    return <DeleteManyCountriesButton currentQKeys={currentQKeys} {...props} />;
   };
 };
 
-const DeleteManyCountriesButton = ({ keys, ids, onDone }: DeleteManyButtonWithKeysProps) => {
-  // For the AlertDialog
-  const [opened, { close, setOpened }] = useDisclosure();
-
-  const { mutate, isPending } = useDeleteManyCountries({
-    keys,
-    onSuccess: () => {
-      close();
-      onDone();
-    },
-  });
+const DeleteManyCountriesButton = ({
+  currentQKeys,
+  ids,
+  onDone,
+}: DeleteManyButtonWithKeysProps) => {
+  const { mutateAsync, isPending } = useDeleteManyCountries({ currentQKeys });
 
   return (
     <DeleteManyButton
-      opened={opened}
-      setOpened={setOpened}
       isDisabled={ids.length === 0}
       isPending={isPending}
-      onDelete={() => mutate(ids)}
+      onDelete={() => {
+        mutateAsync(ids).then(({ error }) => {
+          if (!error) {
+            onDone();
+          }
+        });
+      }}
     />
   );
 };

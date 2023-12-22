@@ -12,11 +12,11 @@ import { getIdColumn } from '@/components/ui/get-id-column';
 import { getSelectColumn } from '@/components/ui/get-select-column';
 import { Switch } from '@/components/ui/switch';
 
-import { CountriesTableKeys } from '../_hooks/use-countries-table';
+import { type CurrentCountriesTableQKeys } from '../_hooks/use-countries-table';
 import { useDeleteCountry } from '../_hooks/use-delete-country';
 import { useToggleFeatureCountry } from '../_hooks/use-toggle-feature-country';
 
-export const columns = (keys: CountriesTableKeys): ColumnDef<Country>[] => [
+export const columns = (currentQKeys: CurrentCountriesTableQKeys): ColumnDef<Country>[] => [
   getSelectColumn(),
   getIdColumn(),
 
@@ -50,7 +50,7 @@ export const columns = (keys: CountriesTableKeys): ColumnDef<Country>[] => [
       const toggle = () => setChecked((prev) => !prev);
 
       const { mutate } = useToggleFeatureCountry({
-        keys,
+        currentQKeys,
         onChange: toggle,
       });
 
@@ -63,7 +63,7 @@ export const columns = (keys: CountriesTableKeys): ColumnDef<Country>[] => [
     cell: ({ row }) => {
       const id = row.original.id;
 
-      const { mutate, isPending } = useDeleteCountry({ keys });
+      const { mutate, isPending } = useDeleteCountry({ currentQKeys });
 
       return (
         <DataTableRowActions

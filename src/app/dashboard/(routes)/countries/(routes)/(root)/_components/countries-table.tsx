@@ -20,7 +20,7 @@ export const CountriesTable = () => {
 
     countriesFilter,
     pagination,
-    keys,
+    currentQKeys,
   } = useCountriesTable();
 
   // Handle Data Fetching Errors
@@ -37,11 +37,11 @@ export const CountriesTable = () => {
     return <AppLoading />;
   }
 
-  const DeleteButton = deleteManyCountriesButtonWithKeys(keys);
+  const DeleteButton = deleteManyCountriesButtonWithKeys(currentQKeys);
 
   return (
     <DataTable
-      columns={columns(keys)}
+      columns={columns(currentQKeys)}
       data={countriesData.data}
       isLoading={countriesFetching || countriesCountFetching}
       filter={<CountriesFilter {...countriesFilter} resetPage={pagination.resetPage} />}

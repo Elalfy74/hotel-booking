@@ -51,7 +51,7 @@ export const CreateCountryForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Dropzone onChange={field.onChange} />
+                <Dropzone onChange={field.onChange} value={field.value} />
               </FormControl>
               <FormMessage />
             </FormItem>

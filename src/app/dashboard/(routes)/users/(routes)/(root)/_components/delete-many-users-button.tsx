@@ -4,7 +4,7 @@ import {
 } from '@/app/dashboard/_components/delete-many-button';
 
 import { useDeleteManyUsers } from '../_hooks/use-delete-many-users';
-import { CurrentUserTableQKeys } from '../_hooks/use-users-table';
+import { type CurrentUserTableQKeys } from '../_hooks/use-users-table';
 
 interface DeleteManyItemsButtonWithKeysProps extends DeleteManyItemsButtonProps {
   currentQKeys: CurrentUserTableQKeys;

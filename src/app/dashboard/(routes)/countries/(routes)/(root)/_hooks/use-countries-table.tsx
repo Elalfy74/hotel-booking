@@ -40,7 +40,7 @@ export const useCountriesTable = () => {
     filter,
   });
 
-  const keys = useMemo(
+  const currentQKeys = useMemo(
     () => ({ countriesQueryKey, countriesCountQueryKey }),
     [countriesQueryKey, countriesCountQueryKey],
   );
@@ -56,8 +56,8 @@ export const useCountriesTable = () => {
 
     countriesFilter,
     pagination,
-    keys,
+    currentQKeys,
   };
 };
 
-export type CountriesTableKeys = ReturnType<typeof useCountriesTable>['keys'];
+export type CurrentCountriesTableQKeys = ReturnType<typeof useCountriesTable>['currentQKeys'];
