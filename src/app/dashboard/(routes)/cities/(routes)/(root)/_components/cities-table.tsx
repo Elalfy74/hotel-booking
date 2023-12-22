@@ -20,7 +20,7 @@ export const CitiesTable = () => {
 
     citiesFilter,
     pagination,
-    keys,
+    currentQKeys,
   } = useCitiesTable();
 
   // Handle Data Fetching Errors
@@ -32,11 +32,11 @@ export const CitiesTable = () => {
     return <AppLoading />;
   }
 
-  const DeleteButton = deleteManyCitiesButtonWithKeys(keys);
+  const DeleteButton = deleteManyCitiesButtonWithKeys(currentQKeys);
 
   return (
     <DataTable
-      columns={columns(keys)}
+      columns={columns(currentQKeys)}
       data={citiesData.data}
       isLoading={citiesFetching || citiesCountFetching}
       filter={<CitiesFilter {...citiesFilter} resetPage={pagination.resetPage} />}

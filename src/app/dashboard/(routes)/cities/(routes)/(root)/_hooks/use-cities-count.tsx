@@ -15,7 +15,7 @@ export const defaultCitiesCountQueryKey: DefaultCitiesCountQueryKey = [
 ] as const;
 
 export const useCitiesCount = ({ filter }: UseCitiesCountProps) => {
-  const queryKey = ['cities count', { filter }];
+  const queryKey = ['cities count', { filter }] as const;
   const where = getCitiesWhereFilter(filter);
 
   const query = useQuery({

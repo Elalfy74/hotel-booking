@@ -5,22 +5,24 @@ import { GetCitiesReturnType, toggleCityIsFeatured } from '../../../_actions';
 import { type CitiesTableKeys } from './use-cities-table';
 
 interface UseToggleFeatureCityProps {
-  keys: CitiesTableKeys;
+  currentQKeys: CitiesTableKeys;
   onChange: () => void;
 }
 
-export const useToggleFeatureCity = ({ keys, onChange }: UseToggleFeatureCityProps) => {
+export const useToggleFeatureCity = ({ currentQKeys, onChange }: UseToggleFeatureCityProps) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: toggleCityIsFeatured,
     onMutate(variables) {
-      const previousData = queryClient.getQueryData<GetCitiesReturnType>(keys.citiesQueryKey);
+      const previousData = queryClient.getQueryData<GetCitiesReturnType>(
+        currentQKeys.citiesQueryKey,
+      );
 
       // To fix animation
       onChange();
 
-      queryClient.setQueryData<GetCitiesReturnType>(keys.citiesQueryKey, (oldData) => {
+      queryClient.setQueryData<GetCitiesReturnType>(currentQKeys.citiesQueryKey, (oldData) => {
         if (!oldData || !oldData.data) return undefined;
 
         const newData = oldData.data.map((city) => {
@@ -39,7 +41,7 @@ export const useToggleFeatureCity = ({ keys, onChange }: UseToggleFeatureCityPro
     onSuccess({ error }, variables, context) {
       if (error) {
         toast.error(error);
-        queryClient.setQueryData(keys.citiesQueryKey, context?.previousData);
+        queryClient.setQueryData(currentQKeys.citiesQueryKey, context?.previousData);
       }
     },
   });

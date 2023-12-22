@@ -48,7 +48,7 @@ export const useCitiesTable = () => {
     filter,
   });
 
-  const keys = useMemo(
+  const currentQKeys = useMemo(
     () => ({ citiesQueryKey, citiesCountQueryKey }),
     [citiesQueryKey, citiesCountQueryKey],
   );
@@ -64,8 +64,8 @@ export const useCitiesTable = () => {
 
     citiesFilter,
     pagination,
-    keys,
+    currentQKeys,
   };
 };
 
-export type CitiesTableKeys = ReturnType<typeof useCitiesTable>['keys'];
+export type CitiesTableKeys = ReturnType<typeof useCitiesTable>['currentQKeys'];

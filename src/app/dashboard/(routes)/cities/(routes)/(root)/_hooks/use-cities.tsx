@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { getCities } from '../../../_actions';
-import { CitiesFilter, getCitiesWhereFilter } from './utils';
+import { type CitiesFilter, getCitiesWhereFilter } from './utils';
 
 interface UseCitiesProps {
   currentPage: number;
@@ -24,7 +24,7 @@ export const defaultCitiesQueryKey: DefaultCitiesQueryKey = [
 ] as const;
 
 export const useCities = ({ currentPage, pageSize, filter }: UseCitiesProps) => {
-  const queryKey = ['cities', { currentPage, pageSize, filter }];
+  const queryKey = ['cities', { currentPage, pageSize, filter }] as const;
   const where = getCitiesWhereFilter(filter);
 
   const query = useQuery({

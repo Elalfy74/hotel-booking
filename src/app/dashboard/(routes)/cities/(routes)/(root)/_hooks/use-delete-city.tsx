@@ -1,25 +1,19 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useDeleteItem } from '@/app/dashboard/_hooks/use-delete-item';
 
 import { deleteCityById } from '../../../_actions';
-import { CitiesTableKeys } from './use-cities-table';
+import { type CitiesTableKeys } from './use-cities-table';
 
 interface UseDeleteCityProps {
-  keys: CitiesTableKeys;
+  currentQKeys: CitiesTableKeys;
 }
 
-// TODO: revalidate after delete
-export const useDeleteCity = ({ keys }: UseDeleteCityProps) => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: deleteCityById,
-    onSuccess: ({ error }) => {
-      if (error) return toast.error(error);
-
-      toast.success('City deleted successfully');
-
-      // reValidateAfterDelete({ queryClient, keys });
+export const useDeleteCity = ({ currentQKeys }: UseDeleteCityProps) => {
+  return useDeleteItem({
+    currentKeys: {
+      arrayOfItemsKey: currentQKeys.citiesQueryKey,
+      countKey: currentQKeys.citiesCountQueryKey,
     },
+    itemName: 'city',
+    mutationFn: deleteCityById,
   });
 };

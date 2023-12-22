@@ -1,10 +1,11 @@
 import { ShieldCheckIcon, ShieldXIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 import { FacetedOption } from '@/components/ui/data-table-faceted-filter';
 import { DataTableResetFilter } from '@/components/ui/data-table-reset-filter';
 import { DataTableSearchFilter } from '@/components/ui/data-table-search-filter';
 import { DataTableSelectFilter } from '@/components/ui/data-table-select-filter';
+import { useDebounce } from '@/hooks/use-debounce';
 
 import { useCitiesFilter } from '../_hooks/use-cities-filter';
 import { CountryFilter } from './country-filter';
@@ -24,17 +25,16 @@ export const CitiesFilter = (props: CitiesFilterProps) => {
     resetPage,
   } = props;
 
-  const [value, setValue] = useState('');
-  const isFiltering = value.length > 0 || isFeatured !== undefined || selectedCountries.length > 0;
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
+  const onSearchValueChange = useCallback(
+    (value: string) => {
       setSearchValue(value);
       resetPage();
-    }, 500);
+    },
+    [setSearchValue, resetPage],
+  );
 
-    return () => clearTimeout(timeout);
-  }, [value, setSearchValue, resetPage]);
+  const [value, setValue] = useDebounce({ onValueChange: onSearchValueChange });
+  const isFiltering = value.length > 0 || isFeatured !== undefined || selectedCountries.length > 0;
 
   const handleIsFeatured = (value: boolean) => {
     if (value === isFeatured) {

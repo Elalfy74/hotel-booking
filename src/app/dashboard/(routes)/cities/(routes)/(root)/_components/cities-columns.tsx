@@ -7,9 +7,10 @@ import { useState } from 'react';
 
 import { CustomAvatar } from '@/components/custom-avatar';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
 import { DataTableRowActions } from '@/components/ui/data-table-row-actions';
+import { getIdColumn } from '@/components/ui/get-id-column';
+import { getSelectColumn } from '@/components/ui/get-select-column';
 import { Switch } from '@/components/ui/switch';
 
 import { CityDto } from '../../../_actions/city.dto';
@@ -17,36 +18,9 @@ import { type CitiesTableKeys } from '../_hooks/use-cities-table';
 import { useDeleteCity } from '../_hooks/use-delete-city';
 import { useToggleFeatureCity } from '../_hooks/use-toggle-feature-city';
 
-export const columns = (keys: CitiesTableKeys): ColumnDef<CityDto>[] => [
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-        className="translate-y-[2px]"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="translate-y-[2px]"
-      />
-    ),
-  },
-
-  {
-    accessorKey: 'id',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Country" />,
-    cell: ({ row }) => <div className="max-w-[80px] truncate">{row.getValue('id')}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
+export const columns = (currentQKeys: CitiesTableKeys): ColumnDef<CityDto>[] => [
+  getSelectColumn(),
+  getIdColumn(),
 
   {
     accessorKey: 'name',
@@ -78,7 +52,7 @@ export const columns = (keys: CitiesTableKeys): ColumnDef<CityDto>[] => [
       const toggle = () => setChecked((prev) => !prev);
 
       const { mutate } = useToggleFeatureCity({
-        keys,
+        currentQKeys,
         onChange: toggle,
       });
 
@@ -118,7 +92,7 @@ export const columns = (keys: CitiesTableKeys): ColumnDef<CityDto>[] => [
     cell: ({ row }) => {
       const id = row.original.id;
 
-      const { mutate, isPending } = useDeleteCity({ keys });
+      const { mutate, isPending } = useDeleteCity({ currentQKeys });
 
       return (
         <DataTableRowActions
