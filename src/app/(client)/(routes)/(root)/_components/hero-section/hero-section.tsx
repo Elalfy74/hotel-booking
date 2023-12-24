@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { SearchForm } from '@/components/search-form/search-form';
 
-export const Hero = () => {
+export const HeroSection = () => {
   return (
     <div className="overlay">
       <Image
