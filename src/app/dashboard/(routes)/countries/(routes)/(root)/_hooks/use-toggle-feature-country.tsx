@@ -1,54 +1,15 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useToggleFeaturedItem } from '@/app/dashboard/_hooks/use-toggle-featured-item';
 
-import { type GetCountriesReturnType, toggleCountryIsFeatured } from '../../../_actions';
-import { CurrentCountriesTableQKeys } from './use-countries-table';
+import { toggleCountryIsFeatured } from '../../../_actions';
+import { type CurrentCountriesTableQKeys } from './use-countries-table';
 
 interface UseToggleFeatureCountryProps {
-  currentQKeys: CurrentCountriesTableQKeys;
-  onChange: () => void;
+  currentItemsKey: CurrentCountriesTableQKeys['countriesQueryKey'];
 }
 
-export const useToggleFeatureCountry = ({
-  currentQKeys,
-  onChange,
-}: UseToggleFeatureCountryProps) => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
+export const useToggleFeatureCountry = ({ currentItemsKey }: UseToggleFeatureCountryProps) => {
+  return useToggleFeaturedItem({
+    currentItemsKey,
     mutationFn: toggleCountryIsFeatured,
-    onMutate(variables) {
-      const previousData = queryClient.getQueryData<GetCountriesReturnType>(
-        currentQKeys.countriesQueryKey,
-      );
-
-      // To fix animation
-      onChange();
-
-      queryClient.setQueryData<GetCountriesReturnType>(
-        currentQKeys.countriesQueryKey,
-        (oldData) => {
-          if (!oldData || !oldData.data) return undefined;
-
-          const newData = oldData.data.map((country) => {
-            if (country.id === variables) return { ...country, isFeatured: !country.isFeatured };
-            return country;
-          });
-
-          return {
-            ...oldData,
-            data: newData,
-          };
-        },
-      );
-
-      return { previousData };
-    },
-    onSuccess({ error }, _, context) {
-      if (error) {
-        toast.error(error);
-        queryClient.setQueryData(currentQKeys.countriesQueryKey, context?.previousData);
-      }
-    },
   });
 };

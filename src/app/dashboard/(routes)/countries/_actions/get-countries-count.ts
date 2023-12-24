@@ -12,4 +12,3 @@ export const getCountriesCount = asyncAdminHandler(
     });
   },
 );
-export type GetCountriesCountReturnType = AwaitedReturn<typeof getCountriesCount>;

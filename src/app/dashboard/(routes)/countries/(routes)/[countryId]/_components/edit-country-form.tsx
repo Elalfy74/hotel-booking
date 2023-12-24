@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input';
 import { Loader } from '@/components/ui/loader';
 import { Switch } from '@/components/ui/switch';
 
-import { updateCountrySchema, UpdateCountryType } from '../../../_schemas';
+import { updateCountrySchema, type UpdateCountryType } from '../../../_schemas';
 import { useUpdateCountry } from '../_hooks/use-update-country';
 
 interface EditCountryFormProps {
