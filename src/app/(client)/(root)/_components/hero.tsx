@@ -10,7 +10,7 @@ export const Hero = () => {
         width={1920}
         height={700}
         alt="hero"
-        className="h-[30rem] object-cover lg:h-[40rem]"
+        className="h-[30rem] w-full object-cover lg:h-[40rem]"
         priority
       />
 

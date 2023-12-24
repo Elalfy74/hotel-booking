@@ -22,6 +22,13 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
+      gridTemplateColumns: {
+        '4-auto': 'repeat(auto-fill, minmax(250px, 1fr))',
+        '3-auto': 'repeat(auto-fill, minmax(300px, 1fr))',
+      },
+      gridTemplateRows: {
+        9: 'repeat(9,minmax(0,1fr))',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

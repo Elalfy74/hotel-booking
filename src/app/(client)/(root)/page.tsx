@@ -1,4 +1,5 @@
-import { FeaturedCities } from './_components/featured-cities';
+import { FeaturedCitiesSection } from './_components/featured-cities-section/featured-cities-section';
+import { FeaturedDestinationsSection } from './_components/featured-destinations-section/featured-destinations-section';
 import { Hero } from './_components/hero';
 
 export default async function Home() {
@@ -8,7 +9,8 @@ export default async function Home() {
         <Hero />
       </section>
       <section className="bg-gray-50 pb-16 pt-40 dark:bg-transparent lg:pt-52">
-        <FeaturedCities />
+        <FeaturedCitiesSection />
+        <FeaturedDestinationsSection />
       </section>
     </main>
   );
