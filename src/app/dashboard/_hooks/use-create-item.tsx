@@ -13,7 +13,7 @@ interface UseCreateItemProps<TResponse> {
   successRoute: string;
 }
 
-export function useCreateItem<TResponse extends { id: string }, TEntityName>(
+export function useCreateItem<TResponse extends { id: string }>(
   props: UseCreateItemProps<TResponse>,
 ) {
   const { defaultKeys, mutationFn, itemName, successRoute } = props;

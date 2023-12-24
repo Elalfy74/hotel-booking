@@ -25,4 +25,3 @@ export const getUsers = asyncAdminHandler(
     return serialize(UserDto, users);
   },
 );
-export type GetUsersReturnType = AwaitedReturn<typeof getUsers>;

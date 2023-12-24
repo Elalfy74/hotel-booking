@@ -12,4 +12,3 @@ export const getUsersCount = asyncAdminHandler(
     });
   },
 );
-export type GetUsersCountReturnType = AwaitedReturn<typeof getUsersCount>;

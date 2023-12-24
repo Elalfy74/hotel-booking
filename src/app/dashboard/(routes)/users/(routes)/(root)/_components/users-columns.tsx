@@ -11,7 +11,7 @@ import { getSelectColumn } from '@/components/ui/get-select-column';
 
 import { UserDto } from '../../../_actions/user.dto';
 import { useDeleteUser } from '../_hooks/use-delete-user';
-import { CurrentUserTableQKeys } from '../_hooks/use-users-table';
+import { type CurrentUserTableQKeys } from '../_hooks/use-users-table';
 
 export const columns = (currentQKeys: CurrentUserTableQKeys): ColumnDef<UserDto>[] => {
   return [
