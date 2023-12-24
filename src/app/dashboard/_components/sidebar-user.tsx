@@ -4,6 +4,7 @@ import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 
+import { CustomAvatar } from '@/components/custom-avatar';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -13,8 +14,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useClientSession } from '@/store/use-client-session';
-
-import { CustomAvatar } from '../../../components/custom-avatar';
 
 export const SidebarUser = () => {
   const { data, isLoading } = useClientSession((state) => state.session);
