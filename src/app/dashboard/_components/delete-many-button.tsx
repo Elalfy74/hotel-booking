@@ -13,19 +13,23 @@ import {
 import { Button } from '@/components/ui/button';
 import { Loader } from '@/components/ui/loader';
 
+export interface DeleteManyItemsButtonProps {
+  ids: string[];
+  // Unselect rows after deletion
+  onDone: () => void;
+}
+
 interface DeleteManyButtonProps {
-  opened: boolean;
-  setOpened: (opened: boolean) => void;
   isDisabled: boolean;
   isPending: boolean;
   onDelete: () => void;
 }
 
 export const DeleteManyButton = (props: DeleteManyButtonProps) => {
-  const { opened, setOpened, isPending, isDisabled, onDelete } = props;
+  const { isPending, isDisabled, onDelete } = props;
 
   return (
-    <AlertDialog open={opened} onOpenChange={setOpened}>
+    <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="destructive" size="sm" className="h-8" disabled={isDisabled}>
           Delete Selected

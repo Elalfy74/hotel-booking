@@ -1,15 +1,15 @@
 'use client';
 
-import { Table } from '@tanstack/react-table';
+import { type Table } from '@tanstack/react-table';
 
-import { DeleteManyButtonProps } from '@/app/dashboard/(pages)/users/(pages)/(root)/_components/delete-many-users-button';
+import { type DeleteManyItemsButtonProps } from '@/app/dashboard/_components/delete-many-button';
 
 import { DataTableViewOptions } from './data-table-view-options';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
   children: React.ReactNode;
-  deleteBtn: React.ComponentType<DeleteManyButtonProps>;
+  deleteBtn: React.ComponentType<DeleteManyItemsButtonProps>;
 }
 
 export function DataTableToolbar<TData extends { id: string }>({
@@ -24,7 +24,7 @@ export function DataTableToolbar<TData extends { id: string }>({
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">{children}</div>
       <div className="flex items-center space-x-2">
-        <DeleteBtn ids={selectedIds} onDone={() => table.resetRowSelection()} />
+        <DeleteBtn ids={selectedIds} onDone={table.resetRowSelection} />
 
         <DataTableViewOptions table={table} />
       </div>

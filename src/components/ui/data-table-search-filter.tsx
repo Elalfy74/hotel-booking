@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { Input } from '@/components/ui/input';
 
 interface DataTableSearchFilterProps {
@@ -6,11 +8,12 @@ interface DataTableSearchFilterProps {
   setValue: (value: string) => void;
 }
 
-export const DataTableSearchFilter = ({
+export const DataTableSearchFilter = memo(NotMemorizedDataTableSearchFilter);
+export function NotMemorizedDataTableSearchFilter({
   placeholder,
   value,
   setValue,
-}: DataTableSearchFilterProps) => {
+}: DataTableSearchFilterProps) {
   return (
     <Input
       placeholder={placeholder}
@@ -19,4 +22,4 @@ export const DataTableSearchFilter = ({
       className="h-8 w-[150px] lg:w-[250px]"
     />
   );
-};
+}

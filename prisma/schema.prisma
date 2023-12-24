@@ -67,7 +67,7 @@ model Country {
 model City {
   id String @id @default(cuid())
 
-  name       String      @unique
+  name       String
   isFeatured Boolean     @default(false)
   images     CityImage[]
   countryId  String
@@ -82,7 +82,7 @@ model CityImage {
   id String @id @default(cuid())
 
   cityId String
-  image  String
+  url    String
 
   city City @relation(fields: [cityId], references: [id], onDelete: Cascade)
 }
@@ -120,7 +120,7 @@ model HotelImage {
   id String @id @default(cuid())
 
   hotelId String
-  image   String
+  url     String
 
   hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
 }

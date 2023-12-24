@@ -1,20 +1,14 @@
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { type DropzoneRootProps, useDropzone } from 'react-dropzone';
 
-interface DropzoneProps {
-  onChange: (file: File) => void;
-  defaultPreview?: string | null;
-}
+import { usePreviewFile } from '@/hooks/use-preview-file';
 
-export const Dropzone = ({ onChange, defaultPreview }: DropzoneProps) => {
-  const [preview, setPreview] = useState<string>();
+interface DropzoneProps extends ImageInputProps {}
 
-  useEffect(() => {
-    return () => {
-      if (preview) URL.revokeObjectURL(preview);
-    };
-  }, [preview]);
+export const Dropzone = ({ value, onChange, defaultPreview }: DropzoneProps) => {
+  const previewFile = usePreviewFile(value);
+  const preview = previewFile ?? defaultPreview;
 
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({
     accept: {
@@ -24,7 +18,6 @@ export const Dropzone = ({ onChange, defaultPreview }: DropzoneProps) => {
     onDrop: (files) => {
       if (!files || files.length < 1) return;
 
-      setPreview(URL.createObjectURL(files[0]));
       onChange(files[0]);
     },
   });
@@ -39,22 +32,20 @@ export const Dropzone = ({ onChange, defaultPreview }: DropzoneProps) => {
     [isFocused, isDragAccept, isDragReject],
   );
 
-  const filePreview = preview || defaultPreview;
-
   return (
     <div {...getRootProps({ style })}>
       <input {...getInputProps()} />
-      {filePreview && (
+      {preview && (
         <Image
-          src={filePreview}
+          src={preview}
           className="h-80 object-cover"
           alt="image"
           priority
           width={600}
           height={400}
           onLoad={() => {
-            if (preview) {
-              URL.revokeObjectURL(preview);
+            if (previewFile) {
+              URL.revokeObjectURL(previewFile);
             }
           }}
         />

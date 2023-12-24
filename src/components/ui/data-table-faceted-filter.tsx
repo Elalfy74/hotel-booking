@@ -31,7 +31,11 @@ interface DataTableFacetedFilterProps<T> {
   onSelectedValuesChange: (values: T[]) => void;
 }
 
-export function DataTableFacetedFilter<T extends string>({
+export const DataTableFacetedFilter = React.memo(
+  NotMemorizedDataTableFacetedFilter,
+) as typeof NotMemorizedDataTableFacetedFilter;
+
+export function NotMemorizedDataTableFacetedFilter<T extends string>({
   title,
   options,
   selectedValues,
