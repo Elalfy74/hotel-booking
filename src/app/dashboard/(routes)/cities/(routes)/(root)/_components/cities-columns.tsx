@@ -3,7 +3,6 @@
 
 import { type ColumnDef } from '@tanstack/react-table';
 import Link from 'next/link';
-import { useState } from 'react';
 
 import { CustomAvatar } from '@/components/custom-avatar';
 import { Button } from '@/components/ui/button';
@@ -12,6 +11,7 @@ import { DataTableRowActions } from '@/components/ui/data-table-row-actions';
 import { getIdColumn } from '@/components/ui/get-id-column';
 import { getSelectColumn } from '@/components/ui/get-select-column';
 import { Switch } from '@/components/ui/switch';
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 import { CityDto } from '../../../_actions/city.dto';
 import { type CitiesTableKeys } from '../_hooks/use-cities-table';
@@ -47,16 +47,21 @@ export const columns = (currentQKeys: CitiesTableKeys): ColumnDef<CityDto>[] => 
     },
     cell: ({ row }) => {
       const id = row.original.id;
-      const [checked, setChecked] = useState(row.original.isFeatured);
-
-      const toggle = () => setChecked((prev) => !prev);
+      const [checked, { toggle }] = useDisclosure(row.original.isFeatured);
 
       const { mutate } = useToggleFeatureCity({
-        currentQKeys,
-        onChange: toggle,
+        currentItemsKey: currentQKeys.citiesQueryKey,
       });
 
-      return <Switch checked={checked} onCheckedChange={() => mutate(id)} />;
+      return (
+        <Switch
+          checked={checked}
+          onCheckedChange={() => {
+            toggle();
+            mutate(id);
+          }}
+        />
+      );
     },
   },
 

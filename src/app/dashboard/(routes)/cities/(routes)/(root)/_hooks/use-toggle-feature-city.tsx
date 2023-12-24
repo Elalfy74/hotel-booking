@@ -1,48 +1,15 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useToggleFeaturedItem } from '@/app/dashboard/_hooks/use-toggle-featured-item';
 
-import { GetCitiesReturnType, toggleCityIsFeatured } from '../../../_actions';
+import { toggleCityIsFeatured } from '../../../_actions';
 import { type CitiesTableKeys } from './use-cities-table';
 
 interface UseToggleFeatureCityProps {
-  currentQKeys: CitiesTableKeys;
-  onChange: () => void;
+  currentItemsKey: CitiesTableKeys['citiesQueryKey'];
 }
 
-export const useToggleFeatureCity = ({ currentQKeys, onChange }: UseToggleFeatureCityProps) => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
+export const useToggleFeatureCity = ({ currentItemsKey }: UseToggleFeatureCityProps) => {
+  return useToggleFeaturedItem({
+    currentItemsKey,
     mutationFn: toggleCityIsFeatured,
-    onMutate(variables) {
-      const previousData = queryClient.getQueryData<GetCitiesReturnType>(
-        currentQKeys.citiesQueryKey,
-      );
-
-      // To fix animation
-      onChange();
-
-      queryClient.setQueryData<GetCitiesReturnType>(currentQKeys.citiesQueryKey, (oldData) => {
-        if (!oldData || !oldData.data) return undefined;
-
-        const newData = oldData.data.map((city) => {
-          if (city.id === variables) return { ...city, isFeatured: !city.isFeatured };
-          return city;
-        });
-
-        return {
-          ...oldData,
-          data: newData,
-        };
-      });
-
-      return { previousData };
-    },
-    onSuccess({ error }, variables, context) {
-      if (error) {
-        toast.error(error);
-        queryClient.setQueryData(currentQKeys.citiesQueryKey, context?.previousData);
-      }
-    },
   });
 };
