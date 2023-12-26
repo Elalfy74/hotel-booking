@@ -9,7 +9,7 @@ import { FeaturedCitiesSwiperItem } from './featured-cities-swiper-item';
 export const FeaturedCitiesSwiper = ({ cities }: { cities: IFeaturedCity[] }) => {
   return (
     <Swiper
-      className="!px-4 md:h-[400px] md:!px-0"
+      className="swiper-padding md:h-[400px]"
       slidesPerView={1.5}
       grid={{
         rows: 1,

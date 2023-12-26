@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma';
 
-import { TopTour } from './top-tour';
+import { TopToursList } from './top-tours-list';
 
 const getTopTours = async () => {
   return prisma.country.findMany({
@@ -16,12 +16,12 @@ const getTopTours = async () => {
 };
 export type ITopTour = AwaitedReturn<typeof getTopTours>[number];
 
-export const TopTourSection = async () => {
+export const TopToursSection = async () => {
   const topTours = await getTopTours();
 
   return (
-    <section className="section">
-      <TopTour tours={topTours} />
+    <section className="section-swiper">
+      <TopToursList tours={topTours} />
     </section>
   );
 };

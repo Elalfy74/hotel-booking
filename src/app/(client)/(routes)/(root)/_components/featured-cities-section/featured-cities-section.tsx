@@ -20,24 +20,20 @@ export const FeaturedCitiesSection = async () => {
   const cities = await getCities();
 
   return (
-    <>
-      <div className="container">
-        <SectionHeading
-          center
-          title="Search a best place in the world"
-          desc={
-            <>
-              Where you&apos;re looking for places for a vacation. we are here to Guide you
-              <br />
-              about the details you need to check in and ease your tripe in advance
-            </>
-          }
-        />
-      </div>
-
-      <div className="md:container">
-        <FeaturedCitiesSwiper cities={cities} />
-      </div>
-    </>
+    <div className="section-swiper pt-0">
+      <SectionHeading
+        center
+        container
+        title="Search a best place in the world"
+        desc={
+          <>
+            Where you&apos;re looking for places for a vacation. we are here to Guide you
+            <br />
+            about the details you need to check in and ease your tripe in advance
+          </>
+        }
+      />
+      <FeaturedCitiesSwiper cities={cities} />
+    </div>
   );
 };

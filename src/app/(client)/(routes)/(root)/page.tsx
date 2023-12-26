@@ -1,7 +1,9 @@
-import { FeaturedCitiesSection } from './_components/featured-cities-section/featured-cities-section';
-import { FeaturedDestinationsSection } from './_components/featured-destinations-section/featured-destinations-section';
-import { HeroSection } from './_components/hero-section/hero-section';
-import { TopTourSection } from './_components/top-tour-section/top-tour-section';
+import {
+  FeaturedCitiesSection,
+  FeaturedDestinationsSection,
+  HeroSection,
+  TopToursSection,
+} from './_components';
 
 export default async function Home() {
   return (
@@ -9,11 +11,13 @@ export default async function Home() {
       <section>
         <HeroSection />
       </section>
-      <section className="bg-gray-50 pb-16 pt-40 dark:bg-transparent lg:pt-52">
-        <FeaturedCitiesSection />
+      <div className="bg-gray-50 dark:bg-transparent">
+        <section className="pt-40 lg:pt-52">
+          <FeaturedCitiesSection />
+        </section>
         <FeaturedDestinationsSection />
-        <TopTourSection />
-      </section>
+        <TopToursSection />
+      </div>
     </main>
   );
 }

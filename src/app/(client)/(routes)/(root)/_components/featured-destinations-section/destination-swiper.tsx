@@ -6,9 +6,13 @@ import { IFeaturedDestination } from './featured-destinations-section';
 
 export const DestinationSwiper = ({ destination }: { destination: IFeaturedDestination }) => {
   return (
-    <Swiper pagination={true} modules={[Pagination]} className="layout-swiper h-full w-full">
+    <Swiper
+      pagination={true}
+      modules={[Pagination]}
+      className="h-full w-full rounded-2xl md:cursor-pointer"
+    >
       {destination.images.map((image) => (
-        <SwiperSlide key={image.id}>
+        <SwiperSlide key={image.id} className="overlay">
           <Image
             width={900}
             height={400}

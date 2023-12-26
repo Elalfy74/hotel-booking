@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { Card } from '@/components/ui/card';
 
-import { type ITopTour } from './top-tour-section';
+import { type ITopTour } from './top-tours-section';
 
 export const SingleTopTour = ({ tour }: { tour: ITopTour }) => {
   return (

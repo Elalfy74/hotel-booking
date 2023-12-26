@@ -11,7 +11,7 @@ import { useNavigation } from '@/hooks/use-navigation';
 
 import { SectionHeading } from '../../section-heading';
 import { SingleTopTour } from './single-top-tour';
-import { ITopTour } from './top-tour-section';
+import { ITopTour } from './top-tours-section';
 
 const options = {
   640: {
@@ -32,12 +32,12 @@ const options = {
   },
 };
 
-export const TopTour = ({ tours }: { tours: ITopTour[] }) => {
+export const TopToursList = ({ tours }: { tours: ITopTour[] }) => {
   const { setSwiperRef, handleSwiperChange, handleCurrentStatus, status } = useNavigation();
 
   return (
     <>
-      <div className="flex items-center justify-between px-4 sm:px-0">
+      <div className="container flex items-center justify-between sm:flex">
         <SectionHeading title="Top Tours" desc="keep calm & travel on" />
         <div className="flex flex-col">
           <Button asChild variant="link" className="p-0">
@@ -52,7 +52,7 @@ export const TopTour = ({ tours }: { tours: ITopTour[] }) => {
         </div>
       </div>
       <Swiper
-        className="swiper-padding text-white"
+        className="swiper-padding"
         slidesPerView={1.5}
         spaceBetween={20}
         freeMode={true}
