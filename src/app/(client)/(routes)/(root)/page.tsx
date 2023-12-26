@@ -1,3 +1,4 @@
+import { ContactBanner } from '../../_components/contact-banner';
 import {
   ExploreTheWorldSection,
   FeaturedCitiesSection,
@@ -21,6 +22,7 @@ export default async function Home() {
         <TopToursSection />
         <ExploreTheWorldSection />
         <TrendingHotelsSection />
+        <ContactBanner />
       </div>
     </main>
   );
