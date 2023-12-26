@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 
-interface SectionHeadingProps {
+export interface SectionHeadingProps {
   title: string;
   desc: string | React.ReactNode;
   center?: boolean;

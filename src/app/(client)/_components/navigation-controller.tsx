@@ -1,5 +1,6 @@
-import { Button } from '@/components/ui/button';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 
 type NavigationControllerProps = {
   handleSwiperChange: (dir: 'prev' | 'next') => void;
@@ -9,7 +10,7 @@ type NavigationControllerProps = {
   };
 };
 
-const NavigationController = ({ handleSwiperChange, status }: NavigationControllerProps) => {
+export const NavigationController = ({ handleSwiperChange, status }: NavigationControllerProps) => {
   const btnStyle =
     'rounded-full bg-gray-200 p-2 duration-300 hover:bg-gray-300 dark:bg-secondary  disabled:bg-gray-100 disabled:cursor-not-allowed';
 
@@ -36,5 +37,3 @@ const NavigationController = ({ handleSwiperChange, status }: NavigationControll
     </div>
   );
 };
-
-export default NavigationController;

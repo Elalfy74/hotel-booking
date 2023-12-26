@@ -1,9 +1,10 @@
 import {
+  ExploreTheWorldSection,
   FeaturedCitiesSection,
   FeaturedDestinationsSection,
   HeroSection,
   TopToursSection,
-} from './_components';
+} from './_components/sections';
 
 export default async function Home() {
   return (
@@ -17,6 +18,7 @@ export default async function Home() {
         </section>
         <FeaturedDestinationsSection />
         <TopToursSection />
+        <ExploreTheWorldSection />
       </div>
     </main>
   );

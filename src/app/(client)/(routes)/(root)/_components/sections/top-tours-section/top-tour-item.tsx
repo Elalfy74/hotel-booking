@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 
 import { type ITopTour } from './top-tours-section';
 
-export const SingleTopTour = ({ tour }: { tour: ITopTour }) => {
+export const TopTourItem = ({ tour }: { tour: ITopTour }) => {
   return (
     <Link href={`/countries/${tour.id}`} className="w-full">
       <Card className="overlay group relative h-full w-full overflow-hidden text-white before:z-[2]">

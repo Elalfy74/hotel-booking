@@ -6,7 +6,7 @@ interface NavigationStatus {
   isEnd: boolean;
 }
 
-export const useNavigation = () => {
+export const useSwiperNavigation = () => {
   const swiperRef = useRef<SwiperCore | null>(null);
   const [status, setStatus] = useState<NavigationStatus>({
     isBeginning: true,
