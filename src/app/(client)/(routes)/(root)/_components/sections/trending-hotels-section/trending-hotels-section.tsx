@@ -1,11 +1,13 @@
 import prisma from '@/lib/prisma';
 
-import { HotelsList } from './hotels-list';
+import { TrendingHotelsList } from './trending-hotels-list';
 
-const getHotels = async () => {
+const getTrendingHotels = async () => {
   const hotels = await prisma.hotel.findMany({
+    where: {
+      isFeatured: true,
+    },
     include: {
-      city: true,
       images: {
         take: 1,
       },
@@ -15,9 +17,6 @@ const getHotels = async () => {
         },
       },
     },
-    orderBy: {
-      id: 'desc',
-    },
     take: 6,
   });
 
@@ -26,14 +25,14 @@ const getHotels = async () => {
     cheapestPrice: Math.min(...hotel.rooms.map((room) => room.price)),
   }));
 };
-export type IHotelWCity = AwaitedReturn<typeof getHotels>[number];
+export type ITrendingHotel = AwaitedReturn<typeof getTrendingHotels>[number];
 
-export const ExploreTheWorldSection = async () => {
-  const hotels = await getHotels();
+export const TrendingHotelsSection = async () => {
+  const hotels = await getTrendingHotels();
 
   return (
-    <section className="section-swiper">
-      <HotelsList hotels={hotels} />
+    <section className="section">
+      <TrendingHotelsList hotels={hotels} />
     </section>
   );
 };

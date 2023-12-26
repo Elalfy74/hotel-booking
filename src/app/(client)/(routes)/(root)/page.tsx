@@ -4,6 +4,7 @@ import {
   FeaturedDestinationsSection,
   HeroSection,
   TopToursSection,
+  TrendingHotelsSection,
 } from './_components/sections';
 
 export default async function Home() {
@@ -19,6 +20,7 @@ export default async function Home() {
         <FeaturedDestinationsSection />
         <TopToursSection />
         <ExploreTheWorldSection />
+        <TrendingHotelsSection />
       </div>
     </main>
   );
