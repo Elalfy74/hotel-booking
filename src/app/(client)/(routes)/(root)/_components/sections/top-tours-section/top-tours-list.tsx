@@ -3,10 +3,10 @@
 import { FreeMode } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { EntityCard } from '@/app/(client)/_components/entity-card';
 import { useSwiperNavigation } from '@/hooks/use-swiper-navigation';
 
 import { SectionHeadingWithController } from '../../section-heading-with-controller';
-import { TopTourItem } from './top-tour-item';
 import { ITopTour } from './top-tours-section';
 
 const options = {
@@ -54,7 +54,7 @@ export const TopToursList = ({ tours }: { tours: ITopTour[] }) => {
       >
         {tours.map((tour) => (
           <SwiperSlide key={tour.id}>
-            <TopTourItem tour={tour} />
+            <EntityCard entity={tour} />
           </SwiperSlide>
         ))}
       </Swiper>
