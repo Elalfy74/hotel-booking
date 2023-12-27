@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma';
 
-import { HotelsList } from './hotels-list';
+import { LazyExploreTheWorld } from './lazy-explore-the-world';
 
 const getHotels = async () => {
   const hotels = await prisma.hotel.findMany({
@@ -31,9 +31,5 @@ export type IHotelWCity = AwaitedReturn<typeof getHotels>[number];
 export const ExploreTheWorldSection = async () => {
   const hotels = await getHotels();
 
-  return (
-    <section className="section-swiper">
-      <HotelsList hotels={hotels} />
-    </section>
-  );
+  return <LazyExploreTheWorld hotels={hotels} />;
 };

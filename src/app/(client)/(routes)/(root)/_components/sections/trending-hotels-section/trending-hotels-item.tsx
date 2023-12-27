@@ -26,11 +26,7 @@ export const TrendingHotelsItem = ({ hotel }: { hotel: ITrendingHotel }) => {
               {hotel.name}
             </h4>
           </Link>
-          <div className="flex gap-1">
-            {new Array(+hotel.stars.toFixed()).fill('').map((_, i) => (
-              <StarIcon className="h-3 w-3 fill-current text-orange-400 sm:h-5 sm:w-5" key={i} />
-            ))}
-          </div>
+          <HotelsStarts stars={hotel.stars} />
           <div>
             <span className="font-semibold md:text-xl">${hotel.cheapestPrice.toFixed(2)}</span>
             <span>/night</span>
@@ -43,5 +39,15 @@ export const TrendingHotelsItem = ({ hotel }: { hotel: ITrendingHotel }) => {
         </Button>
       </div>
     </Card>
+  );
+};
+
+const HotelsStarts = ({ stars }: { stars: number }) => {
+  return (
+    <div className="flex gap-1">
+      {new Array(+stars.toFixed()).fill('').map((_, i) => (
+        <StarIcon className="h-3 w-3 fill-current text-orange-400 sm:h-5 sm:w-5" key={i} />
+      ))}
+    </div>
   );
 };

@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useSwiperNavigation } from '@/hooks/use-swiper-navigation';
 
 import { SectionHeadingWithController } from '../../section-heading-with-controller';
-import { type IHotelWCity } from './explore-the-world-section';
+import { type IHotelWCity } from '..';
 import { HotelItem } from './hotel-item';
 
 const options = {
@@ -23,11 +23,11 @@ const options = {
   },
 };
 
-export const HotelsList = ({ hotels }: { hotels: IHotelWCity[] }) => {
+export const ExploreTheWorld = ({ hotels }: { hotels: IHotelWCity[] }) => {
   const { setSwiperRef, handleCurrentStatus, handleSwiperChange, status } = useSwiperNavigation();
 
   return (
-    <>
+    <section className="section-swiper">
       <SectionHeadingWithController
         title="Explore The World"
         desc="1000 beautiful places to go"
@@ -52,6 +52,6 @@ export const HotelsList = ({ hotels }: { hotels: IHotelWCity[] }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </>
+    </section>
   );
 };
