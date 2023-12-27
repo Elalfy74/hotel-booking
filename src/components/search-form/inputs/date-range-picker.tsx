@@ -3,15 +3,20 @@
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon, ChevronsUpDown } from 'lucide-react';
 import * as React from 'react';
-import { DateRange } from 'react-day-picker';
+import type { DateRange, SelectRangeEventHandler } from 'react-day-picker';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 
-export function DatePickerWithRange() {
-  const [date, setDate] = React.useState<DateRange | undefined>(undefined);
+interface DateRangePickerProps {
+  date?: DateRange;
+  setDate: SelectRangeEventHandler;
+}
+
+export function DateRangePicker(props: DateRangePickerProps) {
+  const { date, setDate } = props;
 
   const displayDate = React.useMemo(() => {
     if (!date) return 'Pick a date';

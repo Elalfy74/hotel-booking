@@ -2,15 +2,15 @@ import Image from 'next/image';
 
 import { SearchForm } from '@/components/search-form/search-form';
 
-export const Hero = () => {
+export const HeroSection = () => {
   return (
-    <div className="overlay">
+    <section className="overlay">
       <Image
         src="/hero.jpg"
         width={1920}
         height={700}
         alt="hero"
-        className="h-[30rem] object-cover lg:h-[40rem]"
+        className="h-[30rem] w-full object-cover lg:h-[40rem]"
         priority
       />
 
@@ -21,9 +21,9 @@ export const Hero = () => {
         </h1>
       </div>
 
-      <div className="container absolute left-1/2 -translate-x-1/2 -translate-y-2/3 lg:-translate-y-1/2">
+      <div className="container absolute left-1/2 -translate-x-1/2 -translate-y-1/2">
         <SearchForm />
       </div>
-    </div>
+    </section>
   );
 };

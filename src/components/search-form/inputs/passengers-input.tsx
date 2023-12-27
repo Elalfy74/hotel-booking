@@ -1,14 +1,18 @@
+'use client';
+
 import { ChevronsUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import { type PassengersInputs, usePassengers } from '@/store/use-select-passengers';
 
 import { SinglePassengerInput } from './single-passenger-input';
 
 export const PassengersInput = () => {
-  // const label = `Adults ${passengers['Adults']} / Children ${passengers['Children']} / Infants ${passengers['Infants']}`;
-  const data = null;
+  const { passengers, handlePassenger } = usePassengers();
+
+  const label = `Adults ${passengers['Adults']} / Children ${passengers['Children']} / Infants ${passengers['Infants']}`;
 
   return (
     <Popover>
@@ -17,10 +21,9 @@ export const PassengersInput = () => {
           variant="outline"
           className={cn(
             'w-full justify-start bg-gray-50 py-6 text-left font-normal focus-visible:bg-white focus-visible:bg-none dark:bg-background',
-            !data && 'font-normal text-gray-400 hover:text-gray-400',
           )}
         >
-          {data || 'Passengers'}
+          {label}
 
           <div className="flex flex-1 justify-end">
             <ChevronsUpDown className="ml-2 h-4 w-4  shrink-0 opacity-50" />
@@ -34,7 +37,8 @@ export const PassengersInput = () => {
               key={item.title}
               passengerTitle={item.title}
               passengerDesc={item.desc}
-              passenger={0}
+              handlePassenger={handlePassenger}
+              passenger={passengers[item.title]}
             />
           ))}
         </div>
@@ -43,7 +47,7 @@ export const PassengersInput = () => {
   );
 };
 
-export const arrOfPassengers = [
+export const arrOfPassengers: { title: keyof PassengersInputs; desc: string }[] = [
   {
     title: 'Adults',
     desc: 'Ages 13 or above',

@@ -13,7 +13,11 @@ const config: Config = {
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: {
+        DEFAULT: '1rem',
+        sm: '2rem',
+        lg: '4rem',
+      },
       screens: {
         '2xl': '1400px',
       },
@@ -21,6 +25,13 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
+      },
+      gridTemplateColumns: {
+        '4-auto': 'repeat(auto-fill, minmax(250px, 1fr))',
+        '3-auto': 'repeat(auto-fill, minmax(300px, 1fr))',
+      },
+      gridTemplateRows: {
+        9: 'repeat(9,minmax(0,1fr))',
       },
       colors: {
         border: 'hsl(var(--border))',

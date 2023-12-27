@@ -65,4 +65,57 @@
   .overlay::before {
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.0001) 10%, #000000 120%);
   }
+
+  .section {
+    @apply container py-16;
+  }
+  .section-swiper {
+    @apply py-16 sm:container;
+  }
+
+  .swiper-padding {
+    padding: 0px 1rem !important;
+  }
+  @media screen and (min-width: 640px) {
+    .swiper-padding {
+      padding: 0 !important;
+    }
+  }
+
+  /* Featured Destinations */
+  .opened-card {
+    @apply fixed bottom-0 left-0 right-0 top-0 z-10 m-auto flex h-[50vh] w-3/5;
+  }
+  /* Card */
+  .layout-card:nth-child(1) {
+    @apply md:col-start-1 md:col-end-3 md:row-start-1 md:row-end-5;
+  }
+  .layout-card:nth-child(2) {
+    @apply md:col-start-3 md:row-start-1 md:row-end-4;
+  }
+  .layout-card:nth-child(3) {
+    @apply md:col-span-1 md:row-span-5 md:row-start-5;
+  }
+  .layout-card:nth-child(4) {
+    @apply md:col-start-2 md:col-end-3 md:row-start-5 md:row-end-[10];
+  }
+  .layout-card:nth-child(5) {
+    @apply md:row-start-4 md:row-end-7;
+  }
+  .layout-card:nth-child(6) {
+    @apply md:col-start-3 md:row-start-7 md:row-end-[10];
+  }
+  /* Card Title */
+  .layout-card:nth-child(2) h3,
+  .layout-card:nth-child(5) h3,
+  .layout-card:nth-child(6) h3 {
+    @apply md:text-base lg:text-lg;
+  }
+}
+
+.swiper-pagination-bullet {
+  background-color: #e2e2e2 !important;
+}
+.swiper-pagination-bullet-active {
+  background-color: #316bff !important;
 }

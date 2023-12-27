@@ -47,13 +47,17 @@ export function Combobox(props: ComboboxProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn('w-[300px] justify-between', className)}
+          className={cn(
+            'w-[300px] justify-between',
+            className,
+            !selected && 'text-gray-400 hover:text-gray-400',
+          )}
         >
           {selected ? selected.label : `Select ${entityName}...`}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className={cn('w-[300px] p-0', className)}>
+      <PopoverContent className={cn('min-w-[300px] p-0')}>
         <Command shouldFilter={false}>
           <CommandInput
             placeholder={`Search ${entityName}...`}
@@ -68,6 +72,10 @@ export function Combobox(props: ComboboxProps) {
               `No ${entityName} found`
             )}
           </CommandEmpty>
+
+          {isFetching && !items.length && (
+            <span className="py-6 text-center text-sm">Fetching {entityName}...</span>
+          )}
 
           {!isFetching && (
             <CommandGroup>
