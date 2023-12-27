@@ -4,7 +4,7 @@ import { SearchForm } from '@/components/search-form/search-form';
 
 export const HeroSection = () => {
   return (
-    <div className="overlay">
+    <section className="overlay">
       <Image
         src="/hero.jpg"
         width={1920}
@@ -21,9 +21,9 @@ export const HeroSection = () => {
         </h1>
       </div>
 
-      <div className="container absolute left-1/2 -translate-x-1/2 -translate-y-2/3 lg:-translate-y-1/2">
+      <div className="container absolute left-1/2 -translate-x-1/2 -translate-y-1/2">
         <SearchForm />
       </div>
-    </div>
+    </section>
   );
 };
