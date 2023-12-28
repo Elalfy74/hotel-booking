@@ -34,23 +34,19 @@ const getCountryCities = async (countryId: string) => {
     },
   });
 };
+export type ICityOfCountry = NonNullable<AwaitedReturn<typeof getCountryCities>>['cities'][number];
 
-interface Props {
+interface SingleCountryPageProps {
   params: {
-    id: string;
+    countryId: string;
   };
 }
-export default async function SingleCountryPage({ params: { id } }: Props) {
-  const countryWithCities = await getCountryCities(id);
+export default async function SingleCountryPage({ params: { countryId } }: SingleCountryPageProps) {
+  const countryWithCities = await getCountryCities(countryId);
 
   if (!countryWithCities) {
     return notFound();
   }
-
-  const cities = countryWithCities.cities.map((city) => ({
-    ...city,
-    country: countryWithCities.name,
-  }));
 
   return (
     <div>
@@ -59,7 +55,7 @@ export default async function SingleCountryPage({ params: { id } }: Props) {
         image={countryWithCities.image}
       />
 
-      <CitiesList cities={cities} />
+      <CitiesList cities={countryWithCities.cities} countryName={countryWithCities.name} />
     </div>
   );
 }
