@@ -3,11 +3,11 @@
 import { FreeMode } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { EntityCard } from '@/app/(client)/_components/entity-card';
 import { useSwiperNavigation } from '@/hooks/use-swiper-navigation';
 
 import { SectionHeadingWithController } from '../../section-heading-with-controller';
-import { TopTourItem } from './top-tour-item';
-import { ITopTour } from './top-tours-section';
+import { type ITopTour } from './top-tours-section';
 
 const options = {
   640: {
@@ -54,7 +54,13 @@ export const TopToursList = ({ tours }: { tours: ITopTour[] }) => {
       >
         {tours.map((tour) => (
           <SwiperSlide key={tour.id}>
-            <TopTourItem tour={tour} />
+            <EntityCard
+              image={tour.image}
+              title={tour.name}
+              subTitle={`${tour._count.cities} Popular Cities`}
+              badge={tour.name}
+              url={`/countries/${tour.id}`}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
