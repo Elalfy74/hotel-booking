@@ -178,3 +178,7 @@
 .swiper-pagination-bullet-active {
   background-color: #316bff !important;
 }
+
+svg.star-svg {
+  display: inline;
+}

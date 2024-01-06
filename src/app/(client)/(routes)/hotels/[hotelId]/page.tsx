@@ -6,9 +6,13 @@ import { Stars } from '@/components/stars';
 import { Separator } from '@/components/ui/separator';
 import prisma from '@/lib/prisma';
 
+import { ExploreTheWorldSection, TrendingHotelsSection } from '../../(root)/_components/sections';
+import { BookingSummary } from './_components/booking-summary';
 import { HotelImagesGallery } from './_components/hotel-images-gallery';
 import { HotelTabs } from './_components/hotel-tabs';
 import { HotelTags } from './_components/hotel-tags';
+import { ReviewForm } from './_components/reviews/review-form';
+import { ReviewsList } from './_components/reviews/reviews-list';
 import { RoomsList } from './_components/rooms-list';
 
 export async function generateStaticParams() {
@@ -88,7 +92,7 @@ export default async function SingleHotelPage({ params: { hotelId } }: SingleHot
 
   return (
     <div className="bg-gray-50 dark:bg-transparent">
-      <div className="px-4 py-10 md:px-20 lg:px-48">
+      <div className="px-4 py-10 lg:px-20 xl:px-48">
         <Breadcrumbs items={breadcrumbItems} />
         <div>
           <h1 className="my-4 text-4xl font-semibold capitalize">{hotel.name}</h1>
@@ -106,20 +110,23 @@ export default async function SingleHotelPage({ params: { hotelId } }: SingleHot
           <div className="mt-5 w-full lg:w-2/3">
             <HotelTabs description={hotel.description} features={hotelFeatures} />
           </div>
-          <div className="w-full lg:w-1/3">{/* <BookingSummary /> */}</div>
+          <div className="w-full lg:w-1/3">
+            <BookingSummary />
+          </div>
         </div>
         <Separator />
 
         <div className="container mt-20 flex flex-col gap-20 xl:w-[70%]">
           <RoomsList rooms={hotel.rooms} />
-          {/* <ReviewForm />
-          <ReviewsList /> */}
+          <ReviewForm />
+          <ReviewsList />
         </div>
       </div>
 
-      {/* <div className="container">
-        <TrendingHotels /> 
-      </div> */}
+      <div className="container">
+        <ExploreTheWorldSection />
+        <TrendingHotelsSection />
+      </div>
       <ContactBanner />
     </div>
   );
