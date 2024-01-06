@@ -91,7 +91,7 @@ export default async function SingleHotelPage({ params: { hotelId } }: SingleHot
   }));
 
   return (
-    <div className="bg-gray-50 dark:bg-transparent">
+    <div>
       <div className="px-4 py-10 lg:px-20 xl:px-48">
         <Breadcrumbs items={breadcrumbItems} />
         <div>
