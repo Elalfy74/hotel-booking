@@ -12,16 +12,16 @@ export default async function Home() {
   return (
     <main className="min-h-screen w-full">
       <HeroSection />
-      <div className="bg-gray-50 dark:bg-transparent">
-        <section className="pt-52">
-          <FeaturedCitiesSection />
-        </section>
-        <FeaturedDestinationsSection />
-        <TopToursSection />
-        <ExploreTheWorldSection />
+      <section className="pt-52">
+        <FeaturedCitiesSection />
+      </section>
+      <FeaturedDestinationsSection />
+      <TopToursSection />
+      <ExploreTheWorldSection />
+      <div className="bg-gray-100 dark:bg-background">
         <TrendingHotelsSection />
-        <ContactBanner />
       </div>
+      <ContactBanner />
     </main>
   );
 }

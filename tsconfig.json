@@ -34,7 +34,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/dashboard/(pages)/users/_schemas/update-user-tsx"
+    "src/app/dashboard/(pages)/users/_schemas/update-user-tsx",
+    "src/app/(client)/(routes)/hotels/(root)/_components/filter/popular-checkbox-listtsx"
   ],
   "exclude": [
     "node_modules"
