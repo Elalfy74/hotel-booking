@@ -17,7 +17,7 @@ const ReviewContent = () => {
     <div className="sm:w-[60%]">
       <div className="mb-6 flex items-end gap-4">
         <Stars stars={3} />
-        <span className="text-mainGray text-xs">26.5.2020</span>
+        <span className="text-xs text-gray-700">26.5.2020</span>
       </div>
       <p className="text-gray-500">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi quaerat, a facere

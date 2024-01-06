@@ -8,7 +8,7 @@ import { type IHotelWCity } from './explore-the-world-section';
 
 export const HotelItem = ({ hotel }: { hotel: IHotelWCity }) => {
   return (
-    <Card className="main-border h-[350px] max-h-full w-full p-3 shadow-sm ">
+    <Card className="h-[350px] max-h-full w-full border p-3 shadow-sm ">
       <Link href={`/hotels/${hotel.id}`}>
         <Image
           width={300}
