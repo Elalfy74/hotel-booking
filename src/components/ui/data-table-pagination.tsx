@@ -5,12 +5,12 @@ import {
   DoubleArrowRightIcon,
 } from '@radix-ui/react-icons';
 
-import { type GetPaginationReturnType } from '@/hooks/use-app-pagination';
+import { type UseQueryPaginationReturn } from '@/hooks/use-query-pagination';
 
 import { Button } from './button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './select';
 
-interface DataTablePaginationProps extends GetPaginationReturnType {
+interface DataTablePaginationProps extends UseQueryPaginationReturn {
   selected: number;
   isLoading: boolean;
 }
@@ -44,13 +44,13 @@ export function DataTablePagination(props: DataTablePaginationProps) {
           </Select>
         </div>
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {props.currentPage + 1} of {props.totalPages}
+          Page {props.page} of {props.totalPages}
         </div>
         <div className="flex items-center space-x-2">
           <Button
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => props.setPage(0)}
+            onClick={() => props.resetPage()}
             disabled={!props.previousEnabled || props.isLoading}
           >
             <span className="sr-only">Go to first page</span>
@@ -77,7 +77,7 @@ export function DataTablePagination(props: DataTablePaginationProps) {
           <Button
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => props.setPage(props.totalPages - 1)}
+            onClick={() => props.setPage(props.totalPages)}
             disabled={!props.nextEnabled || props.isLoading}
           >
             <span className="sr-only">Go to last page</span>

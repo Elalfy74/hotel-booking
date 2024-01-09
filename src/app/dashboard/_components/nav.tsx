@@ -1,6 +1,6 @@
 'use client';
 
-import { BarChart3Icon, Building2Icon, GlobeIcon, Users2Icon } from 'lucide-react';
+import { BarChart3Icon, Building2Icon, BuildingIcon, GlobeIcon, Users2Icon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback } from 'react';
@@ -16,6 +16,7 @@ const navigation = [
   { name: 'Users', icon: Users2Icon, href: '/dashboard/users' },
   { name: 'Countries', icon: GlobeIcon, href: '/dashboard/countries' },
   { name: 'Cities', icon: Building2Icon, href: '/dashboard/cities' },
+  { name: 'Hotels', icon: BuildingIcon, href: '/dashboard/hotels' },
 ];
 
 export const Nav = () => {

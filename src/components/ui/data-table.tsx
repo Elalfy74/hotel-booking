@@ -15,13 +15,14 @@ import { useState } from 'react';
 
 import { DeleteManyItemsButtonProps } from '@/app/dashboard/_components/delete-many-button';
 import { GetPaginationReturnType } from '@/hooks/use-app-pagination';
+import { UseQueryPaginationReturn } from '@/hooks/use-query-pagination';
 
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableToolbar } from './data-table-toolbar';
 import { Spinner } from './spinner';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
 
-interface DataTableProps<TData, TValue> extends GetPaginationReturnType {
+interface DataTableProps<TData, TValue> extends UseQueryPaginationReturn {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   isLoading: boolean;

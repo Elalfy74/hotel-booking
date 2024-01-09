@@ -14,7 +14,6 @@ export const useQueryPagination = ({ totalItems = 0 }: UseQueryPaginationProps =
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [pageSize, setPageSize] = useQueryState('pageSize', parseAsInteger.withDefault(10));
   const [totalItemsState, setTotalItemsState] = useState(totalItems);
-  const isTotalItemsChanged = useRef(false);
 
   const totalItemsRef = useRef(totalItems);
   totalItemsRef.current = totalItems;
@@ -33,11 +32,6 @@ export const useQueryPagination = ({ totalItems = 0 }: UseQueryPaginationProps =
         return;
       }
 
-      if (!isTotalItemsChanged.current) {
-        isTotalItemsChanged.current = true;
-      } else {
-        setPage(null);
-      }
       handleSetTotalItems(totalItemsRef.current);
     };
   }, [totalItems, pageSize, setPage, handleSetTotalItems]);
@@ -55,6 +49,10 @@ export const useQueryPagination = ({ totalItems = 0 }: UseQueryPaginationProps =
     setPage((page) => page - 1);
   }, [previousEnabled, setPage]);
 
+  const resetPage = useCallback(() => {
+    setPage(null);
+  }, [setPage]);
+
   const handlePageSizeChange = useCallback(
     (newPageSize: number) => {
       setPageSize(newPageSize);
@@ -66,6 +64,7 @@ export const useQueryPagination = ({ totalItems = 0 }: UseQueryPaginationProps =
   return {
     page,
     setPage,
+    resetPage,
     pageSize,
     setPageSize: handlePageSizeChange,
     totalItems,
@@ -76,3 +75,4 @@ export const useQueryPagination = ({ totalItems = 0 }: UseQueryPaginationProps =
     setPreviousPage,
   };
 };
+export type UseQueryPaginationReturn = ReturnType<typeof useQueryPagination>;
