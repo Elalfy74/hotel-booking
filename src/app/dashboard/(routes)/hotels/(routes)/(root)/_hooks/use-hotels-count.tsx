@@ -3,7 +3,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { getHotelsCount } from '../../../_actions';
-import { getHotelsWhereFilter, HotelsFilter } from './utils';
+import { getHotelsWhereFilter, type HotelsFilter } from './utils';
 
 type DefaultHotelsCountQueryKey = readonly ['hotels count', { filter: HotelsFilter }];
 
@@ -17,7 +17,7 @@ export const useHotelsCount = ({ filter }: { filter: HotelsFilter }) => {
   const where = getHotelsWhereFilter(filter);
 
   const query = useQuery({
-    queryKey: ['hotels count', filter],
+    queryKey,
     queryFn: () => getHotelsCount({ where }),
     placeholderData: keepPreviousData,
   });

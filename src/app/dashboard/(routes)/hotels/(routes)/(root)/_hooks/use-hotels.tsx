@@ -28,7 +28,7 @@ export const useHotels = ({ currentPage, pageSize, filter }: UseHotelsProps) => 
   const where = getHotelsWhereFilter(filter);
 
   const query = useQuery({
-    queryKey: ['hotels', { currentPage, pageSize, filter }],
+    queryKey,
     queryFn: () =>
       getHotels({
         skip: (currentPage - 1) * pageSize,

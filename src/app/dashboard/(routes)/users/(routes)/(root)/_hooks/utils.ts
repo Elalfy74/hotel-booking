@@ -2,7 +2,7 @@ import { Prisma, type Role } from '@prisma/client';
 
 export interface UsersFilter {
   query: string;
-  role: Role[];
+  roles?: Role[];
 }
 
 export function getUsersWhereFilter(filter: UsersFilter) {
@@ -15,8 +15,8 @@ export function getUsersWhereFilter(filter: UsersFilter) {
     ];
   }
 
-  if (filter.role.length > 0) {
-    where.role = { in: filter.role };
+  if (filter.roles?.length) {
+    where.role = { in: filter.roles };
   }
 
   return where;

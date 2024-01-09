@@ -3,16 +3,14 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getUsersCount } from '../../../_actions';
 import { getUsersWhereFilter, type UsersFilter } from './utils';
 
-interface UseUsersCountProps {
-  filter: UsersFilter;
-}
+type DefaultUsersCountQueryKey = readonly ['users count', { filter: UsersFilter }];
 
-export const defaultUsersCountQueryKey = [
+export const defaultUsersCountQueryKey: DefaultUsersCountQueryKey = [
   'users count',
-  { filter: { query: '', role: [] } },
+  { filter: { query: '', roles: undefined } },
 ] as const;
 
-export const useUsersCount = ({ filter }: UseUsersCountProps) => {
+export const useUsersCount = ({ filter }: { filter: UsersFilter }) => {
   const queryKey = ['users count', { filter }] as const;
   const where = getUsersWhereFilter(filter);
 

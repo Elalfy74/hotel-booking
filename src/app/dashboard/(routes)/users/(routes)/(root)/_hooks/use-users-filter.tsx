@@ -1,20 +1,35 @@
 import { type Role } from '@prisma/client';
-import { useState } from 'react';
+import { parseAsJson, useQueryState } from 'nuqs';
+
+import { UsersFilter } from './utils';
 
 export const useUsersFilter = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const [selectedRoles, setSelectedRoles] = useState<Role[]>([]);
+  const [filter, setFilter] = useQueryState(
+    'filter',
+    parseAsJson<UsersFilter>().withDefault({
+      query: '',
+      roles: undefined,
+    }),
+  );
+
+  const setQ = (q: string) => {
+    if (q === filter.query) {
+      return;
+    }
+    setFilter({ ...filter, query: q });
+  };
+  const setUsersRoles = (roles: Role[] | undefined) => {
+    setFilter({ ...filter, roles });
+  };
 
   const resetFilter = () => {
-    if (searchValue.length > 0) setSearchValue('');
-    if (selectedRoles.length > 0) setSelectedRoles([]);
+    setFilter(null);
   };
 
   return {
-    searchValue,
-    setSearchValue,
-    selectedRoles,
-    setSelectedRoles,
+    filter,
+    setQ,
+    setUsersRoles,
     resetFilter,
   };
 };

@@ -9,16 +9,14 @@ import { useUsersFilter } from './use-users-filter';
 export const useUsersTable = () => {
   // Handle Users Filter
   const usersFilter = useUsersFilter();
-  // Filter users by searchValue and selectedRoles
 
-  const filter = { query: usersFilter.searchValue, role: usersFilter.selectedRoles };
   // Fetch users count
   const {
     data: usersCount,
     isPending: usersCountLoading,
     isFetching: usersCountFetching,
     queryKey: usersCountQueryKey,
-  } = useUsersCount({ filter });
+  } = useUsersCount({ filter: usersFilter.filter });
 
   // Handle pagination
   const pagination = useQueryPagination({
@@ -34,7 +32,7 @@ export const useUsersTable = () => {
   } = useUsers({
     currentPage: pagination.currentPage,
     pageSize: pagination.pageSize,
-    filter,
+    filter: usersFilter.filter,
   });
 
   const currentQKeys = useMemo(

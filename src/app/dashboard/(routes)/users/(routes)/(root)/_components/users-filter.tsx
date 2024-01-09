@@ -14,26 +14,29 @@ interface UsersFilterProps extends ReturnType<typeof useUsersFilter> {
 }
 
 export const UsersFilter = (props: UsersFilterProps) => {
-  const { setSearchValue, selectedRoles, setSelectedRoles, resetFilter, resetPage } = props;
+  const { filter, setQ, setUsersRoles, resetFilter, resetPage } = props;
 
   const onSearchValueChange = useCallback(
     (value: string) => {
-      setSearchValue(value);
+      if (value === filter.query) {
+        return;
+      }
       resetPage();
+      setQ(value);
     },
-    [setSearchValue, resetPage],
+    [setQ, resetPage, filter.query],
   );
 
   const [value, setValue] = useDebounce({ onValueChange: onSearchValueChange });
 
-  const isFiltering = value.length > 0 || selectedRoles.length > 0;
+  const isFiltering = value.length > 0 || filter.roles?.length;
 
   const handleSelectedRolesChange = useCallback(
     (selectedRoles: Role[]) => {
-      setSelectedRoles(selectedRoles);
       resetPage();
+      setUsersRoles(selectedRoles);
     },
-    [setSelectedRoles, resetPage],
+    [setUsersRoles, resetPage],
   );
 
   const reset = () => {
@@ -49,7 +52,7 @@ export const UsersFilter = (props: UsersFilterProps) => {
       <DataTableFacetedFilter
         title="Role"
         options={options}
-        selectedValues={selectedRoles}
+        selectedValues={filter.roles ?? []}
         onSelectedValuesChange={handleSelectedRolesChange}
       />
 
