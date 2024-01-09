@@ -10,7 +10,7 @@ type DefaultUsersQueryKey = readonly [
 
 export const defaultUsersQueryKey: DefaultUsersQueryKey = [
   'users',
-  { currentPage: 0, pageSize: 10, filter: { query: '', roles: [] } },
+  { currentPage: 1, pageSize: 10, filter: { query: '', roles: [] } },
 ] as const;
 
 interface UseUsersProps {

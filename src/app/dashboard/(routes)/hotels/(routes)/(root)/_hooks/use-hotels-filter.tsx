@@ -9,6 +9,7 @@ export const useHotelsFilter = () => {
       query: '',
       isFeatured: undefined,
       citiesFilter: undefined,
+      categoriesFilter: undefined,
     }),
   );
 
@@ -30,6 +31,10 @@ export const useHotelsFilter = () => {
     setFilter({ ...filter, citiesFilter: citiesIds });
   };
 
+  const setCategoriesFilter = (categoriesIds: string[] | undefined) => {
+    setFilter({ ...filter, categoriesFilter: categoriesIds });
+  };
+
   const resetFilter = () => {
     setFilter(null);
   };
@@ -39,6 +44,7 @@ export const useHotelsFilter = () => {
     setQ,
     setFeatured,
     setCitiesFilter,
+    setCategoriesFilter,
     resetFilter,
   };
 };

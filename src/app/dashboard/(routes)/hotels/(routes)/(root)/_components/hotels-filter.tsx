@@ -10,13 +10,22 @@ import { useDebounce } from '@/hooks/use-debounce';
 
 import { useHotelsFilter } from '../_hooks/use-hotels-filter';
 import { CityFilter } from './city-filter';
+import { HotelCategoryFilter } from './hotel-category-filter';
 
 interface HotelsFilterProps extends ReturnType<typeof useHotelsFilter> {
   resetPage: () => void;
 }
 
 export const HotelsFilter = (props: HotelsFilterProps) => {
-  const { filter, setQ, setFeatured, setCitiesFilter, resetFilter, resetPage } = props;
+  const {
+    filter,
+    setQ,
+    setFeatured,
+    setCitiesFilter,
+    setCategoriesFilter,
+    resetFilter,
+    resetPage,
+  } = props;
 
   const onSearchValueChange = useCallback(
     (value: string) => {
@@ -31,11 +40,18 @@ export const HotelsFilter = (props: HotelsFilterProps) => {
 
   const [value, setValue] = useDebounce({ onValueChange: onSearchValueChange });
   const [selectedCities, setSelectedCities] = useState<ComboboxItemType[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<ComboboxItemType[]>([]);
 
   const handleSelectedCities = (values: ComboboxItemType[]) => {
     resetPage();
     setSelectedCities(values);
     setCitiesFilter(values.map((v) => v.value));
+  };
+
+  const handleSelectedCategories = (values: ComboboxItemType[]) => {
+    resetPage();
+    setSelectedCategories(values);
+    setCategoriesFilter(values.map((v) => v.value));
   };
 
   const isFiltering =
@@ -60,6 +76,11 @@ export const HotelsFilter = (props: HotelsFilterProps) => {
   return (
     <>
       <DataTableSearchFilter value={value} setValue={setValue} placeholder="Filter Hotels..." />
+
+      <HotelCategoryFilter
+        selectedCategories={selectedCategories}
+        setSelectedCategories={handleSelectedCategories}
+      />
 
       <CityFilter selectedCities={selectedCities} setSelectedCities={handleSelectedCities} />
 

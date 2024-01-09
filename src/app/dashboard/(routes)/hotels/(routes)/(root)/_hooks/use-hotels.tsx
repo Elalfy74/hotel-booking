@@ -11,7 +11,7 @@ type DefaultHotelsQueryKey = readonly [
 export const defaultHotelsQueryKey: DefaultHotelsQueryKey = [
   'hotels',
   {
-    currentPage: 0,
+    currentPage: 1,
     pageSize: 10,
     filter: { query: '', isFeatured: undefined, citiesFilter: [] },
   },

@@ -5,6 +5,7 @@ import { AppLoading } from '@/components/app-loading';
 import { DataTable } from '@/components/ui/data-table';
 
 import { useHotelsTable } from '../_hooks/use-hotels-table';
+import { deleteManyHotelsButtonWithKeys } from './delete-many-hotels-button';
 import { columns } from './hotels-columns';
 import { HotelsFilter } from './hotels-filter';
 
@@ -32,7 +33,7 @@ export const HotelsTable = () => {
     return <AppLoading />;
   }
 
-  // const DeleteButton = deleteManyhotelsButtonWithKeys(currentQKeys);
+  const DeleteButton = deleteManyHotelsButtonWithKeys(currentQKeys);
 
   return (
     <DataTable
@@ -40,7 +41,7 @@ export const HotelsTable = () => {
       data={hotelsData.data}
       isLoading={hotelsFetching || hotelsCountFetching}
       filter={<HotelsFilter {...hotelsFilter} resetPage={pagination.resetPage} />}
-      deleteBtn={(props: DeleteManyItemsButtonProps) => <button>Delete</button>}
+      deleteBtn={DeleteButton}
       {...pagination}
     />
   );

@@ -14,7 +14,7 @@ export const CountryFilter = ({ selectedCountries, setSelectedCountries }: Count
   const [query, setQuery] = useState('');
 
   const { data, isFetching, isLoading } = useCountries({
-    currentPage: 0,
+    currentPage: 1,
     pageSize: 5,
     filter: {
       query,

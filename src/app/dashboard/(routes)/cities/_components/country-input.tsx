@@ -13,7 +13,7 @@ export function CountryInput({ onSelect, defaultSelected }: CountryInputProps) {
   const [selected, setSelected] = useState<ComboboxItemType | undefined>(defaultSelected);
 
   const { data, isLoading, isFetching } = useCountries({
-    currentPage: 0,
+    currentPage: 1,
     pageSize: 10,
     filter: {
       query: searchValue,

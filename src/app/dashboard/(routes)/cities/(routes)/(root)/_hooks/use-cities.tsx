@@ -11,7 +11,7 @@ type DefaultCitiesQueryKey = readonly [
 export const defaultCitiesQueryKey: DefaultCitiesQueryKey = [
   'cities',
   {
-    currentPage: 0,
+    currentPage: 1,
     pageSize: 10,
     filter: { query: '', isFeatured: undefined, countriesFilter: [] },
   },

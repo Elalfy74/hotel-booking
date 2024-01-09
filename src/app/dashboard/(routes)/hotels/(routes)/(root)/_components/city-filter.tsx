@@ -14,7 +14,7 @@ export const CityFilter = ({ selectedCities, setSelectedCities }: CityFilterProp
   const [query, setQuery] = useState('');
 
   const { data, isFetching, isLoading } = useCities({
-    currentPage: 0,
+    currentPage: 1,
     pageSize: 5,
     filter: {
       query,

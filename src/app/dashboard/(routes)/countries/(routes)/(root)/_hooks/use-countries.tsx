@@ -11,7 +11,7 @@ interface UseCountriesProps {
 
 export const defaultCountriesQueryKey = [
   'countries',
-  { currentPage: 0, pageSize: 10, filter: { query: '', isFeatured: undefined } },
+  { currentPage: 1, pageSize: 10, filter: { query: '', isFeatured: undefined } },
 ] as const;
 
 export const useCountries = ({ currentPage, pageSize, filter }: UseCountriesProps) => {

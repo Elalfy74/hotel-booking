@@ -4,6 +4,7 @@ export interface HotelsFilter {
   query: string;
   isFeatured: boolean | undefined;
   citiesFilter?: string[];
+  categoriesFilter?: string[];
 }
 
 export function getHotelsWhereFilter(filter: HotelsFilter) {
@@ -21,6 +22,14 @@ export function getHotelsWhereFilter(filter: HotelsFilter) {
     where.city = {
       id: {
         in: filter.citiesFilter,
+      },
+    };
+  }
+
+  if (filter.categoriesFilter?.length) {
+    where.category = {
+      id: {
+        in: filter.categoriesFilter,
       },
     };
   }
