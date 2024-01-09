@@ -18,23 +18,19 @@ export const useQueryPagination = ({ totalItems = 0 }: UseQueryPaginationProps =
   const totalItemsRef = useRef(totalItems);
   totalItemsRef.current = totalItems;
 
-  const totalPages = useMemo(() => {
-    return getTotalPages(totalItemsState, pageSize);
-  }, [totalItemsState, pageSize]);
-
-  const handleSetTotalItems = useCallback((newTotalItems: number) => {
-    setTotalItemsState(newTotalItems);
-  }, []);
-
   useEffect(() => {
     return () => {
       if (typeof totalItemsRef.current !== 'number' || totalItems === totalItemsRef.current) {
         return;
       }
 
-      handleSetTotalItems(totalItemsRef.current);
+      setTotalItemsState(totalItemsRef.current);
     };
-  }, [totalItems, pageSize, setPage, handleSetTotalItems]);
+  }, [totalItems, pageSize, setPage]);
+
+  const totalPages = useMemo(() => {
+    return getTotalPages(totalItemsState, pageSize);
+  }, [totalItemsState, pageSize]);
 
   const nextEnabled = useMemo(() => page < totalPages, [page, totalPages]);
   const previousEnabled = useMemo(() => page > 1, [page]);
