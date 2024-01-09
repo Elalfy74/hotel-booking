@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { useAppPagination } from '@/hooks/use-app-pagination';
+import { useQueryPagination } from '@/hooks/use-query-pagination';
 
 import { useCities } from './use-cities';
 import { useCitiesCount } from './use-cities-count';
@@ -30,10 +30,8 @@ export const useCitiesTable = () => {
   } = useCitiesCount({ filter });
 
   // Handle pagination
-  const pagination = useAppPagination({
+  const pagination = useQueryPagination({
     totalItems: citiesCount?.data,
-    initialPage: 0,
-    initialPageSize: 10,
   });
 
   // Fetch cities based on pagination and filter

@@ -28,7 +28,7 @@ export const useHotelsTable = () => {
     isFetching: hotelsFetching,
     queryKey: hotelsQueryKey,
   } = useHotels({
-    currentPage: pagination.page,
+    currentPage: pagination.currentPage,
     pageSize: pagination.pageSize,
     filter: hotelsFilter.filter,
   });

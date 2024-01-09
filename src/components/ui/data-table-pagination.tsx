@@ -44,7 +44,7 @@ export function DataTablePagination(props: DataTablePaginationProps) {
           </Select>
         </div>
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {props.page} of {props.totalPages}
+          Page {props.currentPage} of {props.totalPages}
         </div>
         <div className="flex items-center space-x-2">
           <Button

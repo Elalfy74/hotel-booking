@@ -13,24 +13,10 @@ interface UseQueryPaginationProps {
 export const useQueryPagination = ({ totalItems = 0 }: UseQueryPaginationProps = {}) => {
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [pageSize, setPageSize] = useQueryState('pageSize', parseAsInteger.withDefault(10));
-  const [totalItemsState, setTotalItemsState] = useState(totalItems);
-
-  const totalItemsRef = useRef(totalItems);
-  totalItemsRef.current = totalItems;
-
-  useEffect(() => {
-    return () => {
-      if (typeof totalItemsRef.current !== 'number' || totalItems === totalItemsRef.current) {
-        return;
-      }
-
-      setTotalItemsState(totalItemsRef.current);
-    };
-  }, [totalItems, pageSize, setPage]);
 
   const totalPages = useMemo(() => {
-    return getTotalPages(totalItemsState, pageSize);
-  }, [totalItemsState, pageSize]);
+    return getTotalPages(totalItems, pageSize);
+  }, [totalItems, pageSize]);
 
   const nextEnabled = useMemo(() => page < totalPages, [page, totalPages]);
   const previousEnabled = useMemo(() => page > 1, [page]);
@@ -58,7 +44,7 @@ export const useQueryPagination = ({ totalItems = 0 }: UseQueryPaginationProps =
   );
 
   return {
-    page,
+    currentPage: page,
     setPage,
     resetPage,
     pageSize,

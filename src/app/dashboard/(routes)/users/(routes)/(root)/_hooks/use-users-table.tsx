@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { useAppPagination } from '@/hooks/use-app-pagination';
+import { useQueryPagination } from '@/hooks/use-query-pagination';
 
 import { useUsers } from './use-users';
 import { useUsersCount } from './use-users-count';
@@ -21,10 +21,8 @@ export const useUsersTable = () => {
   } = useUsersCount({ filter });
 
   // Handle pagination
-  const pagination = useAppPagination({
+  const pagination = useQueryPagination({
     totalItems: usersCount?.data,
-    initialPage: 0,
-    initialPageSize: 10,
   });
 
   // Fetch users based on pagination and filter
