@@ -31,7 +31,7 @@ export const useCities = ({ currentPage, pageSize, filter }: UseCitiesProps) => 
     queryKey,
     queryFn: () =>
       getCities({
-        skip: currentPage * pageSize,
+        skip: (currentPage - 1) * pageSize,
         take: pageSize,
         where,
       }),

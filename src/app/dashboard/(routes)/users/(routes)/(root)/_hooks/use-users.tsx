@@ -22,7 +22,7 @@ export const useUsers = ({ currentPage, pageSize, filter }: UseUsersProps) => {
     queryKey,
     queryFn: () =>
       getUsers({
-        skip: currentPage * pageSize,
+        skip: (currentPage - 1) * pageSize,
         take: pageSize,
         where,
       }),

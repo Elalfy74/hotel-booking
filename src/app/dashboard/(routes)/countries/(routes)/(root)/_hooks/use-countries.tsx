@@ -22,7 +22,7 @@ export const useCountries = ({ currentPage, pageSize, filter }: UseCountriesProp
     queryKey,
     queryFn: () =>
       getCountries({
-        skip: currentPage * pageSize,
+        skip: (currentPage - 1) * pageSize,
         take: pageSize,
         where,
       }),
