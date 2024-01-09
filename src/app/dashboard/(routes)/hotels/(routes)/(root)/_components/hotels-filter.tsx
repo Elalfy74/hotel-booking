@@ -38,7 +38,8 @@ export const HotelsFilter = (props: HotelsFilterProps) => {
     setCitiesFilter(values.map((v) => v.value));
   };
 
-  const isFiltering = value.length > 0 || filter.isFeatured !== undefined || selectedCities.length;
+  const isFiltering =
+    value.length > 0 || filter.isFeatured !== undefined || !!selectedCities.length;
 
   const handleIsFeatured = (value: boolean) => {
     resetPage();

@@ -29,7 +29,7 @@ export const UsersFilter = (props: UsersFilterProps) => {
 
   const [value, setValue] = useDebounce({ onValueChange: onSearchValueChange });
 
-  const isFiltering = value.length > 0 || filter.roles?.length;
+  const isFiltering = value.length > 0 || !!filter.roles?.length;
 
   const handleSelectedRolesChange = useCallback(
     (selectedRoles: Role[]) => {

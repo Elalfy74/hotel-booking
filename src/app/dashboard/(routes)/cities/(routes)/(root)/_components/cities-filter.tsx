@@ -32,8 +32,14 @@ export const CitiesFilter = (props: CitiesFilterProps) => {
   const [value, setValue] = useDebounce({ onValueChange: onSearchValueChange });
   const [selectedCountries, setSelectedCountries] = useState<ComboboxItemType[]>([]);
 
+  const handleSelectedCountries = (values: ComboboxItemType[]) => {
+    resetPage();
+    setSelectedCountries(values);
+    setCountriesFilter(values.map((v) => v.value));
+  };
+
   const isFiltering =
-    value.length > 0 || filter.isFeatured !== undefined || selectedCountries.length;
+    value.length > 0 || filter.isFeatured !== undefined || !!selectedCountries.length;
 
   const handleIsFeatured = (value: boolean) => {
     resetPage();
@@ -57,7 +63,7 @@ export const CitiesFilter = (props: CitiesFilterProps) => {
 
       <CountryFilter
         selectedCountries={selectedCountries}
-        setSelectedCountries={setSelectedCountries}
+        setSelectedCountries={handleSelectedCountries}
       />
 
       <DataTableSelectFilter
