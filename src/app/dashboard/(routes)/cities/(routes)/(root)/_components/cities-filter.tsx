@@ -1,7 +1,8 @@
 import { ShieldCheckIcon, ShieldXIcon } from 'lucide-react';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
-import { FacetedOption } from '@/components/ui/data-table-faceted-filter';
+import { type ComboboxItemType } from '@/components/combobox';
+import { type FacetedOption } from '@/components/ui/data-table-faceted-filter';
 import { DataTableResetFilter } from '@/components/ui/data-table-reset-filter';
 import { DataTableSearchFilter } from '@/components/ui/data-table-search-filter';
 import { DataTableSelectFilter } from '@/components/ui/data-table-select-filter';
@@ -15,38 +16,37 @@ interface CitiesFilterProps extends ReturnType<typeof useCitiesFilter> {
 }
 
 export const CitiesFilter = (props: CitiesFilterProps) => {
-  const {
-    setSearchValue,
-    isFeatured,
-    setIsFeatured,
-    resetFilter,
-    selectedCountries,
-    setSelectedCountries,
-    resetPage,
-  } = props;
+  const { filter, setQ, setFeatured, setCountriesFilter, resetFilter, resetPage } = props;
 
   const onSearchValueChange = useCallback(
     (value: string) => {
-      setSearchValue(value);
+      if (value === filter.query) {
+        return;
+      }
       resetPage();
+      setQ(value);
     },
-    [setSearchValue, resetPage],
+    [setQ, resetPage, filter.query],
   );
 
   const [value, setValue] = useDebounce({ onValueChange: onSearchValueChange });
-  const isFiltering = value.length > 0 || isFeatured !== undefined || selectedCountries.length > 0;
+  const [selectedCountries, setSelectedCountries] = useState<ComboboxItemType[]>([]);
+
+  const isFiltering =
+    value.length > 0 || filter.isFeatured !== undefined || selectedCountries.length;
 
   const handleIsFeatured = (value: boolean) => {
-    if (value === isFeatured) {
-      setIsFeatured(undefined);
-    } else {
-      setIsFeatured(value);
-    }
     resetPage();
+    if (value === filter.isFeatured) {
+      setFeatured(undefined);
+    } else {
+      setFeatured(value);
+    }
   };
 
   const reset = () => {
     setValue('');
+    setSelectedCountries([]);
     resetFilter();
     resetPage();
   };
@@ -63,7 +63,7 @@ export const CitiesFilter = (props: CitiesFilterProps) => {
       <DataTableSelectFilter
         options={options}
         onSelectedValueChange={handleIsFeatured}
-        selectedValue={isFeatured}
+        selectedValue={filter.isFeatured}
       />
 
       {isFiltering && <DataTableResetFilter reset={reset} />}

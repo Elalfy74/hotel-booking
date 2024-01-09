@@ -14,27 +14,30 @@ interface CountriesFilterProps extends ReturnType<typeof useCountriesFilter> {
 }
 
 export const CountriesFilter = (props: CountriesFilterProps) => {
-  const { setSearchValue, isFeatured, setIsFeatured, resetFilter, resetPage } = props;
+  const { filter, setFeatured, setQ, resetFilter, resetPage } = props;
 
   const onSearchValueChange = useCallback(
     (value: string) => {
-      setSearchValue(value);
+      if (value === filter.query) {
+        return;
+      }
       resetPage();
+      setQ(value);
     },
-    [setSearchValue, resetPage],
+    [setQ, resetPage, filter.query],
   );
 
   const [value, setValue] = useDebounce({ onValueChange: onSearchValueChange });
 
-  const isFiltering = value.length > 0 || isFeatured !== undefined;
+  const isFiltering = value.length > 0 || filter.isFeatured !== undefined;
 
   const handleIsFeatured = (value: boolean) => {
-    if (value === isFeatured) {
-      setIsFeatured(undefined);
-    } else {
-      setIsFeatured(value);
-    }
     resetPage();
+    if (value === filter.isFeatured) {
+      setFeatured(undefined);
+    } else {
+      setFeatured(value);
+    }
   };
 
   const reset = () => {
@@ -50,7 +53,7 @@ export const CountriesFilter = (props: CountriesFilterProps) => {
       <DataTableSelectFilter
         options={options}
         onSelectedValueChange={handleIsFeatured}
-        selectedValue={isFeatured}
+        selectedValue={filter.isFeatured}
       />
 
       {isFiltering && <DataTableResetFilter reset={reset} />}

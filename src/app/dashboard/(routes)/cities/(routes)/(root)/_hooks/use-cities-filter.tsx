@@ -1,28 +1,43 @@
-import { useState } from 'react';
+import { parseAsJson, useQueryState } from 'nuqs';
 
-import { type ComboboxItemType } from '@/components/combobox';
+import { type CitiesFilter } from './utils';
 
 export const useCitiesFilter = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const [isFeatured, setIsFeatured] = useState<boolean | undefined>(undefined);
-  const [selectedCountries, setSelectedCountries] = useState<ComboboxItemType[]>([]);
+  const [filter, setFilter] = useQueryState(
+    'filter',
+    parseAsJson<CitiesFilter>().withDefault({
+      query: '',
+      isFeatured: undefined,
+      countriesFilter: undefined,
+    }),
+  );
+
+  const setQ = (q: string) => {
+    if (q === filter.query) {
+      return;
+    }
+    setFilter({ ...filter, query: q });
+  };
+
+  const setFeatured = (isFeatured: boolean | undefined) => {
+    if (isFeatured === filter.isFeatured) {
+      return;
+    }
+    setFilter({ ...filter, isFeatured });
+  };
+  const setCountriesFilter = (countriesIds: string[] | undefined) => {
+    setFilter({ ...filter, countriesFilter: countriesIds });
+  };
 
   const resetFilter = () => {
-    setSearchValue('');
-    setIsFeatured(undefined);
-    setSelectedCountries([]);
+    setFilter(null);
   };
 
   return {
-    searchValue,
-    setSearchValue,
-
-    isFeatured,
-    setIsFeatured,
-
-    selectedCountries,
-    setSelectedCountries,
-
+    filter,
+    setQ,
+    setFeatured,
+    setCountriesFilter,
     resetFilter,
   };
 };

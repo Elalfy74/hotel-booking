@@ -11,7 +11,6 @@ export const useCountriesTable = () => {
   const countriesFilter = useCountriesFilter();
 
   // Filter Countries by searchValue and isFeatured
-  const filter = { query: countriesFilter.searchValue, isFeatured: countriesFilter.isFeatured };
 
   // Fetch countries count
   const {
@@ -19,7 +18,7 @@ export const useCountriesTable = () => {
     isPending: countriesCountLoading,
     isFetching: countriesCountFetching,
     queryKey: countriesCountQueryKey,
-  } = useCountriesCount({ filter });
+  } = useCountriesCount({ filter: countriesFilter.filter });
 
   // Handle pagination
   const pagination = useQueryPagination({
@@ -35,7 +34,7 @@ export const useCountriesTable = () => {
   } = useCountries({
     currentPage: pagination.currentPage,
     pageSize: pagination.pageSize,
-    filter,
+    filter: countriesFilter.filter,
   });
 
   const currentQKeys = useMemo(

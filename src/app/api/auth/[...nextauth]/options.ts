@@ -1,4 +1,4 @@
-import { PrismaAdapter } from '@auth/prisma-adapter';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { Prisma, Role } from '@prisma/client';
 import { DefaultSession, NextAuthOptions } from 'next-auth';
 import credentialsProvider from 'next-auth/providers/credentials';

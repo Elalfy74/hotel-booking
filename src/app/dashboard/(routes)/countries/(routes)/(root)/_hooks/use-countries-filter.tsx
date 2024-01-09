@@ -1,19 +1,37 @@
-import { useState } from 'react';
+import { parseAsJson, useQueryState } from 'nuqs';
+
+import { type CountriesFilter } from './utils';
 
 export const useCountriesFilter = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const [isFeatured, setIsFeatured] = useState<boolean | undefined>(undefined);
+  const [filter, setFilter] = useQueryState(
+    'filter',
+    parseAsJson<CountriesFilter>().withDefault({
+      query: '',
+      isFeatured: undefined,
+    }),
+  );
 
+  const setQ = (q: string) => {
+    if (q === filter.query) {
+      return;
+    }
+    setFilter({ ...filter, query: q });
+  };
+
+  const setFeatured = (isFeatured: boolean | undefined) => {
+    if (isFeatured === filter.isFeatured) {
+      return;
+    }
+    setFilter({ ...filter, isFeatured });
+  };
   const resetFilter = () => {
-    setSearchValue('');
-    setIsFeatured(undefined);
+    setFilter(null);
   };
 
   return {
-    searchValue,
-    setSearchValue,
-    isFeatured,
-    setIsFeatured,
+    filter,
+    setQ,
+    setFeatured,
     resetFilter,
   };
 };
