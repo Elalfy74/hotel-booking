@@ -13,7 +13,7 @@ export const useDeleteManyHotels = ({ currentQKeys }: UseDeleteManyHotelsProps) 
       arrayOfItemsKey: currentQKeys.hotelsQueryKey,
       countKey: currentQKeys.hotelsCountQueryKey,
     },
-    itemName: 'city',
+    itemName: 'hotel',
     mutationFn: deleteManyHotels,
   });
 };
