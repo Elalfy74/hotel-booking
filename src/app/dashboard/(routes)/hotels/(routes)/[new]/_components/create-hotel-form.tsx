@@ -2,8 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { m } from 'framer-motion';
-import { MinusIcon, PlusIcon, XIcon } from 'lucide-react';
-import { Fragment, useState } from 'react';
+import { MinusIcon, PlusIcon } from 'lucide-react';
+import { useState } from 'react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { Rating } from 'react-simple-star-rating';
 import { toast } from 'sonner';
@@ -30,6 +30,7 @@ import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 
 import { createHotelSchema, CreateHotelType } from '../../../_schemas';
+import { useCreateHotel } from '../_hooks/use-create-hotel';
 import { CityInput } from './city-input';
 import { HotelCategoryInput } from './hotel-category-input';
 import { HotelFeaturesInput } from './hotel-features-input';
@@ -53,7 +54,7 @@ export const CreateHotelForm = () => {
           price: 0,
           maxAdults: 0,
           maxChildren: 0,
-          beds: 0,
+          beds: '',
         },
       ],
     },
@@ -64,9 +65,34 @@ export const CreateHotelForm = () => {
     name: 'rooms',
   });
 
-  const processForm: SubmitHandler<CreateHotelType> = (data) => {
-    console.log(data);
-    form.reset();
+  const { mutateAsync } = useCreateHotel();
+
+  const processForm: SubmitHandler<CreateHotelType> = async ({
+    images,
+    features,
+    rooms,
+    ...values
+  }) => {
+    const formData = new FormData();
+
+    images.forEach((image) => {
+      formData.append('images', image);
+    });
+
+    features.forEach((feature) => {
+      formData.append('features', feature);
+    });
+
+    if (rooms) {
+      rooms.forEach((room) => {
+        formData.append('rooms', JSON.stringify(room));
+      });
+    }
+
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, String(value));
+    });
+    await mutateAsync(formData);
   };
 
   type FieldName = keyof CreateHotelType;
@@ -77,9 +103,9 @@ export const CreateHotelForm = () => {
 
     if (!output) return;
 
-    if (currentStep < stepsData.length - 1) {
-      if (currentStep === stepsData.length - 2) {
-        await form.handleSubmit(processForm)();
+    if (currentStep < stepsData.length) {
+      if (currentStep === stepsData.length - 1) {
+        return await form.handleSubmit(processForm)();
       }
       setPreviousStep(currentStep);
       setCurrentStep((step) => step + 1);
@@ -160,7 +186,7 @@ export const CreateHotelForm = () => {
                   <FormItem>
                     <FormLabel className="block">Rating</FormLabel>
                     <FormControl>
-                      <Rating onClick={field.onChange} size={30} />
+                      <Rating onClick={field.onChange} size={30} initialValue={field.value} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -296,7 +322,11 @@ export const CreateHotelForm = () => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
-              <h2 className="text-xl font-semibold">Rooms</h2>
+              <h2 className="text-xl font-semibold">
+                Rooms
+                <span className="ml-1 text-sm font-normal text-gray-400">(Optional)</span>
+              </h2>
+
               <p className="!my-2 text-sm text-gray-600 dark:text-gray-300">
                 Provide hotel rooms details.
               </p>
@@ -347,16 +377,11 @@ export const CreateHotelForm = () => {
                           <FormField
                             name={`rooms.${index}.beds`}
                             control={form.control}
-                            render={({ field: { onChange, ...field } }) => (
+                            render={({ field }) => (
                               <FormItem>
-                                <FormLabel>No of Beds</FormLabel>
+                                <FormLabel>Beds</FormLabel>
                                 <FormControl>
-                                  <Input
-                                    placeholder="2"
-                                    type="number"
-                                    onChange={(e) => onChange(Number(e.target.value))}
-                                    {...field}
-                                  />
+                                  <Input placeholder="1 Big bed" {...field} />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -442,7 +467,7 @@ export const CreateHotelForm = () => {
 
                   append({
                     name: '',
-                    beds: 0,
+                    beds: '',
                     maxAdults: 0,
                     maxChildren: 0,
                     price: 0,
@@ -455,7 +480,12 @@ export const CreateHotelForm = () => {
           )}
         </form>
       </Form>
-      <Navigation currentStep={currentStep} next={next} prev={prev} />
+      <Navigation
+        currentStep={currentStep}
+        next={next}
+        prev={prev}
+        isPending={form.formState.isSubmitting}
+      />
     </section>
   );
 };

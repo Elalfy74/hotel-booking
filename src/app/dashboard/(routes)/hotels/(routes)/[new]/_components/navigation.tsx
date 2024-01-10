@@ -1,16 +1,18 @@
 import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 
 import { stepsData } from './steps-data';
 
 interface NavigationProps {
+  isPending: boolean;
   currentStep: number;
   next: () => void;
   prev: () => void;
 }
 
-export const Navigation = ({ currentStep, next, prev }: NavigationProps) => {
+export const Navigation = ({ isPending, currentStep, next, prev }: NavigationProps) => {
   return (
     <div className="mt-8 pt-5">
       <div className="flex justify-between">
@@ -19,7 +21,7 @@ export const Navigation = ({ currentStep, next, prev }: NavigationProps) => {
           variant="outline"
           className="w-40"
           onClick={prev}
-          disabled={currentStep === 0}
+          disabled={currentStep === 0 || isPending}
         >
           <ArrowLeftIcon />
         </Button>
@@ -28,9 +30,15 @@ export const Navigation = ({ currentStep, next, prev }: NavigationProps) => {
           variant="outline"
           className="w-40"
           onClick={next}
-          disabled={currentStep === stepsData.length - 1}
+          disabled={isPending}
         >
-          <ArrowRightIcon />
+          {isPending ? (
+            <Spinner />
+          ) : currentStep === stepsData.length - 1 ? (
+            'Submit'
+          ) : (
+            <ArrowRightIcon />
+          )}
         </Button>
       </div>
     </div>

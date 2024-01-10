@@ -1,10 +1,10 @@
-import { Prisma } from '@prisma/client';
+import { type CreateHotelType } from '../../../_schemas';
 
 type Step = {
   id: number;
   title: string;
   name: string;
-  fields?: (keyof Prisma.HotelCreateArgs['data'])[];
+  fields?: (keyof CreateHotelType)[];
 };
 
 export const stepsData: Step[] = [
@@ -31,10 +31,5 @@ export const stepsData: Step[] = [
     title: 'Step 4',
     name: 'Rooms',
     fields: ['rooms'],
-  },
-  {
-    id: 4,
-    title: 'Step 5',
-    name: 'Complete',
   },
 ];

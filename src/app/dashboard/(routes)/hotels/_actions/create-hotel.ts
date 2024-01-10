@@ -1,6 +1,6 @@
 'use server';
 
-import { type Country, Hotel } from '@prisma/client';
+import { type Hotel } from '@prisma/client';
 
 import { asyncAdminHandler } from '@/actions/utils';
 import prisma from '@/lib/prisma';
@@ -10,30 +10,52 @@ import { createHotelSchema } from '../_schemas';
 
 export const createHotel = asyncAdminHandler(async (formData: FormData): Promise<Hotel> => {
   const actionData = Object.fromEntries(formData);
+  const images = formData.getAll('images');
+  const features = formData.getAll('features');
+  const parsedRooms = formData.getAll('rooms').map((room) => JSON.parse(room as string));
 
   // Validate data
-  const validation = createHotelSchema.safeParse(actionData);
+  const validation = createHotelSchema.safeParse({
+    ...actionData,
+    images,
+    features,
+    rooms: parsedRooms,
+  });
   if (!validation.success) {
     throw new Error(validation.error.message);
   }
 
   const data = validation.data;
 
-  // Check if Hotel exists
-  const isHotelExists = await prisma.hotel.findUnique({
-    where: { name: data.name },
-  });
-  if (isHotelExists) throw new Error('Hotel already exists');
+  //Upload images
+  const imageFile = data.images as File[];
+  const uploadedImages = await utapi.uploadFiles(imageFile);
+  const uploadedImagesURLs = uploadedImages.map((image) => ({
+    url: image.data!.url,
+  }));
 
-  // Upload image
-  const imageFile = data.image as File;
-  const uploadedImage = await utapi.uploadFiles(imageFile);
-  if (!uploadedImage.data) throw new Error('Image upload failed');
-
-  return prisma.hotel.create({
+  const hotel = await prisma.hotel.create({
     data: {
-      rooms,
-      reviews,
+      ...data,
+      features: {
+        createMany: {
+          data: data.features.map((feature) => ({
+            featureId: feature,
+          })),
+        },
+      },
+      images: {
+        createMany: {
+          data: uploadedImagesURLs,
+        },
+      },
+      rooms: {
+        createMany: {
+          data: data.rooms || [],
+        },
+      },
     },
   });
+
+  return hotel;
 });
