@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 
+import { ImagesDropzone } from '@/components/images-dropzone';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -20,7 +21,6 @@ import { Switch } from '@/components/ui/switch';
 import { CountryInput } from '../../../_components/country-input';
 import { createCitySchema, type CreateCityType } from '../../../_schemas';
 import { useCreateCity } from '../_hooks/use-create-city';
-import { ImagesDropzone } from './images-dropzone';
 
 export const CreateCityForm = () => {
   const { mutateAsync } = useCreateCity();
