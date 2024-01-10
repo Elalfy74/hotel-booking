@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { type City, CityImage } from '@prisma/client';
+import { CityImage } from '@prisma/client';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { Dropzone } from '@/components/dropzone';
 import { Button } from '@/components/ui/button';
 import {
   Form,

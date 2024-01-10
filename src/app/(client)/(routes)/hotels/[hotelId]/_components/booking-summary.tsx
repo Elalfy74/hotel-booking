@@ -9,7 +9,7 @@ function PriceSummary() {
   return (
     <div className="mt-5">
       <h4>Price</h4>
-      <ul className="rounded-xl bg-gray-200 p-5">
+      <ul className="rounded-xl bg-gray-200 p-5 dark:border dark:bg-background">
         {new Array(4).fill('').map((item, i) => (
           <li key={i} className="mb-4 flex items-center justify-between capitalize ">
             <span>1 nights</span>
@@ -30,7 +30,7 @@ function PriceSummary() {
 
 export const BookingSummary = () => {
   return (
-    <div className="w-full rounded-xl bg-white px-5 py-6 shadow-sm xl:px-10">
+    <div className="w-full rounded-xl border px-5 py-6 shadow-sm xl:px-10">
       {/* Heading */}
       <div className="mb-5 flex items-center justify-between">
         <PricePerNight price={148} originalPrice={155} />
@@ -42,7 +42,7 @@ export const BookingSummary = () => {
       </div>
       <div className="mt-5">
         <h2 className="mb-4 text-lg font-semibold">Extra Features</h2>
-        <div className="space-y-4">
+        <div className="space-y-4 rounded-lg border p-3">
           <div className="flex items-center space-x-2">
             <Checkbox id="terms-1" />
             <label

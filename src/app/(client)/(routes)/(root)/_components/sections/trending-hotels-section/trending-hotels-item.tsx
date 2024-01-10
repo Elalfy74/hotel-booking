@@ -10,11 +10,11 @@ import { type ITrendingHotel } from './trending-hotels-section';
 export const TrendingHotelsItem = ({ hotel }: { hotel: ITrendingHotel }) => {
   return (
     <Card className="flex max-w-full gap-4 p-4 shadow-sm md:gap-10 md:p-6">
-      <Link href={`/hotels/${hotel.id}`} className="lg:min-w-[160px] lg:max-w-[160px]">
+      <Link href={`/hotels/${hotel.id}`}>
         <Image
           src={hotel.images[0].url}
           alt="hotel"
-          className="h-full w-auto rounded-xl object-cover"
+          className="h-full w-auto max-w-[160px] rounded-xl object-cover md:max-w-full"
           width={512}
           height={410}
         />

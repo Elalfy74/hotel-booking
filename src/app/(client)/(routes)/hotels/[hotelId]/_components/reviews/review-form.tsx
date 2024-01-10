@@ -13,7 +13,7 @@ export const ReviewForm = () => {
       </div>
       <form>
         <textarea
-          className="h-[150px] w-full resize-none rounded-lg border bg-gray-100 p-6 outline-none"
+          className="h-[150px] w-full resize-none rounded-lg border bg-gray-100 p-6 outline-none dark:bg-background"
           placeholder="Write Your details review here.."
         />
         <div className="mt-4 flex justify-end gap-4">
