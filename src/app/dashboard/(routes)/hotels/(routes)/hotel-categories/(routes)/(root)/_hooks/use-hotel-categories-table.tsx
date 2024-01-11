@@ -3,8 +3,8 @@ import { useMemo } from 'react';
 import { useQueryPagination } from '@/hooks/use-query-pagination';
 
 import { useHotelCategories } from './use-hotel-categories';
+import { useHotelCategoriesCount } from './use-hotel-categories-count';
 import { useHotelCategoriesFilter } from './use-hotel-categories-filter';
-import { useHotelCategoriesCount } from './use-hotels-categories-count';
 
 export const useHotelCategoriesTable = () => {
   const hotelCategoriesFilter = useHotelCategoriesFilter();

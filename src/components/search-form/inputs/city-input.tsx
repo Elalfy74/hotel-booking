@@ -21,7 +21,7 @@ export const CityInput = () => {
       selected={selectedCity}
       setSearchChange={setValue}
       setSelected={setSelectedCity}
-      className="w-full justify-between bg-gray-50 py-6 font-normal focus-visible:bg-white focus-visible:bg-none dark:bg-background"
+      btnClassName="w-full justify-between bg-gray-50 py-6 font-normal focus-visible:bg-white focus-visible:bg-none dark:bg-background"
     />
   );
 };

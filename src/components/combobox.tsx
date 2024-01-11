@@ -30,12 +30,21 @@ interface ComboboxProps {
   setSearchChange: (value: string) => void;
   isFetching?: boolean;
 
-  className?: string;
+  btnClassName?: string;
+  contentClassName?: string;
 }
 
 export function Combobox(props: ComboboxProps) {
-  const { selected, setSelected, setSearchChange, items, entityName, isFetching, className } =
-    props;
+  const {
+    selected,
+    setSelected,
+    setSearchChange,
+    items,
+    entityName,
+    isFetching,
+    btnClassName,
+    contentClassName,
+  } = props;
 
   const [open, { setOpened, close }] = useDisclosure(false);
   const [localValue, setLocalValue] = useDebounce({ onValueChange: setSearchChange });
@@ -48,8 +57,8 @@ export function Combobox(props: ComboboxProps) {
           role="combobox"
           aria-expanded={open}
           className={cn(
-            'w-[300px] justify-between',
-            className,
+            'w-[300px] justify-between truncate',
+            btnClassName,
             !selected && 'text-gray-400 hover:text-gray-400',
           )}
         >
@@ -57,7 +66,7 @@ export function Combobox(props: ComboboxProps) {
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className={cn('min-w-[300px] p-0')}>
+      <PopoverContent className={cn('min-w-[300px] p-0', contentClassName)}>
         <Command shouldFilter={false}>
           <CommandInput
             placeholder={`Search ${entityName}...`}

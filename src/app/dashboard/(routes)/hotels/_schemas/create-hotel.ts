@@ -2,13 +2,7 @@ import { z } from 'zod';
 
 import { booleanSchema, imageSchema } from '@/lib/utils';
 
-export const createRoomSchema = z.object({
-  name: z.string().min(2).max(255),
-  price: z.coerce.number().min(1).max(1000),
-  beds: z.string().min(2).max(255),
-  maxAdults: z.coerce.number().min(1).max(10),
-  maxChildren: z.coerce.number().min(0).max(10),
-});
+import { createHotelRoomSchema } from '../(routes)/hotel-rooms/_schemas/create-hotel-rooms';
 
 export const createHotelSchema = z.object({
   name: z.string().min(2).max(255),
@@ -21,6 +15,6 @@ export const createHotelSchema = z.object({
   distanceToDTInKm: z.coerce.number().min(1).max(1000),
   images: z.array(imageSchema).min(1).max(5),
   features: z.array(z.string()).min(1).max(10),
-  rooms: z.array(createRoomSchema).max(5).optional(),
+  rooms: z.array(createHotelRoomSchema).max(5).optional(),
 });
 export type CreateHotelType = z.infer<typeof createHotelSchema>;

@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client';
 
 export interface HotelsFilter {
   query: string;
-  isFeatured: boolean | undefined;
+  isFeatured?: boolean;
   citiesFilter?: string[];
   categoriesFilter?: string[];
 }
