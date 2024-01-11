@@ -19,6 +19,16 @@ export const createHotelCategory = asyncAdminHandler(
 
     const data = validation.data;
 
+    const isHotelCategoryExists = await prisma.hotelCategory.findUnique({
+      where: {
+        name: data.name,
+      },
+    });
+
+    if (isHotelCategoryExists) {
+      throw new Error('Hotel Category already exists');
+    }
+
     const hotelCategory = await prisma.hotelCategory.create({ data });
 
     return {

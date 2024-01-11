@@ -1,8 +1,6 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
-import { useDisclosure } from '@/hooks/use-disclosure';
-
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -23,12 +21,14 @@ import {
 import { Loader } from './loader';
 
 interface DataTableRowActionsProps {
-  editUrl: string;
+  editUrl?: string;
+  EditComponent?: React.ComponentType<{ children: React.ReactNode }>;
   handleDelete: () => void;
   isPending: boolean;
 }
 
 export function DataTableRowActions({
+  EditComponent,
   editUrl,
   handleDelete,
   isPending,
@@ -44,7 +44,19 @@ export function DataTableRowActions({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href={editUrl}>Edit</Link>
+            <>
+              {editUrl && <Link href={editUrl}>Edit</Link>}
+              {EditComponent && (
+                <EditComponent>
+                  <Button
+                    variant="ghost"
+                    className="h-full w-full justify-start rounded px-2 py-1.5 text-sm"
+                  >
+                    Edit
+                  </Button>
+                </EditComponent>
+              )}
+            </>
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer" asChild>
             <AlertDialogTrigger className="h-full w-full">Delete</AlertDialogTrigger>

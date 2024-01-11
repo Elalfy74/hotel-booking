@@ -14,22 +14,25 @@ import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 
 import {
-  createHotelCategorySchema,
-  type CreateHotelCategoryType,
-} from '../../../_schemas/create-hotel-category';
+  updateHotelCategorySchema,
+  type UpdateHotelCategoryType,
+} from '../../../_schemas/update-hotel-category';
 
-export const CreateHotelCategoryForm = ({
+export const EditHotelCategoryForm = ({
+  initialValues,
   onSubmit,
   isPending,
 }: {
   onSubmit: (formData: FormData) => void;
   isPending: boolean;
+  initialValues: UpdateHotelCategoryType;
 }) => {
-  const form = useForm<CreateHotelCategoryType>({
-    resolver: zodResolver(createHotelCategorySchema),
+  const form = useForm<UpdateHotelCategoryType>({
+    resolver: zodResolver(updateHotelCategorySchema),
+    defaultValues: initialValues,
   });
 
-  const handleSubmit = (values: CreateHotelCategoryType) => {
+  const handleSubmit = (values: UpdateHotelCategoryType) => {
     const formData = new FormData();
 
     Object.entries(values).forEach(([key, value]) => {
@@ -55,8 +58,12 @@ export const CreateHotelCategoryForm = ({
             </FormItem>
           )}
         />
-        <Button type="submit" className="ml-auto block" disabled={isPending}>
-          {isPending ? <Spinner className="text-white" size="sm" /> : 'Create'}
+        <Button
+          type="submit"
+          className="ml-auto block"
+          disabled={isPending || !form.formState.isDirty}
+        >
+          {isPending ? <Spinner className="text-white" size="sm" /> : 'Edit'}
         </Button>
       </form>
     </Form>

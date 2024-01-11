@@ -21,7 +21,6 @@ export const CreateHotelCategoryDialog = ({ children }: { children: React.ReactN
   const onSubmit = async (formData: FormData) => {
     const res = await mutateAsync(formData);
 
-    console.log(res.data);
     if (res.error) return;
 
     setOpen(false);

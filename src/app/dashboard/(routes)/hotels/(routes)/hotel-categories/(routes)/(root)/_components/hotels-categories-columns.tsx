@@ -9,7 +9,9 @@ import { getIdColumn } from '@/components/ui/get-id-column';
 import { getSelectColumn } from '@/components/ui/get-select-column';
 
 import { type IHotelCategory } from '../../../_actions';
+import { useDeleteHotelCategory } from '../_hooks/use-delete-hotel-category';
 import { HotelCategoriesTableKeys } from '../_hooks/use-hotel-categories-table';
+import { editHotelCategoryDialogWithId } from './edit-hotel-category-dialog';
 
 export const columns = (currentQKeys: HotelCategoriesTableKeys): ColumnDef<IHotelCategory>[] => [
   getSelectColumn(),
@@ -32,17 +34,18 @@ export const columns = (currentQKeys: HotelCategoriesTableKeys): ColumnDef<IHote
     },
   },
 
-  // TODO update this
   {
     id: 'actions',
     cell: ({ row }) => {
       const { id } = row.original;
+      const { mutateAsync, isPending } = useDeleteHotelCategory({ currentQKeys });
+      const EditComponent = editHotelCategoryDialogWithId(id);
 
       return (
         <DataTableRowActions
-          editUrl={`/dashboard/hotels/hotel-categories/${id}`}
-          handleDelete={() => {}}
-          isPending={false}
+          EditComponent={EditComponent}
+          handleDelete={mutateAsync.bind(null, id)}
+          isPending={isPending}
         />
       );
     },
