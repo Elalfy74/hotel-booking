@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
-import { useHotelCategories } from '@/app/dashboard/(routes)/hotel-categories/(routes)/(root)/_hooks/use-hotel-categories';
 import { ComboboxItemType } from '@/components/combobox';
 import { Button } from '@/components/ui/button';
 import { DataTableControlledFacetedFilter } from '@/components/ui/data-table-controlled-faceted-filter';
+
+import { useHotelCategories } from '../../hotel-categories/(routes)/(root)/_hooks/use-hotel-categories';
 
 interface HotelCategoryFilterProps {
   selectedCategories: ComboboxItemType[];

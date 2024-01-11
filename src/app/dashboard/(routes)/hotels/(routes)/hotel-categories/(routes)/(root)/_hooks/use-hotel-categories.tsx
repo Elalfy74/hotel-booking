@@ -21,9 +21,15 @@ interface UseHotelCategoriesProps {
   currentPage: number;
   pageSize: number;
   filter: HotelCategoriesFilter;
+  withHotelsCount?: boolean;
 }
 
-export const useHotelCategories = ({ currentPage, pageSize, filter }: UseHotelCategoriesProps) => {
+export const useHotelCategories = ({
+  currentPage,
+  pageSize,
+  filter,
+  withHotelsCount = false,
+}: UseHotelCategoriesProps) => {
   const queryKey = ['hotel categories', { currentPage, pageSize, filter }] as const;
   const where = getHotelCategoriesWhereFilter(filter);
 
@@ -34,6 +40,7 @@ export const useHotelCategories = ({ currentPage, pageSize, filter }: UseHotelCa
         skip: (currentPage - 1) * pageSize,
         take: pageSize,
         where,
+        withHotelsCount,
       }),
     placeholderData: keepPreviousData,
   });

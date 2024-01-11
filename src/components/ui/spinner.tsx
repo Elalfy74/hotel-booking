@@ -1,5 +1,7 @@
 import { cva, VariantProps } from 'class-variance-authority';
 
+import { cn } from '@/lib/utils';
+
 const spinnerVariants = cva('animate-spin', {
   variants: {
     variant: {
@@ -31,7 +33,7 @@ export const Spinner = ({ className, variant = 'oval', size, ...props }: Spinner
       {variant === 'oval' && (
         <svg
           viewBox="3 3 18 18"
-          className={spinnerVariants({ size, variant, className })}
+          className={cn(spinnerVariants({ size, variant }), className)}
           {...props}
         >
           <path

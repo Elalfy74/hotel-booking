@@ -11,12 +11,13 @@ interface UseCreateItemProps<TResponse> {
   mutationFn: (formData: FormData) => Promise<ActionRes<TResponse>>;
   defaultKeys: DefaultKeys;
   successRoute: string;
+  shouldNavigate?: boolean;
 }
 
 export function useCreateItem<TResponse extends { id: string }>(
   props: UseCreateItemProps<TResponse>,
 ) {
-  const { defaultKeys, mutationFn, itemName, successRoute } = props;
+  const { defaultKeys, mutationFn, itemName, successRoute, shouldNavigate = true } = props;
   // [users, id]
   // Take the 'users' part
   const firstKeyOfDefaultKeys = Object.values(defaultKeys).map((value: DefaultKeyType) => value[0]);
@@ -75,7 +76,9 @@ export function useCreateItem<TResponse extends { id: string }>(
         data: createdItemData,
       });
 
-      router.push(`/dashboard/${successRoute}`);
+      if (shouldNavigate) {
+        router.push(`/dashboard/${successRoute}`);
+      }
     },
   });
 }

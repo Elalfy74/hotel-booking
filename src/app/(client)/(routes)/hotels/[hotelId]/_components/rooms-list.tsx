@@ -28,8 +28,8 @@ const RoomItem = ({ room }: { room: HotelRoom }) => {
       <div>
         <h3 className="mb-4 mt-0 text-xl font-medium sm:text-2xl md:text-2xl">{room.name}</h3>
         <p className="capitalize">
-          {maxAdults && <span>{maxAdults} adults</span>}
-          {maxChildren && <span> {maxChildren} children</span>}
+          {!!maxAdults && <span>{maxAdults} adults</span>}
+          {!!maxChildren && <span> {maxChildren} children</span>}
         </p>
         <p className="capitalize">{beds}</p>
       </div>

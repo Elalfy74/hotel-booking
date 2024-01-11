@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useHotelCategories } from '@/app/dashboard/(routes)/hotel-categories/(routes)/(root)/_hooks/use-hotel-categories';
+import { useHotelCategories } from '@/app/dashboard/(routes)/hotels/(routes)/hotel-categories/(routes)/(root)/_hooks/use-hotel-categories';
 import { Combobox, type ComboboxItemType } from '@/components/combobox';
 import { Button } from '@/components/ui/button';
 
