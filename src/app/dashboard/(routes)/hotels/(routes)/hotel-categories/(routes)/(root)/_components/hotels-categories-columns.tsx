@@ -25,6 +25,7 @@ export const columns = (currentQKeys: HotelCategoriesTableKeys): ColumnDef<IHote
 
   {
     accessorKey: 'hotels number',
+    accessorFn: (row) => row._count.hotels,
     header: ({ column }) => <DataTableColumnHeader column={column} title="Hotels Number" />,
     cell: ({ row }) => {
       return <div className="max-w-[150px] truncate capitalize">{row.original._count.hotels}</div>;

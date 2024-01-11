@@ -132,6 +132,17 @@ export const HotelsCatalogNav = () => {
         >
           - Hotel Categories
         </Link>
+        <Link
+          className={cn(
+            'block w-fit px-6 py-2 text-sm hover:underline',
+            getIsActive('/dashboard/hotels/hotel-rooms', currentRoute, true)
+              ? 'text-primary'
+              : 'text-muted-foreground',
+          )}
+          href="/dashboard/hotels/hotel-rooms"
+        >
+          - Hotel Rooms
+        </Link>
       </CollapsibleContent>
     </Collapsible>
   );

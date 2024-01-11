@@ -20,6 +20,7 @@ export const columns = (currentQKeys: CurrentUserTableQKeys): ColumnDef<UserDto>
 
     {
       accessorKey: 'fullName',
+      accessorFn: (row) => row.firstName,
       header: ({ column }) => <DataTableColumnHeader column={column} title="Full Name" />,
       cell: ({ row }) => {
         return (

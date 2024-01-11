@@ -60,6 +60,7 @@ export const columns = (currentQKeys: HotelsTableKeys): ColumnDef<IHotel>[] => [
 
   {
     accessorKey: 'rooms',
+    accessorFn: (row) => row._count.rooms,
     header: ({ column }) => <DataTableColumnHeader column={column} title="Rooms" />,
     cell: ({ row }) => {
       return (
