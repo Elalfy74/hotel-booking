@@ -21,9 +21,10 @@ interface UseHotelsProps {
   currentPage: number;
   pageSize: number;
   filter: HotelsFilter;
+  slim?: boolean;
 }
 
-export const useHotels = ({ currentPage, pageSize, filter }: UseHotelsProps) => {
+export const useHotels = ({ currentPage, pageSize, filter, slim = false }: UseHotelsProps) => {
   const queryKey = ['hotels', { currentPage, pageSize, filter }] as const;
   const where = getHotelsWhereFilter(filter);
 
@@ -34,6 +35,7 @@ export const useHotels = ({ currentPage, pageSize, filter }: UseHotelsProps) => 
         skip: (currentPage - 1) * pageSize,
         take: pageSize,
         where,
+        slim,
       }),
     placeholderData: keepPreviousData,
   });
