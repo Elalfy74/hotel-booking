@@ -13,7 +13,7 @@ export const defaultHotelsQueryKey: DefaultHotelsQueryKey = [
   {
     currentPage: 1,
     pageSize: 10,
-    filter: { query: '', isFeatured: undefined, citiesFilter: [] },
+    filter: { query: '', isFeatured: undefined, citiesFilter: undefined },
   },
 ] as const;
 
