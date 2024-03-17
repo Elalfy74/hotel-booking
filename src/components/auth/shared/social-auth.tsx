@@ -1,6 +1,6 @@
 'use client';
 
-import { TwitterIcon } from 'lucide-react';
+import { GithubIcon } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,7 @@ export const SocialAuth = () => {
   return (
     <div className="flex gap-x-2 text-center">
       <GoogleButton />
-      <TwitterButton />
+      <GitHubButton />
     </div>
   );
 };
@@ -24,7 +24,7 @@ const GoogleButton = () => {
   );
 };
 
-const TwitterButton = () => {
+const GitHubButton = () => {
   const handleGithubLogin = async () => {
     await signIn('github', {
       redirect: false,
@@ -37,7 +37,7 @@ const TwitterButton = () => {
       className="h-10 w-10 bg-gray-700 hover:bg-gray-700/90"
       onClick={handleGithubLogin}
     >
-      <TwitterIcon className="h-5 w-5 fill-current dark:fill-white dark:stroke-white" />
+      <GithubIcon className="h-5 w-5 fill-current dark:fill-white dark:stroke-white" />
     </Button>
   );
 };

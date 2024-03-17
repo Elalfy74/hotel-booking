@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:studio": "dotenv -e .env.local -- npx prisma studio"
   },
   "prisma": {
     "seed": "ts-node  --transpile-only prisma/seed.ts"
