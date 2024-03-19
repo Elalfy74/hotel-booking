@@ -175,8 +175,4 @@ Project Link: [Hotel Booking](https://github.com/Elalfy74/hotel-booking)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
 [product-screenshot]: assets/images/screenshot.png
