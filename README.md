@@ -13,12 +13,10 @@
    A hotel booking app has been developed to enable users to browse and make reservations at various hotels
     <br />
     <br />
-    <a href="https://hotel-booking-elalfy74.vercel.app/" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-right: 5px;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+    <a href="https://www.youtube.com/watch?v=bciFYmWU3C0">
     View Demo</a>
     ·
-    <a href="https://hotel-booking-elalfy74.vercel.app/" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-left: 5px;">
-   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-right"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>
+    <a href="https://hotel-booking-elalfy74.vercel.app/">
     See Live</a>
   </p>
 </div>
@@ -33,7 +31,7 @@
         <li><a href="#built-with">Built With</a></li>
         <li><a href="#features">Features</a>
           <ul>
-            <li><a href="#auth">Auth</a></li>
+            <li><a href="#auth">Authentication</a></li>
             <li><a href="#server">Server</a></li>
             <li><a href="#client">Client</a></li>
             <li><a href="#dashboard">Dashboard</a></li>
@@ -83,9 +81,9 @@
 
 ### Features
 
-#### Auth
+#### Authentication
 
-Authentication is implemented with NextAuth.
+The app's authentication system, powered by NextAuth, features multi-role authorization, with distinct roles assigned to users. Specifically, there are two roles: "user" and "admin". The "admin" role grants access to the dashboard, providing privileged functionality within the application.
 
 - Email and Password
 - Google
@@ -139,6 +137,7 @@ You can do CRUD operations on everything with modern UI like steps, Drag and Dro
 
 - Node.js
 - npm or pnpm
+- postgres database
 
 ### Installation
 
