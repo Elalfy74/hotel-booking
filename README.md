@@ -31,7 +31,7 @@
         <li><a href="#built-with">Built With</a></li>
         <li><a href="#features">Features</a>
           <ul>
-            <li><a href="#auth">Authentication</a></li>
+            <li><a href="#authentication">Authentication</a></li>
             <li><a href="#server">Server</a></li>
             <li><a href="#client">Client</a></li>
             <li><a href="#dashboard">Dashboard</a></li>
