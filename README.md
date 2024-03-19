@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-<!-- PROJECT LOGO  -->
+<!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/Elalfy74/hotel-booking">
