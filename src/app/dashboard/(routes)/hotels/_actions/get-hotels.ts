@@ -13,23 +13,21 @@ export const getHotels = asyncAdminHandler(
       skip: args.skip || 0,
       take: args.take || 10,
       where: args.where,
-      include: slim
-        ? {}
-        : {
-            category: true,
-            images: {
-              select: {
-                url: true,
-              },
-              take: 1,
-            },
-            city: true,
-            _count: {
-              select: {
-                rooms: true,
-              },
-            },
+      include: {
+        category: true,
+        images: {
+          select: {
+            url: true,
           },
+          take: 1,
+        },
+        city: true,
+        _count: {
+          select: {
+            rooms: true,
+          },
+        },
+      },
       orderBy: {
         createdAt: 'desc',
       },
